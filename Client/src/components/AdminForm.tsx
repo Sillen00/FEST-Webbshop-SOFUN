@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Button, Card, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
@@ -17,9 +11,7 @@ const AdminSchema = Yup.object().shape({
   id: Yup.string(),
   title: Yup.string().required("Ange titel"),
   description: Yup.string().required("Ange beskrivning"),
-  image: Yup.string()
-    .required("Ange bild")
-    .url("Bilden måste vara en giltig URL"),
+  image: Yup.string().required("Ange bild").url("Bilden måste vara en giltig URL"),
   background: Yup.string(),
   price: Yup.number()
     .typeError("Priset måste vara en siffra")
@@ -124,14 +116,10 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
           value={formik.values.description}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.description && Boolean(formik.errors.description)
-          }
+          error={formik.touched.description && Boolean(formik.errors.description)}
           helperText={formik.touched.description && formik.errors.description}
           inputProps={{ "data-cy": "product-description" }}
-          FormHelperTextProps={
-            { "data-cy": "product-description-error" } as any
-          }
+          FormHelperTextProps={{ "data-cy": "product-description-error" } as any}
         />
 
         <TextField
@@ -228,11 +216,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
                     overflow: "hidden",
                   }}
                 >
-                  <img
-                    src={formik.values.image}
-                    alt={formik.values.title}
-                    width="100%"
-                  />
+                  <img src={formik.values.image} alt={formik.values.title} width="100%" />
                 </Box>
               </Box>
 
@@ -255,9 +239,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
                     marginBottom: "0.5rem",
                   }}
                 >
-                  <Typography variant="subtitle2">
-                    Pris {formik.values.price} kr
-                  </Typography>
+                  <Typography variant="subtitle2">Pris {formik.values.price} kr</Typography>
                 </Box>
                 <Box
                   sx={{
@@ -265,9 +247,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
                     height: "12rem",
                   }}
                 >
-                  <Typography variant="body1">
-                    {formik.values.description}
-                  </Typography>
+                  <Typography variant="body1">{formik.values.description}</Typography>
                 </Box>
               </Box>
             </Link>

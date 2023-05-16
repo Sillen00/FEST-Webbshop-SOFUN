@@ -20,7 +20,7 @@ export default function Admin() {
   const navigate = useNavigate();
   const { product } = useProduct();
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (

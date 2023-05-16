@@ -17,6 +17,7 @@ import { useProduct } from "../contexts/ProductContext";
 import { CartItem } from "../data";
 
 export default function ProductInfo() {
+  const matches = useMediaQuery("(min-width:1280px)");
   const params = useParams();
 
   const { product } = useProduct();
@@ -113,7 +114,6 @@ export default function ProductInfo() {
     return <h1>Product not found</h1>;
   }
 
-  const matches = useMediaQuery("(min-width:1280px)");
 
   return (
     <Box
