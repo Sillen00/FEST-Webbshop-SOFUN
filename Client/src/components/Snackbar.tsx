@@ -1,22 +1,12 @@
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Button,
-  IconButton,
-  Paper,
-  Snackbar as MuiSnackbar,
-  Typography,
-} from "@mui/material";
+import * as Icon from "@mui/icons-material";
+
+import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 interface SnackbarProps {
   open: boolean;
-  handleClose: (
-    event: React.SyntheticEvent<Element, Event> | Event,
-    reason?: string
-  ) => void;
+  handleClose: (event: React.SyntheticEvent<Element, Event> | Event, reason?: string) => void;
   lastAddedProduct?: {
     title: string;
     price: number;
@@ -24,11 +14,7 @@ interface SnackbarProps {
   };
 }
 
-export default function Snackbar({
-  open,
-  handleClose,
-  lastAddedProduct,
-}: SnackbarProps) {
+export default function Snackbar({ open, handleClose, lastAddedProduct }: SnackbarProps) {
   return (
     <>
       <MuiSnackbar
@@ -65,7 +51,7 @@ export default function Snackbar({
               sx={{ position: "absolute", top: 0, right: 0 }}
               onClick={handleClose}
             >
-              <CloseIcon fontSize="small" />
+              <Icon.Close fontSize="small" />
             </IconButton>
             <Box
               sx={{
@@ -76,9 +62,7 @@ export default function Snackbar({
                 marginBottom: "1rem",
               }}
             >
-              <CheckCircleIcon
-                sx={{ color: "green", fontSize: "1rem", marginRight: "0.5rem" }}
-              />
+              <Icon.CheckCircle sx={{ color: "green", fontSize: "1rem", marginRight: "0.5rem" }} />
               <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
                 Har lagts till i kundvagnen
               </Typography>
@@ -109,9 +93,7 @@ export default function Snackbar({
                   flexGrow: 1,
                 }}
               >
-                <Typography variant="subtitle1">
-                  {lastAddedProduct.title}
-                </Typography>
+                <Typography variant="subtitle1">{lastAddedProduct.title}</Typography>
                 <Typography variant="subtitle1">
                   {lastAddedProduct.price.toLocaleString("sv-SE")} SEK
                 </Typography>

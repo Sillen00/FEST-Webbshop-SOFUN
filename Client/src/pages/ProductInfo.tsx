@@ -1,4 +1,5 @@
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import * as Icon from "@mui/icons-material";
+
 import {
   Avatar,
   Box,
@@ -114,7 +115,6 @@ export default function ProductInfo() {
     return <h1>Product not found</h1>;
   }
 
-
   return (
     <Box
       sx={{
@@ -179,7 +179,7 @@ export default function ProductInfo() {
                   });
                 }}
               >
-                <AddShoppingCartIcon />
+                <Icon.AddShoppingCart />
               </Button>
             </Tooltip>
           </Box>
@@ -190,9 +190,7 @@ export default function ProductInfo() {
             left: "10%",
             width: "50%",
             height: "50%",
-            backgroundImage: matches
-              ? `url(${selectedProduct?.background})`
-              : "none",
+            backgroundImage: matches ? `url(${selectedProduct?.background})` : "none",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             // zIndex: "200",
