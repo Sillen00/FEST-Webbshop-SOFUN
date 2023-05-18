@@ -3,7 +3,6 @@
 ## Beskrivning
 
 Ski-Doo är ett snöskotermärke som vi valt att göra en webshop för. Vi säljer snöskotrar.
-<!-- test pr -->
 
 ## Tekniker och verktyg
 
