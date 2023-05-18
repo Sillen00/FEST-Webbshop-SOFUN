@@ -22,6 +22,7 @@ app.use(express.json());
 // app.use('/api/users', userRouter);
 // app.use('/api/products', productRouter);
 // app.use('/api/orders', orderRouter);
+// app.use('/api/categories', categoryRouter);
 
 // ERROR HANDLING --------------------------------------------------------------------------------------------------------------------
 app.use((req, res, next) => {
