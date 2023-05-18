@@ -3,8 +3,8 @@ import { Box, IconButton, Tooltip, useTheme } from "@mui/material";
 import StyledBadge from "@mui/material/Badge";
 
 import { NavLink } from "react-router-dom";
-import Logo from "./components/Logo";
-import { useCart } from "./contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
+import Logo from "./Logo";
 
 export default function Header() {
   const { cart } = useCart();
@@ -76,16 +76,9 @@ export default function Header() {
           <Box>
             <Tooltip title="Kundvagn">
               <NavLink to="./checkout">
-                <IconButton
-                  aria-label="cart"
-                  data-cy="cart-link"
-                  color="secondary"
-                >
+                <IconButton aria-label="cart" data-cy="cart-link" color="secondary">
                   <StyledBadge
-                    badgeContent={
-                      cart.reduce((total, item) => total + item.quantity, 0) ||
-                      "0"
-                    }
+                    badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || "0"}
                     color="info"
                     data-cy="cart-items-count-badge"
                   >
