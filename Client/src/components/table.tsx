@@ -1,14 +1,20 @@
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { Avatar, IconButton, Input, Typography } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import * as Icon from "@mui/icons-material";
+
+import {
+  Avatar,
+  IconButton,
+  Input,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { useCart } from "../contexts/CartContext";
+
 export default function BasicTable() {
   const { cart, addProduct, removeProduct } = useCart();
   const totalCost = cart.reduce((acc, item) => {
@@ -69,11 +75,7 @@ export default function BasicTable() {
                   variant="rounded"
                 />
               </TableCell>
-              <TableCell
-                align="center"
-                data-cy="product-title"
-                sx={{ width: "10%" }}
-              >
+              <TableCell align="center" data-cy="product-title" sx={{ width: "10%" }}>
                 {product.title}
               </TableCell>
               <TableCell align="center" sx={{ width: "10%" }}>
@@ -83,7 +85,7 @@ export default function BasicTable() {
                   onClick={() => removeProduct(product)}
                   data-cy="decrease-quantity-button"
                 >
-                  <RemoveCircleOutlineIcon />
+                  <Icon.RemoveCircleOutline />
                 </IconButton>
               </TableCell>
               <TableCell align="center" sx={{ width: "10%" }}>
@@ -100,29 +102,18 @@ export default function BasicTable() {
                   onClick={() => addProduct(product)}
                   data-cy="increase-quantity-button"
                 >
-                  <AddCircleOutlineIcon />
+                  <Icon.AddCircleOutline />
                 </IconButton>
               </TableCell>
-              <TableCell
-                align="center"
-                data-cy="product-price"
-                sx={{ width: "8rem" }}
-              >
+              <TableCell align="center" data-cy="product-price" sx={{ width: "8rem" }}>
                 {product.quantity * product.price}
               </TableCell>
             </TableRow>
           ))}
 
           <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell
-              align="right"
-              data-cy="total-price"
-              colSpan={6}
-              sx={{ padding: "1rem" }}
-            >
-              <Typography variant="h6">
-                Totalt: {totalCost.toLocaleString("sv-SE")} SEK
-              </Typography>
+            <TableCell align="right" data-cy="total-price" colSpan={6} sx={{ padding: "1rem" }}>
+              <Typography variant="h6">Totalt: {totalCost.toLocaleString("sv-SE")} SEK</Typography>
             </TableCell>
           </TableRow>
         </TableBody>
