@@ -31,10 +31,8 @@ jobs:
     - run: npm run build 
     - run: npm run lint
     - run: npm test --if-present
-    
     # Add Prettier step
-#     - name: Check code formatting with Prettier
-#       run: npx prettier --check .
+    # run: npm run format
     
     # Add MongoDB setup steps
     - name: Install MongoDB
