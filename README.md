@@ -1,13 +1,15 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/G8PqYEM6)
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://github.com/Sillen00/FEST---Webbshop)
 
-# <span style="color:dodgerblue">User Based Content </span>
+# <span style="color:dodgerblue">Webbshop With Server Side </span>
 
 ## <span style="color:dodgerblue"> Description </span>
 
-In this school assignment, we have created a user-based platform where a user has the ability to register, log in, and create content.
+<!-- Skriv en beskrivning till projektet. Texten nedan är en text till tidigare express projectet, för insperation :) -->
+
+<!-- In this school assignment, we have created a user-based platform where a user has the ability to register, log in, and create content.
 
 User data is based on a separate resource, where the password is encrypted. All content that is created, modified, or removed is saved to a MongoDB database.
-All content is presented to the user, even when they are not logged in.
+All content is presented to the user, even when they are not logged in. -->
 
 ## <span style="color:dodgerblue"> Setup Project </span>
 
