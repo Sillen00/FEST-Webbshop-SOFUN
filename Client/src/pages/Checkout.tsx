@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CheckoutForm from "../components/CheckoutForm";
-import BasicTable from "../components/table";
+import BasicTable from "../components/Table";
 import { useCart } from "../contexts/CartContext";
 
 export default function Checkout() {
