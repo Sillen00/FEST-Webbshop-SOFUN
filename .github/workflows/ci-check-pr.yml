@@ -28,8 +28,8 @@ jobs:
         cache: 'npm'
         cache-dependency-path: Client/package-lock.json
     - run: npm ci 
-    - run: npm run build
-    - run: npm run lint
+    - run: cd client && npm run build
+    - run: cd client && npm run lint
     # - run: cd client && npm test --if-present
     # Add Prettier step
     # run: cd client && npm run format
