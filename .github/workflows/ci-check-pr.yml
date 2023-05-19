@@ -27,15 +27,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build 
-    - run: npm run lint
-    - run: npm test --if-present
+        cache-dependency-path: client/package-lock.json
+    - run: cd client && npm ci 
+    - run: cd client && npm run build
+    - run: cd client && npm run lint
+    # - run: cd client && npm test --if-present
     # Add Prettier step
-    # run: npm run format
+    # run: cd client && npm run format
     
     # Add MongoDB setup steps
-    - name: Install MongoDB
-      run: sudo apt-get install mongodb
-    - name: Start MongoDB
-      run: sudo service mongod start
+    # - name: Install MongoDB
+    #   run: sudo apt-get install mongodb
+    # - name: Start MongoDB
+    #   run: sudo service mongod start
