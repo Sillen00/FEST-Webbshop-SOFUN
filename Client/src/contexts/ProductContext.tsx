@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext } from "react";
-import { Product, products } from "../data";
-import { useLocalStorageState } from "../hooks/useLocalstorage";
+import { createContext, ReactNode, useContext } from 'react';
+import { Product, products } from '../data';
+import { useLocalStorageState } from '../hooks/useLocalstorage';
 
 interface ContextValue {
   product: Product[];
@@ -19,31 +19,26 @@ interface Props {
 }
 
 export default function ProductInventory({ children }: Props) {
-  const [product, setProduct] = useLocalStorageState<Product[]>(
-    products,
-    "products"
-  );
+  const [product, setProduct] = useLocalStorageState<Product[]>(products, 'products');
 
   const clearProduct = () => {
     setProduct([]);
   };
 
   function addProduct(product: Product) {
-    setProduct((prevProduct) => [...prevProduct, product]);
+    setProduct(prevProduct => [...prevProduct, product]);
   }
 
   function removeProduct(product: Product) {
-    setProduct((prevProduct) => {
-      const updatedProduct = prevProduct.filter(
-        (item) => item.id !== product.id
-      );
+    setProduct(prevProduct => {
+      const updatedProduct = prevProduct.filter(item => item.id !== product.id);
       return updatedProduct;
     });
   }
 
   const updateProduct = (id: string, newData: Product) => {
-    setProduct((prevState) => {
-      const index = prevState.findIndex((x) => x.id === id);
+    setProduct(prevState => {
+      const index = prevState.findIndex(x => x.id === id);
       if (index === -1) return prevState;
       const updatedItem = {
         ...prevState[index],

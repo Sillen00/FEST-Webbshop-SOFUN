@@ -1,13 +1,7 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from "@mui/material";
-import { useState } from "react";
-import { useProduct } from "../contexts/ProductContext";
-import { Product } from "../data";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import { useState } from 'react';
+import { useProduct } from '../contexts/ProductContext';
+import { Product } from '../data';
 
 export default function DeleteDialog(props: Product) {
   const { removeProduct } = useProduct();
@@ -24,26 +18,22 @@ export default function DeleteDialog(props: Product) {
 
   return (
     <>
-      <Button
-        data-cy="admin-remove-product"
-        color="error"
-        onClick={handleClickOpen}
-      >
+      <Button data-cy='admin-remove-product' color='error' onClick={handleClickOpen}>
         Radera
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             Du kan inte ångra dig efteråt om du tar bort produkten 😨
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleClose} color='secondary'>
             Avbryt
           </Button>
           <Button
-            color="error"
-            data-cy="confirm-delete-button"
+            color='error'
+            data-cy='confirm-delete-button'
             onClick={() => {
               removeProduct(props);
               handleClose();
