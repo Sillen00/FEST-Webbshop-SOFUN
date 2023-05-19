@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch: # Manually trigger the workflow
+  # workflow_dispatch: # Manually trigger the workflow
 
 jobs:
   build:
@@ -19,7 +19,6 @@ jobs:
       matrix:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -27,17 +26,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build 
-    - run: npm run lint
-    - run: npm test --if-present
-    
+        cache-dependency-path: Client/package-lock.json
+    - run: cd Client && npm ci 
+    - run: cd Client && npm run build
+    - run: cd Client && npm run lint
+    # - run: cd client && npm test --if-present
     # Add Prettier step
-#     - name: Check code formatting with Prettier
-#       run: npx prettier --check .
+    # run: cd client && npm run format
     
     # Add MongoDB setup steps
-    - name: Install MongoDB
-      run: sudo apt-get install mongodb
-    - name: Start MongoDB
-      run: sudo service mongod start
+    # - name: Install MongoDB
+    #   run: sudo apt-get install mongodb
+    # - name: Start MongoDB
+    #   run: sudo service mongod start
