@@ -6,9 +6,11 @@
 
 SO-FUN webshop: Where Fun and Sofas Unite!
 
-For this school assignment, we have developed a dynamic webshop specializing in the sale of couches in various sizes. Our user-friendly platform allows users to easily register, log in, and place orders. Notably, our webshop includes an admin interface with enhanced accessibility, granting administrators the ability to create, modify, and remove products as needed. Additionally, our website features a real-time stock counter, keeping customers informed about the availability of our products for sale.
+For this school assignment, we have developed a dynamic webshop specializing in the sale of couches in various sizes. Our platform is built using React, MaterialUI, TypeScript, Express and Mongoose. Our user-friendly platform allows users to easily register, log in, and place orders. Notably, our webshop includes an admin interface with enhanced accessibility, granting administrators the ability to create, modify, and remove products as needed. Additionally, our website features a real-time stock counter, keeping customers informed about the availability of our products for sale.
 
 User data is securely stored in a separate resource with encrypted passwords, while all website content is efficiently managed and stored in a MongoDB database, ensuring accessibility and data integrity at all times, even for non-logged-in users.
+
+Note that the site is built in Swedish.
 
 Året är 1992, Waynes World och Charlie Moongår på biograferna. Janne Kemi är en finsk ultramiljonär som bestämt sig för att satsa på en ny e-handeln. Han vill investera i nya hemsidor. Han har anlitat er för att ta fram dessa sidor. Han har vissa specifika krav från sin IT avdelning som han bifogat som en kravspecifikation. Förutom det har ni fria händer att ta fram en grym idé och tjäna sjuka pengar (åt Janne).
 
