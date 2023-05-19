@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext } from "react";
-import { CartItem } from "../data";
-import { useLocalStorageState } from "../hooks/useLocalstorage";
+import { createContext, ReactNode, useContext } from 'react';
+import { CartItem } from '../data';
+import { useLocalStorageState } from '../hooks/useLocalstorage';
 
 interface ContextValue {
   cart: CartItem[];
@@ -18,16 +18,14 @@ interface Props {
 }
 
 export default function ShoppingCart({ children }: Props) {
-  const [cart, setCart] = useLocalStorageState<CartItem[]>([], "cart");
+  const [cart, setCart] = useLocalStorageState<CartItem[]>([], 'cart');
 
   const clearCart = () => {
     setCart([]);
   };
 
   const addProduct = (product: CartItem) => {
-    const existingProductIndex = cart.findIndex(
-      (item) => item.id === product.id
-    );
+    const existingProductIndex = cart.findIndex(item => item.id === product.id);
 
     if (existingProductIndex === -1) {
       setCart([...cart, { ...product, quantity: 1 }]);
@@ -39,10 +37,8 @@ export default function ShoppingCart({ children }: Props) {
   };
 
   function removeProduct(product: CartItem) {
-    setCart((prevCart) => {
-      const existingProductIndex = prevCart.findIndex(
-        (item) => item.id === product.id
-      );
+    setCart(prevCart => {
+      const existingProductIndex = prevCart.findIndex(item => item.id === product.id);
 
       if (existingProductIndex === -1) {
         return prevCart;

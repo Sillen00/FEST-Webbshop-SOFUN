@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { CartItem } from "../data";
+import { createContext, ReactNode, useContext, useState } from 'react';
+import { CartItem } from '../data';
 
 interface Customer {
   name: string;
@@ -30,11 +30,11 @@ export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order>({
     products: [],
     customer: {
-      name: "",
-      email: "",
-      city: "",
-      phone: "",
-      street: "",
+      name: '',
+      email: '',
+      city: '',
+      phone: '',
+      street: '',
       zipcode: 0,
     },
   });

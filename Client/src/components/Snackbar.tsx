@@ -1,8 +1,8 @@
-import * as Icon from "@mui/icons-material";
+import * as Icon from '@mui/icons-material';
 
-import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from "@mui/material";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from '@mui/material';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface SnackbarProps {
   open: boolean;
@@ -18,97 +18,97 @@ export default function Snackbar({ open, handleClose, lastAddedProduct }: Snackb
   return (
     <>
       <MuiSnackbar
-        data-cy="added-to-cart-toast"
+        data-cy='added-to-cart-toast'
         open={open}
         onClose={handleClose}
         autoHideDuration={3000}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
       >
         {lastAddedProduct && (
           <Paper
             elevation={4}
             sx={{
-              backgroundColor: "primary",
-              borderColor: "grey.300",
+              backgroundColor: 'primary',
+              borderColor: 'grey.300',
               borderWidth: 1,
-              borderStyle: "solid",
-              width: "18rem",
-              padding: "1rem",
-              borderRadius: "3px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              position: "relative",
+              borderStyle: 'solid',
+              width: '18rem',
+              padding: '1rem',
+              borderRadius: '3px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
             }}
           >
             <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              sx={{ position: "absolute", top: 0, right: 0 }}
+              size='small'
+              aria-label='close'
+              color='inherit'
+              sx={{ position: 'absolute', top: 0, right: 0 }}
               onClick={handleClose}
             >
-              <Icon.Close fontSize="small" />
+              <Icon.Close fontSize='small' />
             </IconButton>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "1rem",
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '1rem',
               }}
             >
-              <Icon.CheckCircle sx={{ color: "green", fontSize: "1rem", marginRight: "0.5rem" }} />
-              <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
+              <Icon.CheckCircle sx={{ color: 'green', fontSize: '1rem', marginRight: '0.5rem' }} />
+              <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>
                 Har lagts till i kundvagnen
               </Typography>
             </Box>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                marginBottom: "1rem",
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+                marginBottom: '1rem',
               }}
             >
-              <Box sx={{ marginRight: "1rem" }}>
+              <Box sx={{ marginRight: '1rem' }}>
                 <img
                   src={lastAddedProduct.image}
-                  alt="product"
+                  alt='product'
                   style={{
-                    width: "70px",
+                    width: '70px',
                   }}
                 />
               </Box>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                   flexGrow: 1,
                 }}
               >
-                <Typography variant="subtitle1">{lastAddedProduct.title}</Typography>
-                <Typography variant="subtitle1">
-                  {lastAddedProduct.price.toLocaleString("sv-SE")} SEK
+                <Typography variant='subtitle1'>{lastAddedProduct.title}</Typography>
+                <Typography variant='subtitle1'>
+                  {lastAddedProduct.price.toLocaleString('sv-SE')} SEK
                 </Typography>
               </Box>
             </Box>
-            <NavLink to="./checkout">
+            <NavLink to='./checkout'>
               <Button
-                variant="contained"
+                variant='contained'
                 sx={{
-                  backgroundColor: "secondary.main",
-                  color: "secondary.contrastText",
-                  "&:hover": {
-                    backgroundColor: "secondary.light",
+                  backgroundColor: 'secondary.main',
+                  color: 'secondary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'secondary.light',
                   },
-                  alignSelf: "flex-end",
+                  alignSelf: 'flex-end',
                 }}
               >
                 Gå till kassan
