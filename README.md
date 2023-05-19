@@ -1,15 +1,16 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://github.com/Sillen00/FEST---Webbshop)
 
-# <span style="color:dodgerblue">Webbshop With Server Side </span>
+# <span style="color:dodgerblue">Webbshop "SO-FUN" With Server Side </span>
 
 ## <span style="color:dodgerblue"> Description </span>
 
-<!-- Skriv en beskrivning till projektet. Texten nedan är en text till tidigare express projectet, för insperation :) -->
+SO-FUN webshop: Where Fun and Sofas Unite!
 
-<!-- In this school assignment, we have created a user-based platform where a user has the ability to register, log in, and create content.
+For this school assignment, we have developed a dynamic webshop specializing in the sale of couches in various sizes. Our user-friendly platform allows users to easily register, log in, and place orders. Notably, our webshop includes an admin interface with enhanced accessibility, granting administrators the ability to create, modify, and remove products as needed. Additionally, our website features a real-time stock counter, keeping customers informed about the availability of our products for sale.
 
-User data is based on a separate resource, where the password is encrypted. All content that is created, modified, or removed is saved to a MongoDB database.
-All content is presented to the user, even when they are not logged in. -->
+User data is securely stored in a separate resource with encrypted passwords, while all website content is efficiently managed and stored in a MongoDB database, ensuring accessibility and data integrity at all times, even for non-logged-in users.
+
+Året är 1992, Waynes World och Charlie Moongår på biograferna. Janne Kemi är en finsk ultramiljonär som bestämt sig för att satsa på en ny e-handeln. Han vill investera i nya hemsidor. Han har anlitat er för att ta fram dessa sidor.Han har vissa specifika krav från sin IT avdelning som han bifogat som en kravspecifikation. Förutom det har ni fria händer att ta fram en grym idé och tjäna sjuka pengar (åt Janne).
 
 ## <span style="color:dodgerblue"> Setup Project </span>
 
@@ -34,24 +35,29 @@ Edvin Djulic [GitHub](https://github.com/Edvindjulic) <br>
 Simon Bengtsson [GitHub](https://github.com/Sillen00)<br>
 Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 
----
+**Krav för godkänt**
 
-**Krav för godkänt:**
+- [ ] Alla sidor skall vara responsiva. (G)
+- [ ] Arbetet ska implementeras med en React frontend och en Express backend. (G)
+- [ ] Express backenden ska ha validering på samtliga endpoints. (G)
+- [ ] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G)
+- [ ] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
+- [ ] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G)
+- [ ] Man ska kunna logga in som administratör i systemet (G)•Inga Lösenord får sparas i klartext i databasen (G)
+- [ ] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
+- [ ] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
+- [ ] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
+- [ ] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
+- [ ] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
+- [ ] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten (G)
+- [ ] En besökare som gör en beställning ska få möjligheten att registrera sig samt logga in och måste vara inloggad som kund innan beställningen skapas (G)
+- [ ] Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält (G)
 
-- [ ] Git & GitHub har använts
-- [ ] Projektmappen innehåller en README.md fil (läs ovan för mer info)
-- [ ] Uppgiften lämnas in i tid!
-- [ ] Det ska finnas minst två stycken resurser (users & posts)
-- [ ] Det ska gå att registrera sig, logga in och skapa innehåll som är kopplat till inloggad användare.
-- [ ] Endast den inloggade användaren får lov att utföra C_UD actions på sitt innehåll.
-- [ ] Allt innehåll ska sparas i en MongoDB databas.
+**Krav för välgodkänt**
 
-_Gjorda krav ska kryssar i_
-
-**Krav för väl godkänt:**
-
-- [ ] Alla punkter för godkänt är uppfyllda
-- [ ] Det ska finnas en adminroll i systemet där man som inloggad admin har rättigheten att utföra CRUD operationer på allt innehåll.
-- [ ] Admins ska ha tillgång till ett gränssnitt som listar alla användare och deras roller. En admin ska från gränssnittet kunna ta bort användare eller ändra dess roll.
-
-_Gjorda krav ska kryssar i_
+- [ ] Ett CI flöde ska sättas upp (i början av projektet) som kontrollerar prettier, eslint, typescript & tester i varje PR, tester kan lånas ifrån tidigare uppgifter (VG)
+- [ ] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte (VG)
+- [ ] Administratörer ska kunna redigera produkt inklusive vilka kategorier den tillhör (VG)
+- [ ] Administratörer ska kunna lägga till och ta bort produkter (VG)
+- [ ] Backendapplikationen ska ha en fungerande global felhantering (VG)
+- [ ] En administratör ska kunna uppgradera en användare till administratör (VG)•Administratörer ska kunna markera beställningar som skickade (VG)
