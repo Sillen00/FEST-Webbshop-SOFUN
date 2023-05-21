@@ -53,7 +53,7 @@ export default function Products() {
             flexDirection: 'column',
             alignItems: 'center',
             margin: '1rem',
-            padding: '2rem',
+            // padding: '2rem',
             maxHeight: matches ? '29.6rem' : 'none',
             justifyContent: 'center',
             height: '100%',
@@ -67,7 +67,7 @@ export default function Products() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '5rem',
+                height: '20rem',
               }}
             >
               <Box
@@ -83,74 +83,69 @@ export default function Products() {
                 <img src={product.image} alt={product.title} width='100%' />
               </Box>
             </Box>
-
+          </Link>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'start',
-                marginTop: '2rem',
+                width: '100%',
+                margin: '1rem',
               }}
             >
-              <Box sx={{ paddingTop: '0.2rem' }}>
-                <Typography variant='subtitle2'>2024</Typography>
-              </Box>
               <Box>
                 <Typography variant='h5' data-cy='product-title'>
                   {product.title}
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  marginBottom: '0.5rem',
-                }}
-              >
+              <Box>
                 <Typography variant='subtitle2' data-cy='product-price'>
                   Pris {product.price} kr
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  maxWidth: '30rem',
-                  height: '12rem',
-                }}
-              >
-                <Typography variant='body1' data-cy='product-description'>
-                  {product.description}
-                </Typography>
-              </Box>
             </Box>
-          </Link>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              padding: '0.5rem',
-            }}
-          >
-            <Button
-              variant='contained'
-              color='secondary'
+
+            <Box
               sx={{
-                backgroundColor: 'secondary.main',
-                color: 'secondary.contrastText',
-                '&:hover': {
-                  backgroundColor: 'secondary.light',
-                },
-              }}
-              data-cy='product-buy-button'
-              onClick={() => {
-                addProduct(product as CartItem);
-                setSnackbarOpen(true);
-                setLastAddedProduct({
-                  title: product.title,
-                  price: product.price,
-                  image: product.image,
-                });
+                display: 'flex',
+                justifyContent: 'flex-end',
+                margin: '1rem',
+                marginTop: '2rem',
+                width: '100%',
+                height: '2rem',
               }}
             >
-              Lägg till i kundvagnen
-            </Button>
+              <Button
+                variant='contained'
+                color='secondary'
+                sx={{
+                  backgroundColor: 'secondary.main',
+                  color: 'secondary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'secondary.light',
+                  },
+                }}
+                data-cy='product-buy-button'
+                onClick={() => {
+                  addProduct(product as CartItem);
+                  setSnackbarOpen(true);
+                  setLastAddedProduct({
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                  });
+                }}
+              >
+                Lägg i kundvagnen
+              </Button>
+            </Box>
           </Box>
         </Card>
       ))}
