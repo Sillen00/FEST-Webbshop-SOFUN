@@ -1,3 +1,4 @@
+import cookieSession from 'cookie-session';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { ZodError } from 'zod';
@@ -11,15 +12,15 @@ export const app = express();
 app.use(express.json());
 
 // COOKIE SESSION --------------------------------------------------------------------------------------------------------------------
-// app.use(
-//   cookieSession({
-//     name: 'login',
-//     secure: false,
-//     httpOnly: true,
-//     secret: 'ashdjasdk12351j',
-//     maxAge: 1000 * 60 * 20,
-//   })
-// );
+app.use(
+  cookieSession({
+    name: 'login',
+    secure: false,
+    httpOnly: true,
+    secret: 'ashdjasdk12351j',
+    maxAge: 1000 * 60 * 20,
+  })
+);
 
 // ROUTES ----------------------------------------------------------------------------------------------------------------------------
 
