@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Product } from '../data/index';
 
-
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
@@ -26,7 +25,6 @@ export const defaultValues: AdminValues = {
   price: 0,
 };
 
-
 type AdminFormProps = {
   product?: Product;
   isNewProduct: boolean;
@@ -44,12 +42,11 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
     image: product?.image || defaultValues.image,
     price: product?.price || defaultValues.price,
   };
-  
+
   const formik = useFormik<AdminValues>({
     initialValues,
     validationSchema: AdminSchema,
-    onSubmit: async (values) => {
-    
+    onSubmit: async values => {
       const product = {
         categoryIDs: [],
         title: values.title,
@@ -60,7 +57,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
         imageURL: 'placeholder',
         isArchived: false,
       };
-    
+
       try {
         const response = await fetch('/api/products', {
           method: 'POST',
@@ -69,9 +66,9 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
           },
           body: JSON.stringify(product),
         });
-    
+
         console.log('Response status:', response.status);
-    
+
         if (response.ok) {
           const createdProduct = await response.json();
           console.log('Product created successfully:', createdProduct);
@@ -83,9 +80,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
         console.error('Error creating product:', error);
       }
     },
-    
   });
-  
 
   return (
     <>
