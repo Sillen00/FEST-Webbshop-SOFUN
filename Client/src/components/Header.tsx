@@ -59,7 +59,7 @@ export default function Header() {
               <TextField id='standard-error' label='Användarnamn' variant='standard' />
             </Box>
             <Box>
-              <TextField id='standard-error' label='Användarnamn' variant='standard' />
+              <TextField id='standard-error' label='Lösenord' variant='standard' />
             </Box>
 
             <Button sx={{ width: '100%', marginTop: '1em' }} variant='contained' color='secondary'>
@@ -68,7 +68,7 @@ export default function Header() {
               </NavLink>
             </Button>
 
-            <Box sx={{ border: '1px solid gray' }}></Box>
+            <Box sx={{ border: '1px solid gray', marginTop: "2em" }}></Box>
 
             <Typography id='modal-modal-description' sx={{ mt: 2 }}>
               Har du inte ett konto?
@@ -101,7 +101,7 @@ export default function Header() {
               <TextField id='standard-error' label='Användarnamn' variant='standard' />
             </Box>
             <Box>
-              <TextField id='standard-error' label='Användarnamn' variant='standard' />
+              <TextField id='standard-error' label='Lösenord' variant='standard' />
             </Box>
 
             <Button sx={{ width: '100%', marginTop: '1em' }} variant='contained' color='secondary'>
@@ -110,7 +110,7 @@ export default function Header() {
               </NavLink>
             </Button>
 
-            <Box sx={{ border: '1px solid gray' }}></Box>
+            <Box sx={{ border: '1px solid gray', marginTop: "2em" }}></Box>
 
             <Typography id='modal-modal-description' sx={{ mt: 2 }}>
               Har redan ett konto?
