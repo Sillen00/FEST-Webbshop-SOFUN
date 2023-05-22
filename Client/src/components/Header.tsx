@@ -9,6 +9,7 @@ import Logo from './Logo';
 
 export default function Header() {
   const { cart } = useCart();
+  console.log('hej');
 
   return (
     <Box
