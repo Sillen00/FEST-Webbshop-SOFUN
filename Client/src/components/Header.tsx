@@ -1,5 +1,6 @@
 import * as Icon from '@mui/icons-material';
-import { Box, IconButton, Tooltip, useTheme } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 
 import { NavLink } from 'react-router-dom';
@@ -8,20 +9,19 @@ import Logo from './Logo';
 
 export default function Header() {
   const { cart } = useCart();
-  const theme = useTheme();
 
   return (
     <Box
       sx={{
-        backgroundColor: 'primary.main',
+        backgroundColor: '#fffaf5',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 'auto',
+        height: '9rem',
         textDecoration: 'none',
-        padding: '1rem',
+        padding: '1rem 5rem 1rem 5rem',
       }}
     >
       <Box
@@ -29,8 +29,7 @@ export default function Header() {
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
+          justifyContent: 'space-between',
           textAlign: 'center',
           '& a': {
             color: 'black',
@@ -45,15 +44,13 @@ export default function Header() {
           }}
         >
           <NavLink to='./'>
-            <Logo theme={theme} width={200} height={50} />
+            <Logo />
           </NavLink>
         </Box>
         <Box
           sx={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
+            display: 'flex',
             gap: '2rem',
             padding: '0 1rem',
             textDecoration: 'none',
@@ -68,12 +65,12 @@ export default function Header() {
             },
           }}
         >
-          <NavLink to='./'>Start</NavLink>
-          <NavLink to='./checkout'>Kassa</NavLink>
           <NavLink to='./admin' data-cy='admin-link'>
-            Admin
+            <IconButton aria-label='admin' color='secondary'>
+              <AccountCircleIcon sx={{ fontSize: '1.9rem' }} />
+            </IconButton>
           </NavLink>
-          <Box>
+          <Box sx={{ marginLeft: 'auto' }}>
             <Tooltip title='Kundvagn'>
               <NavLink to='./checkout'>
                 <IconButton aria-label='cart' data-cy='cart-link' color='secondary'>
@@ -82,7 +79,7 @@ export default function Header() {
                     color='info'
                     data-cy='cart-items-count-badge'
                   >
-                    <Icon.ShoppingCart />
+                    <Icon.ShoppingCart sx={{ fontSize: '1.9rem' }} />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
