@@ -13,3 +13,7 @@ content-type: application/json
   "imageURL": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcRRv9ICxXjK-LVFv-lKRId6gB45BFoNCLsZ4dk7bZpYGblPLPG-9aYss0Z0wt2PmWDb",
   "isArchived": false
 }
+
+### 
+# @name deleteProduct
+DELETE http://localhost:3000/api/products/646bdd54297a44c534e558e2
