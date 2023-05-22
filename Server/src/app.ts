@@ -25,9 +25,9 @@ app.use(
 // ROUTES ----------------------------------------------------------------------------------------------------------------------------
 
 app.use('/api/users', userRouter);
-app.use('/api/products', productRouter);
-app.use('/api/orders', orderRouter);
-app.use('/api/categories', categoryRouter);
+app.use(productRouter);
+app.use(orderRouter);
+app.use(categoryRouter);
 
 // ERROR HANDLING --------------------------------------------------------------------------------------------------------------------
 app.use((req, res, next) => {
