@@ -15,10 +15,6 @@ export default function Header() {
 
   const isLoggedIn = false; // or false, depending on the user's login status
 
-  // const [register, setRegister] = useState(true);
-  // const handleRegisterOpen = () => setRegister(true);
-  // const handleRegisterClose = () => setRegister(false);
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

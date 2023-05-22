@@ -1,12 +1,15 @@
 import { Box } from '@mui/material';
 
 import { Button, TextField, Typography } from '@mui/material';
+import axios from 'axios';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 function LoginRegisterModal() {
   const [register, setRegister] = useState(true);
+  const navigate = useNavigate();
 
   interface FormValues {
     username: string;
@@ -14,42 +17,43 @@ function LoginRegisterModal() {
   }
 
   const handleLoginSubmit = (values: FormValues) => {
-    // axios
-    //   .post(
-    //     'http://localhost:3000/api/users/login',
-    //     {
-    //       username: values.username,
-    //       password: values.password,
-    //     },
-    //     { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-    //   )
-    //   .then(function (response) {
-    //     if (response) {
-    //       navigate('/feed');
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     setIsNotValid(true);
-    //   });
+    axios
+      .post(
+        'http://localhost:3000/api/users/login',
+        {
+          username: values.username,
+          password: values.password,
+        },
+        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+      )
+      .then(function (response) {
+        if (response) {
+          navigate('/checkout');
+        }
+      })
+      .catch(function (error) {
+        // setIsNotValid(true);
+        console.log(error);
+      });
   };
   const handleRegisterSubmit = (values: FormValues) => {
-    // axios
-    //   .post(
-    //     'http://localhost:3000/api/users/login',
-    //     {
-    //       username: values.username,
-    //       password: values.password,
-    //     },
-    //     { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-    //   )
-    //   .then(function (response) {
-    //     if (response) {
-    //       navigate('/feed');
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     setIsNotValid(true);
-    //   });
+    axios
+      .post(
+        'http://localhost:3000/api/users/signup',
+        {
+          username: values.username,
+          password: values.password,
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      .then(function (response) {
+        console.log(response);
+        navigate('/checkout');
+      })
+      .catch(function (error) {
+        console.log(error);
+        // setUsernameTakenError(error.response.data);
+      });
   };
 
   //Form validation with Yup and Formik ----------------------------------------------------------
@@ -71,7 +75,7 @@ function LoginRegisterModal() {
     validationSchema: schemaLogin,
     onSubmit: handleLoginSubmit,
   });
-  
+
   const formikRegister = useFormik({
     initialValues: {
       username: '',
@@ -175,7 +179,12 @@ function LoginRegisterModal() {
               />
             </Box>
 
-            <Button sx={{ width: '100%', marginTop: '1em' }} variant='contained' color='secondary'>
+            <Button
+              type='submit'
+              sx={{ width: '100%', marginTop: '1em' }}
+              variant='contained'
+              color='secondary'
+            >
               Registrera dig
             </Button>
           </form>
