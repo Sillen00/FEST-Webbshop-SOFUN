@@ -2,17 +2,15 @@ import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useProduct } from '../contexts/ProductContext';
-import { Product, generateId } from '../data';
+import { Product } from '../data/index';
+
 
 const AdminSchema = Yup.object().shape({
-  id: Yup.string(),
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
   image: Yup.string().required('Ange bild').url('Bilden måste vara en giltig URL'),
-  background: Yup.string(),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -22,13 +20,12 @@ const AdminSchema = Yup.object().shape({
 type AdminValues = Yup.InferType<typeof AdminSchema>;
 
 export const defaultValues: AdminValues = {
-  id: '',
   title: '',
   description: '',
   image: '',
-  background: '',
   price: 0,
 };
+
 
 type AdminFormProps = {
   product?: Product;
@@ -37,46 +34,59 @@ type AdminFormProps = {
 
 export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
   const matches = useMediaQuery('(min-width:500px)');
-  const navigate = useNavigate();
-  const { addProduct, updateProduct } = useProduct();
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const initialValues: AdminValues = {
-    id: product?.id || defaultValues.id,
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
     image: product?.image || defaultValues.image,
-    background: product?.background || defaultValues.background,
     price: product?.price || defaultValues.price,
   };
-
+  
   const formik = useFormik<AdminValues>({
     initialValues,
     validationSchema: AdminSchema,
-    onSubmit: values => {
-      let uniqueID = values.id;
-      if (values.id === '') {
-        uniqueID = generateId();
-      }
-      const customer = {
-        id: uniqueID,
+    onSubmit: async (values) => {
+    
+      const product = {
+        categoryIDs: [],
         title: values.title,
         description: values.description,
-        image: values.image,
-        background: values.background,
+        imageID: 'hardcoded-image-id',
         price: values.price,
+        stockLevel: 100,
+        imageURL: 'placeholder',
+        isArchived: false,
       };
-      if (isNewProduct) {
-        addProduct(customer as Product);
+    
+      try {
+        const response = await fetch('/api/products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(product),
+        });
+    
+        console.log('Response status:', response.status);
+    
+        if (response.ok) {
+          const createdProduct = await response.json();
+          console.log('Product created successfully:', createdProduct);
+        } else {
+          const message = await response.text();
+          throw new Error(message);
+        }
+      } catch (error) {
+        console.error('Error creating product:', error);
       }
-      if (!isNewProduct) {
-        updateProduct(customer.id as string, customer as Product);
-      }
-      navigate('/admin');
     },
+    
   });
+  
+
   return (
     <>
       <Box
@@ -138,22 +148,8 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
         />
         <TextField
           fullWidth
-          id='background'
-          type='background'
-          name='background'
-          label='Bakgrundsbild-URL'
-          value={formik.values.background}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.background && Boolean(formik.errors.background)}
-          helperText={formik.touched.background && formik.errors.background}
-          inputProps={{ 'data-cy': 'customer-name' }}
-          FormHelperTextProps={{ 'data-cy': 'customer-name-error' } as any}
-        />
-        <TextField
-          fullWidth
           id='price'
-          type='price'
+          type='number'
           name='price'
           label='Pris'
           value={formik.values.price}
@@ -184,7 +180,6 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
           }}
         >
           <Card
-            key={formik.values.id}
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -197,7 +192,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
               width: matches ? '22rem' : '100%',
             }}
           >
-            <Link to={'/product/' + formik.values.id}>
+            <Link to={'/product/'}>
               <Box
                 sx={{
                   display: 'flex',
