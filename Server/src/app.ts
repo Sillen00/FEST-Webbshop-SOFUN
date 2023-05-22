@@ -23,7 +23,7 @@ app.use(express.json());
 
 // ROUTES ----------------------------------------------------------------------------------------------------------------------------
 
-app.use('/api/users', userRouter);
+app.use(userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/categories', categoryRouter);
