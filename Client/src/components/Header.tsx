@@ -57,16 +57,16 @@ export default function Header() {
             fontFamily: 'Oswald, sans-serif',
             fontSize: '1.3rem',
             '& a': {
-              color: 'primary.contrastText',
+              color: 'secondary.contrastText',
               textDecoration: 'none',
               '&:hover': {
-                color: 'secondary.light',
+                color: 'secondary.contrastText',
               },
             },
           }}
         >
           <NavLink to='./admin' data-cy='admin-link'>
-            <IconButton aria-label='admin' color='secondary'>
+            <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
               <AccountCircleIcon sx={{ fontSize: '1.9rem' }} />
             </IconButton>
           </NavLink>
@@ -80,7 +80,6 @@ export default function Header() {
                 >
                   <StyledBadge
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
-                    color='info'
                     data-cy='cart-items-count-badge'
                   >
                     <Icon.ShoppingCart sx={{ fontSize: '1.9rem' }} />
