@@ -22,7 +22,7 @@ export default function Header() {
         alignItems: 'center',
         height: '9rem',
         textDecoration: 'none',
-        padding: '1rem 10rem 1rem 10rem',
+        padding: '1rem 5rem 1rem 5rem',
       }}
     >
       <Box
@@ -45,7 +45,7 @@ export default function Header() {
           }}
         >
           <NavLink to='./'>
-            <Logo width={200} height={50} />
+            <Logo />
           </NavLink>
         </Box>
         <Box
