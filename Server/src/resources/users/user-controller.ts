@@ -6,23 +6,22 @@
 
 import { Request, Response } from 'express';
 import { UserModel } from './user-model';
+import { z } from 'zod';
 
-// import { boolean, object, string } from 'zup';
+const UserCreateSchema = z.object({
+    username: z.string().nonempty('Username is required'),
+    password: z.string().nonempty('Password is required'),
+    isAdmin: z.boolean().optional(),
+  });
 
-export const UserCreateSchema = object({
-  username: string().required(),
-  password: string().required(),
-  isAdmin: boolean().notRequired(),
-})
-  .noUnknown()
-  .strict();
+// ENDPOINTS ----------------------------------------------------------------------
 
 export async function getAllUsers(req: Request, res: Response) {
   console.log('Placeholder för getAllUsers');
 }
 
 export async function signUpUser(req: Request, res: Response) {
-  const userBody = await UserCreateSchema.validate(req.body);
+  const userBody = await UserCreateSchema.parse(req.body);
   const existingUser = await UserModel.findOne({ username: userBody.username });
   if (existingUser) {
     return res.status(409).json('Username is already taken');
