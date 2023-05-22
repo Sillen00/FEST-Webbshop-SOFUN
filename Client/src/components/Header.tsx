@@ -76,7 +76,11 @@ export default function Header() {
           <Box>
             <Tooltip title='Kundvagn'>
               <NavLink to='./checkout'>
-                <IconButton aria-label='cart' data-cy='cart-link' color='secondary'>
+                <IconButton
+                  aria-label='cart'
+                  data-cy='cart-link'
+                  sx={{ color: 'secondary.contrastText' }}
+                >
                   <StyledBadge
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
                     color='info'

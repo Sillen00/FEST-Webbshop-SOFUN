@@ -4,20 +4,20 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#E8F1F2',
-      light: 'rgb(236, 243, 244)',
-      dark: 'rgb(162, 168, 169)',
+      main: '#FFFFFF',
+      // light: 'rgb(236, 243, 244)',
+      // dark: 'rgb(162, 168, 169)',
       contrastText: '#090809',
     },
     secondary: {
-      main: '#13293D',
-      light: 'rgb(66, 83, 99)',
-      dark: 'rgb(13, 28, 42)',
-      contrastText: '#ffffff',
+      main: '#F5F5F5',
+      // light: 'rgb(66, 83, 99)',
+      dark: '#000000',
+      contrastText: '#090809',
     },
     background: {
-      paper: '#f5f5f5',
-      default: '#FFFFFF',
+      paper: '#00000',
+      default: '#090809',
     },
     info: {
       main: '#1B98E0',
@@ -33,23 +33,23 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Oswald, sans-serif', 'Roboto'].join(','),
+    fontFamily: ['Ariata Display'].join(','),
     h5: {
       fontWeight: 300,
-      fontFamily: 'Oswald',
+      fontFamily: 'Ariata Display',
     },
     h4: {
-      fontFamily: 'Oswald',
+      fontFamily: 'Ariata Display',
     },
     body1: {
       fontSize: '1rem',
       fontWeight: 100,
-      fontFamily: 'Roboto',
+      fontFamily: 'Ariata Display',
     },
     body2: {
       fontSize: '1.2rem',
       fontWeight: 100,
-      fontFamily: 'Roboto',
+      fontFamily: 'Ariata Display',
     },
   },
 });

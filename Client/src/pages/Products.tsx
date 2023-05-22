@@ -38,7 +38,7 @@ export default function Products() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
-        backgroundColor: 'background.default',
+        backgroundColor: 'primary.main',
         '& a': {
           color: 'black',
           textDecoration: 'none',
@@ -58,6 +58,7 @@ export default function Products() {
             justifyContent: 'center',
             height: '100%',
             width: matches ? '22rem' : '100%',
+            backgroundColor: 'primary.main',
           }}
           data-cy='product'
         >
@@ -130,9 +131,9 @@ export default function Products() {
           >
             <Button
               variant='contained'
-              color='secondary'
+              color='primary'
               sx={{
-                backgroundColor: 'secondary.main',
+                backgroundColor: 'primary.main',
                 color: 'secondary.contrastText',
                 '&:hover': {
                   backgroundColor: 'secondary.light',
