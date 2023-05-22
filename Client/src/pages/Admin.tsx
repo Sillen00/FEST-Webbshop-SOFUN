@@ -39,7 +39,17 @@ export default function Admin() {
         <Button
           data-cy='admin-add-product'
           variant='contained'
-          color='success'
+          color='primary'
+          sx={{
+            fontSize: '12px',
+            border: '1px solid',
+            padding: '0.5rem',
+            backgroundColor: 'primary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
           onClick={() => {
             navigate('/admin/product/new');
           }}
@@ -126,7 +136,7 @@ export default function Admin() {
                 </TableCell>
                 <TableCell align='center' sx={{ width: '16%' }}>
                   <Button
-                    color='secondary'
+                    sx={{ color: 'secondary.contrastText' }}
                     onClick={() => {
                       navigate('/admin/product/' + product.id);
                     }}

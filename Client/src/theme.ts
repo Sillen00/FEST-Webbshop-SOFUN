@@ -4,20 +4,12 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#E8F1F2',
-      light: 'rgb(236, 243, 244)',
-      dark: 'rgb(162, 168, 169)',
+      main: '#FFFFFF',
       contrastText: '#090809',
     },
     secondary: {
-      main: '#13293D',
-      light: 'rgb(66, 83, 99)',
-      dark: 'rgb(13, 28, 42)',
-      contrastText: '#ffffff',
-    },
-    background: {
-      paper: '#f5f5f5',
-      default: '#FFFFFF',
+      main: '#fffaf5',
+      contrastText: '#090809',
     },
     info: {
       main: '#1B98E0',
@@ -27,29 +19,18 @@ export const theme = createTheme({
       main: '#d32f2f',
       dark: '#c62828',
     },
-    success: {
-      main: '#2e7d32',
-      dark: '#1b5e20',
-    },
   },
   typography: {
-    fontFamily: ['Oswald, sans-serif', 'Roboto'].join(','),
-    h5: {
-      fontWeight: 300,
-      fontFamily: 'Oswald',
-    },
+    fontFamily: ['Ariata Display'].join(','),
     h4: {
-      fontFamily: 'Oswald',
+      fontWeight: 600,
+      fontFamily: 'Ariata Display',
+      fontSize: '18px',
     },
-    body1: {
-      fontSize: '1rem',
+    h5: {
+      fontFamily: 'Ariata Display',
       fontWeight: 100,
-      fontFamily: 'Roboto',
-    },
-    body2: {
-      fontSize: '1.2rem',
-      fontWeight: 100,
-      fontFamily: 'Roboto',
+      fontSize: '16px',
     },
   },
 });
