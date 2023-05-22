@@ -14,11 +14,11 @@
     "prettier": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.12",
+    "@mui/material": "^5.13.1",
     "esbuild": "^0.17.12",
     "formik": "^2.2.9",
     "prettier": "^2.8.8",
