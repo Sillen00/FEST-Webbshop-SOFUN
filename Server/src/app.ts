@@ -1,4 +1,5 @@
 import cookieSession from 'cookie-session';
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { ZodError } from 'zod';
@@ -8,23 +9,24 @@ import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
 
 export const app = express();
-// app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 // COOKIE SESSION --------------------------------------------------------------------------------------------------------------------
 app.use(
   cookieSession({
-    name: 'login',
+    name: 'session',
+    // keys: ['ashdjasdk12351j'],
     secure: false,
     httpOnly: true,
     secret: 'ashdjasdk12351j',
-    maxAge: 1000 * 60 * 20,
+    maxAge: 24 * 60 * 60 * 1000,
   })
 );
 
 // ROUTES ----------------------------------------------------------------------------------------------------------------------------
 
-app.use('/api/users', userRouter);
+app.use(userRouter);
 app.use(productRouter);
 app.use(orderRouter);
 app.use(categoryRouter);
