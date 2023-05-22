@@ -1,6 +1,6 @@
 import * as Icon from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Box, IconButton, Tooltip, useTheme } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 
 import { NavLink } from 'react-router-dom';
@@ -9,7 +9,6 @@ import Logo from './Logo';
 
 export default function Header() {
   const { cart } = useCart();
-  const theme = useTheme();
 
   return (
     <Box
