@@ -53,8 +53,8 @@ export default function Products() {
             flexDirection: 'column',
             alignItems: 'center',
             margin: '1rem',
-            // padding: '2rem',
-            maxHeight: matches ? '29.6rem' : 'none',
+
+            maxHeight: matches ? '33rem' : 'none',
             justifyContent: 'center',
             height: '100%',
             width: matches ? '22rem' : '100%',
@@ -67,21 +67,12 @@ export default function Products() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '20rem',
+                height: '27rem',
+                width: '22rem',
+                overflow: 'hidden',
               }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '250px',
-                  height: '150px',
-                  overflow: 'hidden',
-                }}
-              >
-                <img src={product.image} alt={product.title} width='100%' />
-              </Box>
+              <img src={product.image} alt={product.title} width='100%' />
             </Box>
           </Link>
           <Box
