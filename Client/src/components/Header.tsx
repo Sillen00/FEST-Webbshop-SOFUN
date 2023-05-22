@@ -75,9 +75,7 @@ export default function Header() {
         }}
       >
         <NavLink to='./'>Start</NavLink>
-        <NavLink to='./admin' data-cy='admin-link'>
-          Admin
-        </NavLink>
+        <NavLink to='./admin'>Admin</NavLink>
         <Box>
           <Tooltip title='Kundvagn'>
             {isLoggedIn ? (
