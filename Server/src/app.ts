@@ -1,6 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { ZodError } from 'zod';
+import categoryRouter from './resources/category/category-router';
+import orderRouter from './resources/orders/order-router';
+import productRouter from './resources/products/product-router';
+import userRouter from './resources/users/user-router';
 
 export const app = express();
 // app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
@@ -19,10 +23,10 @@ app.use(express.json());
 
 // ROUTES ----------------------------------------------------------------------------------------------------------------------------
 
-// app.use('/api/users', userRouter);
-// app.use('/api/products', productRouter);
-// app.use('/api/orders', orderRouter);
-// app.use('/api/categories', categoryRouter);
+app.use('/api/users', userRouter);
+app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/categories', categoryRouter);
 
 // ERROR HANDLING --------------------------------------------------------------------------------------------------------------------
 app.use((req, res, next) => {
