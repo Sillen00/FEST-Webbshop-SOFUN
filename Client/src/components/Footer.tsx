@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.contrastText,
 
         color: 'white',
         width: '100%',
@@ -17,9 +17,9 @@ export default function Footer() {
     >
       <Box sx={{ paddingLeft: '1rem' }}>
         <Typography variant='h6' sx={{ marginBottom: '1rem' }}>
-          <p>Ski-Doo</p>
-          <p>support@skidoo.se</p>
-          <p>0611-550602</p>
+          <p>SO-FUN</p>
+          <p>support@sofun.se</p>
+          <p>031-334375</p>
         </Typography>
       </Box>
     </Box>
