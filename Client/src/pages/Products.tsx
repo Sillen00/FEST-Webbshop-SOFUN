@@ -53,8 +53,8 @@ export default function Products() {
             flexDirection: 'column',
             alignItems: 'center',
             margin: '1rem',
-            padding: '2rem',
-            maxHeight: matches ? '29.6rem' : 'none',
+
+            maxHeight: matches ? '33rem' : 'none',
             justifyContent: 'center',
             height: '100%',
             width: matches ? '22rem' : '100%',
@@ -67,90 +67,76 @@ export default function Products() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '5rem',
+                height: '27rem',
+                width: '22rem',
+                overflow: 'hidden',
               }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '250px',
-                  height: '150px',
-                  overflow: 'hidden',
-                }}
-              >
-                <img src={product.image} alt={product.title} width='100%' />
+              <img src={product.image} alt={product.title} width='100%' />
+            </Box>
+          </Link>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                margin: '1rem',
+              }}
+            >
+              <Box>
+                <Typography variant='h5' data-cy='product-title'>
+                  {product.title}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant='subtitle2' data-cy='product-price'>
+                  Pris {product.price} kr
+                </Typography>
               </Box>
             </Box>
 
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'start',
+                justifyContent: 'flex-end',
+                margin: '1rem',
                 marginTop: '2rem',
+                width: '100%',
+                height: '2rem',
               }}
             >
-              <Box sx={{ paddingTop: '0.2rem' }}>
-                <Typography variant='subtitle2'>2024</Typography>
-              </Box>
-              <Box>
-                <Typography variant='h5' data-cy='product-title'>
-                  {product.title}
-                </Typography>
-              </Box>
-              <Box
+              <Button
+                variant='contained'
+                color='secondary'
                 sx={{
-                  marginBottom: '0.5rem',
+                  backgroundColor: 'secondary.main',
+                  color: 'secondary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'secondary.light',
+                  },
+                }}
+                data-cy='product-buy-button'
+                onClick={() => {
+                  addProduct(product as CartItem);
+                  setSnackbarOpen(true);
+                  setLastAddedProduct({
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                  });
                 }}
               >
-                <Typography variant='subtitle2' data-cy='product-price'>
-                  Pris {product.price} kr
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  maxWidth: '30rem',
-                  height: '12rem',
-                }}
-              >
-                <Typography variant='body1' data-cy='product-description'>
-                  {product.description}
-                </Typography>
-              </Box>
+                Lägg i kundvagnen
+              </Button>
             </Box>
-          </Link>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              padding: '0.5rem',
-            }}
-          >
-            <Button
-              variant='contained'
-              color='secondary'
-              sx={{
-                backgroundColor: 'secondary.main',
-                color: 'secondary.contrastText',
-                '&:hover': {
-                  backgroundColor: 'secondary.light',
-                },
-              }}
-              data-cy='product-buy-button'
-              onClick={() => {
-                addProduct(product as CartItem);
-                setSnackbarOpen(true);
-                setLastAddedProduct({
-                  title: product.title,
-                  price: product.price,
-                  image: product.image,
-                });
-              }}
-            >
-              Lägg till i kundvagnen
-            </Button>
           </Box>
         </Card>
       ))}
