@@ -14,7 +14,6 @@ export default function Header() {
 
   const location = useLocation();
 
-
   const { open, handleOpen, handleClose, isLoggedIn } = useUser();
 
   return (
@@ -75,14 +74,14 @@ export default function Header() {
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
             <Icon.AccountCircle
-              sx={{
-                [theme.breakpoints.down('sm')]: {
-                  fontSize: '1.7rem',
-                },
-                [theme.breakpoints.up('md')]: {
+              sx={
+                {
                   fontSize: '3rem',
-                },
-              }}
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '1.7rem',
+                  },
+                }
+              }
             />
           </IconButton>
         </NavLink>
@@ -101,12 +100,12 @@ export default function Header() {
                     data-cy='cart-items-count-badge'
                   >
                     <Icon.ShoppingCart
-                    // sx={{
-                    // fontSize: '2rem',
-                    // [theme.breakpoints.down('sm')]: {
-                    //   fontSize: '1.5rem',
-                    // },
-                    // }}
+                      sx={{
+                        fontSize: '3rem',
+                        [theme.breakpoints.down('sm')]: {
+                          fontSize: '1.7rem',
+                        },
+                      }}
                     />
                   </StyledBadge>
                 </IconButton>
