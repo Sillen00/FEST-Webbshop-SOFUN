@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 
 import { Button, TextField, Typography } from '@mui/material';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +11,7 @@ function LoginRegisterModal() {
   const [register, setRegister] = useState(true);
   const navigate = useNavigate();
 
-  const { registerUser } = useUser();
+  const { registerUser, loginUser } = useUser();
 
   interface FormValues {
     username: string;
@@ -20,24 +19,8 @@ function LoginRegisterModal() {
   }
 
   const handleLoginSubmit = (values: FormValues) => {
-    axios
-      .post(
-        'http://localhost:3000/api/users/login',
-        {
-          username: values.username,
-          password: values.password,
-        },
-        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-      )
-      .then(function (response) {
-        if (response) {
-          navigate('/checkout');
-        }
-      })
-      .catch(function (error) {
-        // setIsNotValid(true);
-        console.log(error);
-      });
+    loginUser(values);
+    navigate('/checkout');
   };
   const handleRegisterSubmit = (values: FormValues) => {
     registerUser(values);

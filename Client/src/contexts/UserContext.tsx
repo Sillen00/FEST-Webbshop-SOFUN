@@ -11,6 +11,8 @@ interface UserContextValue {
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  loginUser: (values: User) => void;
+  isLoggedIn: boolean;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -25,6 +27,9 @@ export default function UserProvider({ children }: Props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // or false, depending on the user's login status
+
+
   const registerUser = async (values: User) => {
     await axios
       .post(
@@ -37,11 +42,35 @@ export default function UserProvider({ children }: Props) {
       )
       .then(function (response) {
         handleClose();
+        setIsLoggedIn(true);
         console.log(response);
-      })
-      .catch(function (error) {
+    })
+    .catch(function (error) {
         console.log(error);
         // setUsernameTakenError(error.response.data);
+    });
+};
+
+const loginUser = async (values: User) => {
+    axios
+    .post(
+        'http://localhost:3000/api/users/login',
+        {
+            username: values.username,
+            password: values.password,
+        },
+        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+        )
+        .then(function (response) {
+            if (response) {
+                handleClose();
+                setIsLoggedIn(true);
+                console.log(response);
+            }
+      })
+      .catch(function (error) {
+        // setIsNotValid(true);
+        console.log(error);
       });
   };
 
@@ -52,6 +81,8 @@ export default function UserProvider({ children }: Props) {
         open,
         handleOpen,
         handleClose,
+        loginUser,
+        isLoggedIn,
       }}
     >
       {children}

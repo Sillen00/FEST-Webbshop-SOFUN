@@ -14,13 +14,8 @@ export default function Header() {
 
   const location = useLocation();
 
-  const isLoggedIn = false; // or false, depending on the user's login status
 
-  const { open, handleOpen, handleClose } = useUser();
-
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const { open, handleOpen, handleClose, isLoggedIn } = useUser();
 
   return (
     <Box
