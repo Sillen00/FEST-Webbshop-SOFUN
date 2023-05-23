@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Product } from '../data/index';
+import { Product } from '../contexts/ProductContext'
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
@@ -28,6 +28,7 @@ export const defaultValues: AdminValues = {
 type AdminFormProps = {
   product?: Product;
   isNewProduct: boolean;
+  onSubmit: (newProduct: Product) => void;
 };
 
 export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
@@ -39,7 +40,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    image: product?.image || defaultValues.image,
+    image: product?.imageID || defaultValues.image,
     price: product?.price || defaultValues.price,
   };
 

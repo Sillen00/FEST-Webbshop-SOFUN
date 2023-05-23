@@ -59,7 +59,7 @@ export default function OrderConfirmation() {
               >
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <img
-                    src={product.image}
+                    src={product.imageURL}
                     alt={product.title}
                     style={{ width: '8rem', height: 'auto' }}
                   />
