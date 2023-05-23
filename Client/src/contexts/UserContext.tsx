@@ -29,7 +29,7 @@ export default function UserProvider({ children }: Props) {
   const handleClose = () => setOpen(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false); // or false, depending on the user's login status
-  const [isNotValid, setIsNotValid] = useState(false); 
+  const [isNotValid, setIsNotValid] = useState(false);
 
   const registerUser = async (values: User) => {
     await axios
