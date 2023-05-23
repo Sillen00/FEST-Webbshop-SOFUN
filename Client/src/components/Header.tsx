@@ -5,6 +5,7 @@ import StyledBadge from '@mui/material/Badge';
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { theme } from '../theme';
 import LoginRegisterModal from './LoginRegisterModal';
 import Logo from './Logo';
 
@@ -30,7 +31,10 @@ export default function Header() {
         alignItems: 'center',
         height: '9rem',
         textDecoration: 'none',
-        padding: '1rem 5rem 1rem 5rem',
+        padding: '1em 5em 1em 5em',
+        [theme.breakpoints.down('sm')]: {
+          padding: '1em 2em 1em 2em',
+        },
         color: 'black',
       }}
     >
@@ -48,7 +52,6 @@ export default function Header() {
       <Box
         sx={{
           alignItems: 'center',
-          padding: '0.5rem 0',
         }}
       >
         <NavLink style={{ textDecoration: 'none' }} to='./'>
@@ -60,7 +63,6 @@ export default function Header() {
           alignItems: 'center',
           display: 'flex',
           gap: '2rem',
-          padding: '0 1rem',
           textDecoration: 'none',
           fontFamily: 'Oswald, sans-serif',
           fontSize: '1.3rem',
@@ -75,7 +77,16 @@ export default function Header() {
       >
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-            <Icon.AccountCircle sx={{ fontSize: '1.9rem' }} />
+            <Icon.AccountCircle
+              sx={{
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '1.7rem',
+                },
+                [theme.breakpoints.up('md')]: {
+                  fontSize: '3rem',
+                },
+              }}
+            />
           </IconButton>
         </NavLink>
 
@@ -92,7 +103,14 @@ export default function Header() {
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
                     data-cy='cart-items-count-badge'
                   >
-                    <Icon.ShoppingCart sx={{ fontSize: '1.9rem' }} />
+                    <Icon.ShoppingCart
+                      // sx={{
+                        // fontSize: '2rem',
+                        // [theme.breakpoints.down('sm')]: {
+                        //   fontSize: '1.5rem',
+                        // },
+                      // }}
+                    />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
@@ -107,7 +125,16 @@ export default function Header() {
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
                     data-cy='cart-items-count-badge'
                   >
-                    <Icon.ShoppingCart sx={{ fontSize: '1.9rem' }} />
+                    <Icon.ShoppingCart
+                      sx={{
+                        [theme.breakpoints.down('sm')]: {
+                          fontSize: '1.7rem',
+                        },
+                        [theme.breakpoints.up('md')]: {
+                          fontSize: '3rem',
+                        },
+                      }}
+                    />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
