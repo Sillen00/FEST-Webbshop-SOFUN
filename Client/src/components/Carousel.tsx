@@ -44,7 +44,7 @@ export default function ReactBootstrapCarousel() {
         <Carousel.Item style={carouselWindow}>
           <img
             className='d-block w-100'
-            src='/Images/Frame72.png'
+            src='/Images/Frame7.png'
             alt='Third slide'
             style={{ objectFit: 'cover', height: '100%', width: '100%' }}
           />
