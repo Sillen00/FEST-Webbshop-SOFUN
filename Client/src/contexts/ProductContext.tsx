@@ -74,19 +74,32 @@ export default function ProductProvider({ children }: Props) {
     });
   };
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, [setProduct]);
+
   return (
     <ProductContext.Provider
-      value={{
-        product,
-        setProduct,
-        addProduct,
-        removeProduct,
-        clearProduct,
-        updateProduct,
-      }}
-    >
-      {children}
-    </ProductContext.Provider>
+    value={{
+      product,
+      setProduct,
+      addProduct,
+      removeProduct,
+      clearProduct,
+      updateProduct,
+    }}
+  >
+    {children}
+  </ProductContext.Provider>
   );
 }
-

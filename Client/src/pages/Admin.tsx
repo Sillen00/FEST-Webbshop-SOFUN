@@ -96,7 +96,7 @@ export default function Admin() {
           <TableBody>
             {product.map(product => (
               <TableRow
-                key={product.id}
+                key={product._id}
                 sx={{
                   '&:last-child td, &:last-child th': {},
                 }}
@@ -115,7 +115,7 @@ export default function Admin() {
                     variant="rounded"
                   /> */}
                   <img
-                    src={product.image}
+                    src={product.imageID}
                     alt={product.title}
                     style={{
                       maxWidth: isSmallScreen ? '5rem' : '20rem',
@@ -123,7 +123,7 @@ export default function Admin() {
                   />
                 </TableCell>
                 <TableCell align='center' data-cy='product-id' sx={{ width: '16%' }}>
-                  {product.id}
+                  {product._id}
                 </TableCell>
                 <TableCell align='center' sx={{ width: '16%' }} data-cy='product-title'>
                   {product.title}
@@ -138,7 +138,7 @@ export default function Admin() {
                   <Button
                     sx={{ color: 'secondary.contrastText' }}
                     onClick={() => {
-                      navigate('/admin/product/' + product.id);
+                      navigate('/admin/product/' + product._id);
                     }}
                     data-cy='admin-edit-product'
                   >

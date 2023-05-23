@@ -10,7 +10,7 @@ export default function EditProduct() {
   const selectedProduct = product.find(chosen => chosen._id === params.id) as Product;
 
   const handleSubmit = (updatedProduct: Product) => {
-    // Vet ej vad som ska göras här??
+    // Handle the form submission
     console.log(updatedProduct);
   };
 
@@ -33,3 +33,4 @@ export default function EditProduct() {
     </Box>
   );
 }
+
