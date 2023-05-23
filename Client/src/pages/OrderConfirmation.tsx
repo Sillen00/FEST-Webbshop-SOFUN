@@ -107,7 +107,7 @@ export default function OrderConfirmation() {
         <Box
           sx={{
             background: 'white',
-            margin: '0r 0 2rem 0',
+            margin: '0 0 2rem 0',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -118,22 +118,18 @@ export default function OrderConfirmation() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              textAlign: 'left',
+              textAlign: 'center',
             }}
           >
             <p>Tack för din beställning!</p>
             <p>Ditt ordernummer: {generateId()}</p>
           </Box>
           <Typography
-            variant='h6'
-            component='h6'
+            component='h4'
             sx={{
-              height: '6vh',
               fontSize: '1rem',
               fontWeight: 'bold',
               marginTop: '1rem',
-              marginLeft: '2rem',
-              textAlign: 'left',
             }}
           >
             Din order levereras till följande adress
@@ -142,9 +138,9 @@ export default function OrderConfirmation() {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start',
+              alignItems: 'center',
               padding: '1rem',
-              marginBottom: '1rem',
+              marginBottom: '2rem',
             }}
           >
             <Typography variant='subtitle1' data-cy='customer-name'>
