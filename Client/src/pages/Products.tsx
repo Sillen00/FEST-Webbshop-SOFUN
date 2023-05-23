@@ -2,13 +2,10 @@ import { Box, Button, Card, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Snackbar from '../components/Snackbar';
-import { useCart } from '../contexts/CartContext';
 import { useProduct } from '../contexts/ProductContext';
-import { CartItem } from '../data';
 
 export default function Products() {
-  const { product } = useProduct();
-  const { addProduct } = useCart();
+  const { products } = useProduct();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<
     | {
@@ -30,6 +27,7 @@ export default function Products() {
   };
 
   const matches = useMediaQuery('(min-width:500px)');
+
   return (
     <Box
       sx={{
@@ -45,9 +43,9 @@ export default function Products() {
         },
       }}
     >
-      {product.map(product => (
+      {products.map(product => (
         <Card
-          key={product.id}
+          key={product._id}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -62,7 +60,7 @@ export default function Products() {
           }}
           data-cy='product'
         >
-          <Link to={'/product/' + product.id}>
+          <Link to={'/product/' + product._id}>
             <Box
               sx={{
                 display: 'flex',
@@ -73,7 +71,7 @@ export default function Products() {
                 overflow: 'hidden',
               }}
             >
-              <img src={product.image} alt={product.title} width='100%' />
+              <img src={product.imageURL} alt={product.title} width='100%' />
             </Box>
           </Link>
           <Box
@@ -130,12 +128,11 @@ export default function Products() {
                 }}
                 data-cy='product-buy-button'
                 onClick={() => {
-                  addProduct(product as CartItem);
                   setSnackbarOpen(true);
                   setLastAddedProduct({
                     title: product.title,
                     price: product.price,
-                    image: product.image,
+                    image: product.imageURL,
                   });
                 }}
               >

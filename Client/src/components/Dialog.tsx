@@ -4,7 +4,7 @@ import { useProduct } from '../contexts/ProductContext';
 import { Product } from '../data';
 
 export default function DeleteDialog(props: Product) {
-  const { removeProduct } = useProduct();
+  /* const { removeProduct } = useProduct(); */
 
   const [open, setOpen] = useState(false);
 
@@ -35,7 +35,7 @@ export default function DeleteDialog(props: Product) {
             color='error'
             data-cy='confirm-delete-button'
             onClick={() => {
-              removeProduct(props);
+              /* removeProduct(props); */
               handleClose();
             }}
           >

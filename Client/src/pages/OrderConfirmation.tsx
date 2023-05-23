@@ -1,6 +1,5 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
-import { generateId } from '../data';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
@@ -122,7 +121,6 @@ export default function OrderConfirmation() {
             }}
           >
             <p>Tack för din beställning!</p>
-            <p>Ditt ordernummer: {generateId()}</p>
           </Box>
           <Typography
             variant='h6'

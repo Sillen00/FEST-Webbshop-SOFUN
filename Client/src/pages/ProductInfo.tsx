@@ -15,7 +15,6 @@ import { useParams } from 'react-router-dom';
 import Snackbar from '../components/Snackbar';
 import { useCart } from '../contexts/CartContext';
 import { useProduct } from '../contexts/ProductContext';
-import { CartItem } from '../data';
 
 export default function ProductInfo() {
   const matches = useMediaQuery('(min-width:1280px)');

@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useContext } from 'react';
+/* import { createContext, ReactNode, useContext, useEffect } from 'react';
 import { Product, products } from '../data';
 import { useLocalStorageState } from '../hooks/useLocalstorage';
 
 interface ContextValue {
-  product: Product[];
+  products: Product[];
   setProduct: React.Dispatch<React.SetStateAction<Product[]>>;
   addProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
@@ -50,18 +50,75 @@ export default function ProductInventory({ children }: Props) {
     });
   };
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, [setProduct]);
+
   return (
     <ProductContext.Provider
-      value={{
-        product,
-        setProduct,
-        addProduct,
-        removeProduct,
-        clearProduct,
-        updateProduct,
-      }}
-    >
-      {children}
-    </ProductContext.Provider>
+    value={{
+      products,
+      setProduct,
+      addProduct,
+      removeProduct,
+      clearProduct,
+      updateProduct,
+    }}
+  >
+    {children}
+  </ProductContext.Provider>
   );
+} */
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
+
+interface Product {
+  _id: string;
+  title: string;
+  imageURL: string;
+  price: number;
+  description: string;
+}
+
+interface ContextValue {
+  products: Product[];
+}
+
+export const ProductContext = createContext<ContextValue>(null as any);
+export const useProduct = () => useContext(ProductContext);
+
+interface Props {
+  children: ReactNode;
+}
+
+export default function ProductProvider({ children }: Props) {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+
+
+  return <ProductContext.Provider value={{ products }}>{children}</ProductContext.Provider>;
 }
