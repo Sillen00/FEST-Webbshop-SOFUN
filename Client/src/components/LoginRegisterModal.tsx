@@ -3,13 +3,11 @@ import { Box } from '@mui/material';
 import { Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUser } from '../contexts/UserContext';
 
 function LoginRegisterModal() {
   const [register, setRegister] = useState(true);
-  const navigate = useNavigate();
 
   const { registerUser, loginUser, isNotValid } = useUser();
 
@@ -20,15 +18,9 @@ function LoginRegisterModal() {
 
   const handleLoginSubmit = (values: FormValues) => {
     loginUser(values);
-    if (isNotValid === false) {
-      navigate('/checkout');
-    }
   };
   const handleRegisterSubmit = (values: FormValues) => {
     registerUser(values);
-    if (isNotValid === false) {
-      navigate('/checkout');
-    }
   };
 
   //Form validation with Yup and Formik ----------------------------------------------------------
