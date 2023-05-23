@@ -15,5 +15,3 @@ export const generateId = () => {
     .substring(1);
   return newId;
 };
-
-

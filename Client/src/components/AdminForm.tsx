@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Product } from '../contexts/ProductContext'
+import { Product } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),

@@ -90,16 +90,16 @@ export default function ProductProvider({ children }: Props) {
 
   return (
     <ProductContext.Provider
-    value={{
-      product,
-      setProduct,
-      addProduct,
-      removeProduct,
-      clearProduct,
-      updateProduct,
-    }}
-  >
-    {children}
-  </ProductContext.Provider>
+      value={{
+        product,
+        setProduct,
+        addProduct,
+        removeProduct,
+        clearProduct,
+        updateProduct,
+      }}
+    >
+      {children}
+    </ProductContext.Provider>
   );
 }

@@ -36,13 +36,8 @@ export default function EditProduct() {
       </Typography>
 
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <AdminForm
-          product={newProduct}
-          isNewProduct={true}
-          onSubmit={handleAddProduct}
-        />
+        <AdminForm product={newProduct} isNewProduct={true} onSubmit={handleAddProduct} />
       </Box>
     </Box>
   );
 }
-
