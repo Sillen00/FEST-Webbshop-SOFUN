@@ -33,7 +33,6 @@ export default function Products() {
   const matches = useMediaQuery('(min-width:500px)');
   return (
     <>
-      {' '}
       <Carousel />
       <Box
         sx={{
@@ -42,7 +41,7 @@ export default function Products() {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          backgroundColor: 'background.default',
+          backgroundColor: 'secondary.main',
           '& a': {
             color: 'black',
             textDecoration: 'none',
@@ -62,6 +61,7 @@ export default function Products() {
               justifyContent: 'center',
               height: '100%',
               width: matches ? '22rem' : '100%',
+              backgroundColor: 'primary.main',
             }}
             data-cy='product'
           >
@@ -96,13 +96,13 @@ export default function Products() {
                 }}
               >
                 <Box>
-                  <Typography variant='h5' data-cy='product-title'>
+                  <Typography variant='h4' data-cy='product-title'>
                     {product.title}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='subtitle2' data-cy='product-price'>
-                    Pris {product.price} kr
+                  <Typography sx={{ variant: 'h5' }} data-cy='product-price'>
+                    {product.price}kr
                   </Typography>
                 </Box>
               </Box>
@@ -113,18 +113,22 @@ export default function Products() {
                   justifyContent: 'flex-end',
                   margin: '1rem',
                   marginTop: '2rem',
+                  marginLeft: '0',
                   width: '100%',
                   height: '2rem',
                 }}
               >
                 <Button
                   variant='contained'
-                  color='secondary'
+                  color='primary'
                   sx={{
-                    backgroundColor: 'secondary.main',
+                    fontSize: '12px',
+                    border: '1px solid',
+                    padding: '0.5rem',
+                    backgroundColor: 'primary.main',
                     color: 'secondary.contrastText',
                     '&:hover': {
-                      backgroundColor: 'secondary.light',
+                      backgroundColor: 'primary.main',
                     },
                   }}
                   data-cy='product-buy-button'

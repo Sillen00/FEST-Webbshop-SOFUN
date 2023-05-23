@@ -1,0 +1,15 @@
+### 
+# @name createProduct
+POST http://localhost:3000/api/products
+content-type: application/json
+
+{
+  "categoryIDs": ["618e2e01e32c8b7c3358f9a1", "618e2e01e32c8b7c3358f9a2"],
+  "title": "Product 1",
+  "imageID": "img1",
+  "description": "This is product 1",
+  "price": 99.99,
+  "stockLevel": 100,
+  "imageURL": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcRRv9ICxXjK-LVFv-lKRId6gB45BFoNCLsZ4dk7bZpYGblPLPG-9aYss0Z0wt2PmWDb",
+  "isArchived": false
+}
