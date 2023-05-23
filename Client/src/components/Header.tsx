@@ -1,5 +1,6 @@
 import * as Icon from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 
@@ -20,9 +21,9 @@ export default function Header() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '9rem',
+        height: '7rem',
         textDecoration: 'none',
-        padding: '1rem 5rem 1rem 5rem',
+        padding: '0rem 5rem 0rem 5rem',
       }}
     >
       <Box
@@ -66,11 +67,20 @@ export default function Header() {
             },
           }}
         >
-          <NavLink to='./admin' data-cy='admin-link'>
-            <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-              <AccountCircleIcon sx={{ fontSize: '1.9rem' }} />
-            </IconButton>
-          </NavLink>
+          <Tooltip title='Admin'>
+            <NavLink to='./admin'>
+              <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
+                <ModeEditIcon sx={{ fontSize: '1.9rem' }} />
+              </IconButton>
+            </NavLink>
+          </Tooltip>
+          <Tooltip title='Orders'>
+            <NavLink to='./orders' data-cy='admin-link'>
+              <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
+                <AccountCircleIcon sx={{ fontSize: '1.9rem' }} />
+              </IconButton>
+            </NavLink>
+          </Tooltip>
           <Box sx={{ marginLeft: 'auto' }}>
             <Tooltip title='Kundvagn'>
               <NavLink to='./checkout'>

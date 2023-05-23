@@ -9,7 +9,6 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import App from './App';
-import { theme } from './theme';
 import ShoppingCart from './contexts/CartContext';
 import OrderProvider from './contexts/OrderContext';
 import ProductInventory from './contexts/ProductContext';
@@ -19,8 +18,10 @@ import Checkout from './pages/Checkout';
 import EditProduct from './pages/EditProduct';
 import NewProduct from './pages/NewProduct';
 import OrderConfirmation from './pages/OrderConfirmation';
+import OrderPage from './pages/OrderPage';
 import ProductInfo from './pages/ProductInfo';
 import Products from './pages/Products';
+import { theme } from './theme';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path='checkout' element={<Checkout />} />
       <Route path='confirmation' element={<OrderConfirmation />} />
       <Route path='admin' element={<Admin />} />
+      <Route path='orders' element={<OrderPage />} />
       <Route path='admin/product/:id' element={<EditProduct />} />
       <Route path='admin/product/new' element={<NewProduct />} />
       <Route path='*' element={<Navigate to='/' />} />
