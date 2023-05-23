@@ -2,9 +2,9 @@ import * as Icon from '@mui/icons-material';
 import { Box, IconButton, Modal, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 
-import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useUser } from '../contexts/UserContext';
 import { theme } from '../theme';
 import LoginRegisterModal from './LoginRegisterModal';
 import Logo from './Logo';
@@ -16,9 +16,11 @@ export default function Header() {
 
   const isLoggedIn = false; // or false, depending on the user's login status
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { open, handleOpen, handleClose } = useUser();
+
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   return (
     <Box
@@ -104,12 +106,12 @@ export default function Header() {
                     data-cy='cart-items-count-badge'
                   >
                     <Icon.ShoppingCart
-                      // sx={{
-                        // fontSize: '2rem',
-                        // [theme.breakpoints.down('sm')]: {
-                        //   fontSize: '1.5rem',
-                        // },
-                      // }}
+                    // sx={{
+                    // fontSize: '2rem',
+                    // [theme.breakpoints.down('sm')]: {
+                    //   fontSize: '1.5rem',
+                    // },
+                    // }}
                     />
                   </StyledBadge>
                 </IconButton>
