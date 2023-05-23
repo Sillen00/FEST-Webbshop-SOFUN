@@ -54,7 +54,9 @@ export default function CheckoutForm() {
     },
   });
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}
+    >
       <Typography variant='h5'>Leveransuppgifter </Typography>
 
       <Box
@@ -62,9 +64,10 @@ export default function CheckoutForm() {
         sx={{
           '& > :not(style)': {
             m: 1,
-            width: '25ch',
+            width: '16rem',
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
           },
         }}
         noValidate

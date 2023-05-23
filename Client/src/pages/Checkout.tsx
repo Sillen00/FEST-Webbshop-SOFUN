@@ -21,7 +21,7 @@ export default function Checkout() {
         marginBottom: '1rem',
       }}
     >
-      <Typography variant='h4'>Kassa </Typography>
+      <Typography variant='h3'>Kassa </Typography>
       {cart.length > 0 ? (
         <Box
           sx={{

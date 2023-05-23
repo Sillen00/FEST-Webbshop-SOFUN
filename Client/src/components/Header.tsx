@@ -11,7 +11,6 @@ import Logo from './Logo';
 
 export default function Header() {
   const { cart } = useCart();
-
   const location = useLocation();
 
   const { open, handleOpen, handleClose, isLoggedIn } = useUser();
@@ -25,11 +24,11 @@ export default function Header() {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '9rem',
+        height: '7rem',
         textDecoration: 'none',
-        padding: '1em 5em 1em 5em',
+        padding: '0em 4em 0em 4em',
         [theme.breakpoints.down('sm')]: {
-          padding: '1em 2em 1em 2em',
+          padding: '0em 1.5em 0em 1.5em',
         },
         color: 'black',
       }}
@@ -59,6 +58,9 @@ export default function Header() {
           alignItems: 'center',
           display: 'flex',
           gap: '2rem',
+          [theme.breakpoints.down('sm')]: {
+            gap: '0rem',
+          },
           textDecoration: 'none',
           fontFamily: 'Oswald, sans-serif',
           fontSize: '1.3rem',
@@ -73,9 +75,9 @@ export default function Header() {
       >
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-            <Icon.AccountCircle
+            <Icon.ModeEdit
               sx={{
-                fontSize: '3rem',
+                fontSize: '2.5rem',
                 [theme.breakpoints.down('sm')]: {
                   fontSize: '1.7rem',
                 },
@@ -84,7 +86,22 @@ export default function Header() {
           </IconButton>
         </NavLink>
 
-        <Box>
+        <Tooltip title='Orders'>
+          <NavLink to='./orders' data-cy='admin-link'>
+            <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
+              <Icon.AccountCircle
+                sx={{
+                  fontSize: '2.5rem',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '1.7rem',
+                  },
+                }}
+              />
+            </IconButton>
+          </NavLink>
+        </Tooltip>
+
+        <Box sx={{ marginLeft: 'auto' }}>
           <Tooltip title='Kundvagn'>
             {isLoggedIn ? (
               <NavLink to='./checkout'>
@@ -99,7 +116,7 @@ export default function Header() {
                   >
                     <Icon.ShoppingCart
                       sx={{
-                        fontSize: '3rem',
+                        fontSize: '2.5rem',
                         [theme.breakpoints.down('sm')]: {
                           fontSize: '1.7rem',
                         },
@@ -121,7 +138,7 @@ export default function Header() {
                   >
                     <Icon.ShoppingCart
                       sx={{
-                        fontSize: '3rem',
+                        fontSize: '2.5rem',
                         [theme.breakpoints.down('sm')]: {
                           fontSize: '1.7rem',
                         },
