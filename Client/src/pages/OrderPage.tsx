@@ -1,7 +1,8 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
+import { generateId } from '../data';
 
-export default function OrderConfirmation() {
+export default function OrderPage() {
   const { order } = useOrder();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -9,7 +10,6 @@ export default function OrderConfirmation() {
   const totalCost = order.products.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
-
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ export default function OrderConfirmation() {
         margin: '2rem',
       }}
     >
-      <Typography variant='h3'>Bokningsbekräftelse</Typography>
+      <Typography variant='h3'>Odrar</Typography>
 
       <Box
         sx={{
@@ -58,7 +58,7 @@ export default function OrderConfirmation() {
               >
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <img
-                    src={product.imageURL}
+                    src={product.image}
                     alt={product.title}
                     style={{ width: '8rem', height: 'auto' }}
                   />
@@ -121,6 +121,7 @@ export default function OrderConfirmation() {
             }}
           >
             <p>Tack för din beställning!</p>
+            <p>Ditt ordernummer: {generateId()}</p>
           </Box>
           <Typography
             component='h4'

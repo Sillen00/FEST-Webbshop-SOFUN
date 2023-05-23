@@ -3,6 +3,7 @@ import * as Icon from '@mui/icons-material';
 import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 
 interface SnackbarProps {
   open: boolean;
@@ -15,6 +16,8 @@ interface SnackbarProps {
 }
 
 export default function Snackbar({ open, handleClose, lastAddedProduct }: SnackbarProps) {
+  const { isLoggedIn, handleOpen } = useUser();
+
   return (
     <>
       <MuiSnackbar
@@ -99,21 +102,39 @@ export default function Snackbar({ open, handleClose, lastAddedProduct }: Snackb
                 </Typography>
               </Box>
             </Box>
-            <NavLink to='./checkout'>
-              <Button
-                variant='contained'
-                sx={{
-                  backgroundColor: 'secondary.main',
-                  color: 'secondary.contrastText',
-                  '&:hover': {
-                    backgroundColor: 'secondary.light',
-                  },
-                  alignSelf: 'flex-end',
-                }}
-              >
-                Gå till kassan
-              </Button>
-            </NavLink>
+            {isLoggedIn ? (
+              <NavLink to='./checkout'>
+                <Button
+                  variant='contained'
+                  sx={{
+                    backgroundColor: 'secondary.main',
+                    color: 'secondary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'secondary.light',
+                    },
+                    alignSelf: 'flex-end',
+                  }}
+                >
+                  Gå till kassan
+                </Button>
+              </NavLink>
+            ) : (
+              <NavLink onClick={handleOpen} to={location.pathname}>
+                <Button
+                  variant='contained'
+                  sx={{
+                    backgroundColor: 'secondary.main',
+                    color: 'secondary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'secondary.light',
+                    },
+                    alignSelf: 'flex-end',
+                  }}
+                >
+                  Gå till kassan
+                </Button>
+              </NavLink>
+            )}
           </Paper>
         )}
       </MuiSnackbar>

@@ -35,21 +35,21 @@ export default function BasicTable() {
         <TableHead>
           <TableRow
             sx={{
-              bgcolor: 'secondary.main',
+              bgcolor: 'secondary.contrastText',
             }}
           >
-            <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               Produkter
             </TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               Modell
             </TableCell>
             <TableCell align='center'></TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               Antal
             </TableCell>
             <TableCell align='center'></TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               Pris
             </TableCell>
           </TableRow>
@@ -78,10 +78,9 @@ export default function BasicTable() {
               <TableCell align='center' data-cy='product-title' sx={{ width: '10%' }}>
                 {product.title}
               </TableCell>
-              <TableCell align='center' sx={{ width: '10%' }}>
+              <TableCell align='center' sx={{ width: '10%', color: 'secondary.contrastText' }}>
                 <IconButton
                   aria-label='remove'
-                  color='secondary'
                   onClick={() => removeProduct(product)}
                   data-cy='decrease-quantity-button'
                 >
@@ -95,10 +94,9 @@ export default function BasicTable() {
                   sx={{ width: '1.2rem' }}
                 />
               </TableCell>
-              <TableCell align='center' sx={{ width: '10%' }}>
+              <TableCell align='center' sx={{ width: '10%', color: 'secondary.contrastText' }}>
                 <IconButton
                   aria-label='add'
-                  color='secondary'
                   onClick={() => addProduct(product)}
                   data-cy='increase-quantity-button'
                 >
