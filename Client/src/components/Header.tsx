@@ -74,14 +74,12 @@ export default function Header() {
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
             <Icon.AccountCircle
-              sx={
-                {
-                  fontSize: '3rem',
-                  [theme.breakpoints.down('sm')]: {
-                    fontSize: '1.7rem',
-                  },
-                }
-              }
+              sx={{
+                fontSize: '3rem',
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '1.7rem',
+                },
+              }}
             />
           </IconButton>
         </NavLink>
@@ -123,11 +121,9 @@ export default function Header() {
                   >
                     <Icon.ShoppingCart
                       sx={{
+                        fontSize: '3rem',
                         [theme.breakpoints.down('sm')]: {
                           fontSize: '1.7rem',
-                        },
-                        [theme.breakpoints.up('md')]: {
-                          fontSize: '3rem',
                         },
                       }}
                     />
