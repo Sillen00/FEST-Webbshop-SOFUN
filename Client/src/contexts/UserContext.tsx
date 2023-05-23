@@ -13,6 +13,7 @@ interface UserContextValue {
   handleClose: () => void;
   loginUser: (values: User) => void;
   isLoggedIn: boolean;
+  isNotValid: boolean;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -28,7 +29,7 @@ export default function UserProvider({ children }: Props) {
   const handleClose = () => setOpen(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false); // or false, depending on the user's login status
-
+  const [isNotValid, setIsNotValid] = useState(false); 
 
   const registerUser = async (values: User) => {
     await axios
@@ -44,32 +45,33 @@ export default function UserProvider({ children }: Props) {
         handleClose();
         setIsLoggedIn(true);
         console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-        // setUsernameTakenError(error.response.data);
-    });
-};
-
-const loginUser = async (values: User) => {
-    axios
-    .post(
-        'http://localhost:3000/api/users/login',
-        {
-            username: values.username,
-            password: values.password,
-        },
-        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-        )
-        .then(function (response) {
-            if (response) {
-                handleClose();
-                setIsLoggedIn(true);
-                console.log(response);
-            }
       })
       .catch(function (error) {
-        // setIsNotValid(true);
+        console.log(error);
+        setIsNotValid(true);
+        // setUsernameTakenError(error.response.data);
+      });
+  };
+
+  const loginUser = async (values: User) => {
+    axios
+      .post(
+        'http://localhost:3000/api/users/login',
+        {
+          username: values.username,
+          password: values.password,
+        },
+        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+      )
+      .then(function (response) {
+        if (response) {
+          handleClose();
+          setIsLoggedIn(true);
+          console.log(response);
+        }
+      })
+      .catch(function (error) {
+        setIsNotValid(true);
         console.log(error);
       });
   };
@@ -83,6 +85,7 @@ const loginUser = async (values: User) => {
         handleClose,
         loginUser,
         isLoggedIn,
+        isNotValid,
       }}
     >
       {children}

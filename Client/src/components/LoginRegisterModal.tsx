@@ -11,7 +11,7 @@ function LoginRegisterModal() {
   const [register, setRegister] = useState(true);
   const navigate = useNavigate();
 
-  const { registerUser, loginUser } = useUser();
+  const { registerUser, loginUser, isNotValid } = useUser();
 
   interface FormValues {
     username: string;
@@ -20,11 +20,15 @@ function LoginRegisterModal() {
 
   const handleLoginSubmit = (values: FormValues) => {
     loginUser(values);
-    navigate('/checkout');
+    if (isNotValid === false) {
+      navigate('/checkout');
+    }
   };
   const handleRegisterSubmit = (values: FormValues) => {
     registerUser(values);
-    navigate('/checkout');
+    if (isNotValid === false) {
+      navigate('/checkout');
+    }
   };
 
   //Form validation with Yup and Formik ----------------------------------------------------------
@@ -35,7 +39,7 @@ function LoginRegisterModal() {
   });
   const schemaRegister = Yup.object().shape({
     username: Yup.string().min(6, 'Name should have at least 6 letters'),
-    password: Yup.string().min(4, 'Your password must be at least 6 to create an account'),
+    password: Yup.string().min(4, 'Your password must be at least 4 to create an account'),
   });
 
   const formikLogin = useFormik({
@@ -64,6 +68,11 @@ function LoginRegisterModal() {
             <Typography id='modal-modal-title' variant='h6' component='h2'>
               Logga in
             </Typography>
+            {isNotValid && (
+              <Typography variant='h6' component='h2' color='error.main'>
+                Fel användarnamn eller lösenord
+              </Typography>
+            )}
             <Box>
               <TextField
                 id='username'
