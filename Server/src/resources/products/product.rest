@@ -17,3 +17,15 @@ content-type: application/json
 ### 
 # @name deleteProduct
 DELETE http://localhost:3000/api/products/646bdd54297a44c534e558e2
+
+###
+# @name updateProduct
+
+PUT http://localhost:3000/api/products/646df8c61c20756a17cc6cf9
+Content-Type: application/json
+
+{
+  "title": "Updated Product",
+  "description": "This is the updated product",
+  "price": 129.99
+}

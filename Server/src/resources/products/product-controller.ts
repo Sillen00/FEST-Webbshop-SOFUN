@@ -52,7 +52,25 @@ export async function createProduct(req: Request, res: Response) {
 }
 
 export async function updateProduct(req: Request, res: Response) {
-  console.log('Placeholder för updateProduct');
+  try {
+    const { id } = req.params;
+    const { title, description, price } = req.body;
+
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      id,
+      { title, description, price },
+      { new: true } //behövs för att skicka tillbaka den uppdaterade produkten
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: 'Error updating product' });
+  }
 }
 
 export async function deleteProduct(req: Request, res: Response) {

@@ -5,13 +5,14 @@ import { useProduct, Product } from '../contexts/ProductContext';
 
 export default function EditProduct() {
   const params = useParams();
-  const { product } = useProduct();
+  const { product, updateProduct } = useProduct();
 
   const selectedProduct = product.find(chosen => chosen._id === params.id) as Product;
 
   const handleSubmit = (updatedProduct: Product) => {
-    // Handle the form submission
-    console.log(updatedProduct);
+    if (params?.id) {
+      updateProduct(params.id, updatedProduct);
+    }
   };
 
   return (
