@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 export interface Product {
-  _id: string;
+  _id?: string;
   categoryIDs: string[];
   title: string;
   imageID: string;
@@ -49,9 +49,27 @@ export default function ProductProvider({ children }: Props) {
     setProduct([]);
   };
 
-  const addProduct = (newProduct: Product) => {
-    setProduct(prevProducts => [...prevProducts, newProduct]);
-  };
+  async function addProduct  (newProduct: Product)  {
+    try {
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
+      });
+
+      if (response.ok) {
+        const createdProduct = await response.json();
+        setProduct(prevProducts => [...prevProducts, createdProduct]);
+      } else {
+        const message = await response.text();
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error('Error creating product:', error);
+    }
+  }
 
   async function removeProduct(product: Product) {
     try {

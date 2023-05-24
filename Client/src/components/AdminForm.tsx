@@ -31,7 +31,7 @@ type AdminFormProps = {
   onSubmit: (newProduct: Product) => void;
 };
 
-export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
+export default function AdminForm({ product, isNewProduct, onSubmit }: AdminFormProps) {
   const matches = useMediaQuery('(min-width:500px)');
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
@@ -47,8 +47,8 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
   const formik = useFormik<AdminValues>({
     initialValues,
     validationSchema: AdminSchema,
-    onSubmit: async values => {
-      const product = {
+    onSubmit: values => {
+      const newProduct: Product = {
         categoryIDs: [],
         title: values.title,
         description: values.description,
@@ -59,27 +59,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
         isArchived: false,
       };
 
-      try {
-        const response = await fetch('/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(product),
-        });
-
-        console.log('Response status:', response.status);
-
-        if (response.ok) {
-          const createdProduct = await response.json();
-          console.log('Product created successfully:', createdProduct);
-        } else {
-          const message = await response.text();
-          throw new Error(message);
-        }
-      } catch (error) {
-        console.error('Error creating product:', error);
-      }
+      onSubmit(newProduct);
     },
   });
 
