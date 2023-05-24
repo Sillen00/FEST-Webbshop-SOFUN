@@ -82,11 +82,30 @@ export default function ProductProvider({ children }: Props) {
     }
   }
 
-  const updateProduct = (id: string, newData: Product) => {
-    setProduct(prevProducts =>
-      prevProducts.map(item => (item._id === id ? { ...item, ...newData } : item))
-    );
-  };
+  async function updateProduct(id: string, newData: Product) {
+    try {
+      const response = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      });
+  
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        setProduct(prevProducts =>
+          prevProducts.map(item => (item._id === id ? updatedProduct : item))
+        );
+      } else {
+        const message = await response.text();
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
+  
 
   return (
     <ProductContext.Provider
