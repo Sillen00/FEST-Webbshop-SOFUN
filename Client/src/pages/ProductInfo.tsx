@@ -1,11 +1,9 @@
-import * as Icon from '@mui/icons-material';
-
 import {
-  Avatar,
   Box,
   Button,
   Card,
   CardContent,
+  Divider,
   Tooltip,
   Typography,
   useMediaQuery,
@@ -44,14 +42,11 @@ export default function ProductInfo() {
     setSnackbarOpen(false);
   };
 
-  const backgroundImage =
-    'https://www.ski-doo.com/content/dam/global/en/ski-doo/my22/images/models/Ski-Doo-Model-Essential-Background.jpg';
-
   const selectedProduct = product.find(product => product.id === params.id);
 
   const card = (
     <React.Fragment>
-      <CardContent>
+      <CardContent sx={{ padding: '1.2rem' }}>
         <Box
           sx={{
             display: 'flex',
@@ -66,17 +61,8 @@ export default function ProductInfo() {
               padding: '0.5rem 0.8rem',
             }}
           >
-            <Avatar
-              src={selectedProduct?.image}
-              alt='avatar'
-              sx={{
-                width: '10rem',
-                height: '5rem',
-                padding: '0.5rem',
-              }}
-            />
-            <Box sx={{ padding: '1.2rem' }}>
-              <Typography data-cy='product-title' variant='h4'>
+            <Box>
+              <Typography data-cy='product-title' variant='h3' marginBottom={'0.3rem'}>
                 {selectedProduct?.title}
               </Typography>
             </Box>
@@ -89,13 +75,13 @@ export default function ProductInfo() {
               fontSize: '60px',
             }}
           >
-            <Typography variant='h5'>2024</Typography>
-            <Typography data-cy='product-price' variant='h5'>
+            <Typography data-cy='product-price' variant='h5' marginBottom={'1.5rem'}>
               {selectedProduct?.price}
-              <span>SEK</span>
+              <span>kr</span>
             </Typography>
           </Box>
         </Box>
+        <Divider />
         <Box
           sx={{
             padding: '0.8rem',
@@ -103,6 +89,9 @@ export default function ProductInfo() {
             flexWrap: 'wrap',
           }}
         >
+          <Typography marginBottom={'1.5rem'} marginTop={'1rem'}>
+            Kategori
+          </Typography>
           <Typography variant='body2' data-cy='product-description'>
             {selectedProduct?.description}
           </Typography>
@@ -120,20 +109,17 @@ export default function ProductInfo() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundPositionY: '15%',
-        backgroundRepeat: 'no-repeat',
         height: '78.4vh',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        padding: matches ? '0.5rem' : '0rem',
+        padding: matches ? '5rem' : '0rem',
       }}
     >
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          maxWidth: '40rem',
+          maxWidth: '35rem',
           flexDirection: 'column',
           alignItems: 'center',
         }}
@@ -144,8 +130,8 @@ export default function ProductInfo() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: '10',
-            height: matches ? '22rem' : '26rem',
+            // height: matches ? '32rem' : '36rem',
+            marginBottom: '3rem',
           }}
           variant='outlined'
         >
@@ -163,10 +149,19 @@ export default function ProductInfo() {
             <Tooltip title='Lägg till i kundvagnen'>
               <Button
                 variant='contained'
-                color='secondary'
+                color='primary'
                 sx={{
-                  width: '4.5rem',
-                  margin: '0 0.8rem 0.8rem 0',
+                  fontSize: '12px',
+                  paddingRight: '1rem',
+                  paddingLeft: '1rem',
+                  marginRight: '2rem',
+                  marginBottom: '1rem',
+                  marginTop: '6rem',
+                  backgroundColor: 'primary.contrastText',
+                  color: 'primary.main',
+                  '&:hover': {
+                    backgroundColor: 'primary.contrastText',
+                  },
                 }}
                 data-cy='product-buy-button'
                 onClick={() => {
@@ -179,7 +174,7 @@ export default function ProductInfo() {
                   });
                 }}
               >
-                <Icon.AddShoppingCart />
+                Lägg i kundvagnen
               </Button>
             </Tooltip>
           </Box>
@@ -193,7 +188,6 @@ export default function ProductInfo() {
             backgroundImage: matches ? `url(${selectedProduct?.background})` : 'none',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            // zIndex: "200",
           }}
         >
           <Snackbar

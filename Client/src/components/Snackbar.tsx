@@ -1,6 +1,6 @@
 import * as Icon from '@mui/icons-material';
 
-import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from '@mui/material';
+import { Box, Button, IconButton, Paper, Snackbar as MuiSnackbar, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -95,20 +95,27 @@ export default function Snackbar({ open, handleClose, lastAddedProduct }: Snackb
               >
                 <Typography variant='subtitle1'>{lastAddedProduct.title}</Typography>
                 <Typography variant='subtitle1'>
-                  {lastAddedProduct.price.toLocaleString('sv-SE')} SEK
+                  {lastAddedProduct.price.toLocaleString('sv-SE')}kr
                 </Typography>
               </Box>
             </Box>
             <NavLink to='./checkout'>
               <Button
                 variant='contained'
+                color='primary'
+                fullWidth
                 sx={{
-                  backgroundColor: 'secondary.main',
+                  fontSize: '12px',
+                  border: '1px solid',
+                  padding: '0.5rem',
+                  paddingLeft: '1.5rem',
+                  paddingRight: '1.5rem',
+                  alignItems: 'flex-end',
+                  backgroundColor: 'primary.main',
                   color: 'secondary.contrastText',
                   '&:hover': {
-                    backgroundColor: 'secondary.light',
+                    backgroundColor: 'primary.main',
                   },
-                  alignSelf: 'flex-end',
                 }}
               >
                 Gå till kassan

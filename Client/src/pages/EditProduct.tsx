@@ -16,10 +16,10 @@ export default function EditProduct() {
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: '1rem',
-        marginBottom: '1rem',
+        marginBottom: '3rem',
       }}
     >
-      <Typography variant='h4' sx={{ marginBottom: '1rem' }}>
+      <Typography variant='h3' sx={{ marginBottom: '3rem' }}>
         Redigera produkt
       </Typography>
       <Box sx={{ display: 'flex' }}>
