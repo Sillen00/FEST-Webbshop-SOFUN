@@ -49,44 +49,28 @@ export default function ProductProvider({ children }: Props) {
     setProduct([]);
   };
 
-  function addProduct(product: Product) {
-    setProduct(prevProduct => [...prevProduct, product]);
-  }
+  const addProduct = (newProduct: Product) => {
+    setProduct(prevProducts => [...prevProducts, newProduct]);
+  };
 
-  function removeProduct(product: Product) {
-    setProduct(prevProduct => {
-      const updatedProduct = prevProduct.filter(item => item._id !== product._id);
-      return updatedProduct;
-    });
+  async function removeProduct(product: Product) {
+    try {
+      await fetch(`/api/products/${product._id}`, {
+        method: 'DELETE',
+      });
+      setProduct(prevProducts =>
+        prevProducts.filter(item => item._id !== product._id)
+      );
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
   }
 
   const updateProduct = (id: string, newData: Product) => {
-    setProduct(prevState => {
-      const index = prevState.findIndex(x => x._id === id);
-      if (index === -1) return prevState;
-      const updatedItem = {
-        ...prevState[index],
-        ...newData,
-      };
-      const newArray = [...prevState];
-      newArray[index] = updatedItem;
-      return newArray;
-    });
+    setProduct(prevProducts =>
+      prevProducts.map(item => (item._id === id ? { ...item, ...newData } : item))
+    );
   };
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/api/products');
-        const data = await response.json();
-        setProduct(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, [setProduct]);
 
   return (
     <ProductContext.Provider
@@ -103,3 +87,4 @@ export default function ProductProvider({ children }: Props) {
     </ProductContext.Provider>
   );
 }
+
