@@ -1,4 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete';
+import * as Icon from '@mui/icons-material';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 import { useState } from 'react';
 import { Product, useProduct } from '../contexts/ProductContext';
@@ -24,7 +24,7 @@ export default function DeleteDialog(props: Product) {
         sx={{ display: 'flex', justifyContent: 'flex-end' }}
         onClick={handleClickOpen}
       >
-        <DeleteIcon sx={{ color: 'secondary.contrastText' }} />
+        <Icon.Delete sx={{ color: 'secondary.contrastText' }} />
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
