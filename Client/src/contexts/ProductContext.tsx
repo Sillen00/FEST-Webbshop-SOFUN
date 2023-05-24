@@ -58,9 +58,7 @@ export default function ProductProvider({ children }: Props) {
       await fetch(`/api/products/${product._id}`, {
         method: 'DELETE',
       });
-      setProduct(prevProducts =>
-        prevProducts.filter(item => item._id !== product._id)
-      );
+      setProduct(prevProducts => prevProducts.filter(item => item._id !== product._id));
     } catch (error) {
       console.error('Error deleting product:', error);
     }
@@ -87,4 +85,3 @@ export default function ProductProvider({ children }: Props) {
     </ProductContext.Provider>
   );
 }
-
