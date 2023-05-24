@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.13.1",
     "axios": "^1.4.0",
+    "bootstrap": "^5.2.3",
     "esbuild": "^0.17.12",
     "formik": "^2.2.9",
     "prettier": "^2.8.8",
