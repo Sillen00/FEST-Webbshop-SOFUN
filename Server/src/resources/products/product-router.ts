@@ -19,8 +19,8 @@ const productRouter = express
   .Router()
   .get('/api/products', getAllProducts)
   .get('/api/products/:id', getProductById, productQuantity)
-  .post('/api/products', authAdmin, authLogin, createProduct)
-  .put('/api/products/:id', authAdmin, authLogin, updateProduct)
-  .delete('/api/products/:id', authAdmin, authLogin, deleteProduct);
+  .post('/api/products', authAdmin, createProduct)
+  .put('/api/products/:id', authAdmin, updateProduct)
+  .delete('/api/products/:id', authAdmin, deleteProduct);
 
 export default productRouter;
