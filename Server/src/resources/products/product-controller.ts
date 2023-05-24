@@ -56,8 +56,24 @@ export async function updateProduct(req: Request, res: Response) {
 }
 
 export async function deleteProduct(req: Request, res: Response) {
-  console.log('Placeholder för deleteProduct');
+  try {
+    const product = await ProductModel.findById(req.params.id);
+    if (!product) {
+      const responseObj = req.params.id + " not found";
+      res.status(404).json(responseObj);
+      return;
+    }
+    await ProductModel.findByIdAndDelete(req.params.id);
+    res.status(204).json(product);
+  } catch (error) {
+    res.status(404).json({
+      message: "Error finding the product",
+      error: (error as any).message,
+    });
+  }
 }
+
+
 
 export async function productQuantity(req: Request, res: Response) {
   console.log('Placeholder för productQuantity');
