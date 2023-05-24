@@ -7,6 +7,7 @@ export default function Logo() {
     color: '#2b2929',
     letterSpacing: '0.25em',
     fontSize: '2rem',
+    whiteSpace: 'nowrap',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.5rem',
     },
