@@ -1,3 +1,4 @@
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import {
   Box,
   Button,
@@ -30,20 +31,22 @@ export default function Admin() {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '1rem',
-        marginTop: '1rem',
-        marginBottom: '1rem',
+        marginBottom: '2rem',
       }}
     >
-      <Typography variant='h4'>Admin</Typography>
-      <Box>
+      <Typography variant='h3' marginBottom='2rem'>
+        Admin
+      </Typography>
+      <Box marginBottom='2rem'>
         <Button
           data-cy='admin-add-product'
           variant='contained'
           color='primary'
           sx={{
-            fontSize: '12px',
+            fontSize: '16px',
             border: '1px solid',
-            padding: '0.5rem',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
             backgroundColor: 'primary.main',
             color: 'secondary.contrastText',
             '&:hover': {
@@ -54,7 +57,7 @@ export default function Admin() {
             navigate('/admin/product/new');
           }}
         >
-          Lägg till en ny produkt
+          Lägg till produkt
         </Button>
       </Box>
       <TableContainer
@@ -71,32 +74,29 @@ export default function Admin() {
           <TableHead>
             <TableRow
               sx={{
-                bgcolor: 'secondary.main',
+                bgcolor: 'secondary.contrastText',
               }}
             >
-              <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Bild
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 ID
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Titel
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'secondary.contrastText' }}>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Pris{' '}
               </TableCell>
               <TableCell align='center'></TableCell>
-              <TableCell
-                align='center'
-                sx={{ typography: 'h6', color: 'secondary.contrastText' }}
-              ></TableCell>
+              <TableCell align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {product.map(product => (
               <TableRow
-                key={product.id}
+                key={product._id}
                 sx={{
                   '&:last-child td, &:last-child th': {},
                 }}
@@ -115,7 +115,7 @@ export default function Admin() {
                     variant="rounded"
                   /> */}
                   <img
-                    src={product.image}
+                    src={product.imageID}
                     alt={product.title}
                     style={{
                       maxWidth: isSmallScreen ? '5rem' : '20rem',
@@ -123,7 +123,7 @@ export default function Admin() {
                   />
                 </TableCell>
                 <TableCell align='center' data-cy='product-id' sx={{ width: '16%' }}>
-                  {product.id}
+                  {product._id}
                 </TableCell>
                 <TableCell align='center' sx={{ width: '16%' }} data-cy='product-title'>
                   {product.title}
@@ -131,18 +131,18 @@ export default function Admin() {
                 <TableCell align='center' data-cy='product-price'>
                   {product.price}
                 </TableCell>
-                <TableCell align='center' sx={{ width: '16%' }}>
+                <TableCell align='center' sx={{ width: '6%' }}>
                   <DeleteDialog {...product} />
                 </TableCell>
-                <TableCell align='center' sx={{ width: '16%' }}>
+                <TableCell align='center' sx={{ width: '6%' }}>
                   <Button
                     sx={{ color: 'secondary.contrastText' }}
                     onClick={() => {
-                      navigate('/admin/product/' + product.id);
+                      navigate('/admin/product/' + product._id);
                     }}
                     data-cy='admin-edit-product'
                   >
-                    Redigera
+                    <ModeEditIcon sx={{ color: 'secondary.contrastText' }} />
                   </Button>
                 </TableCell>
               </TableRow>

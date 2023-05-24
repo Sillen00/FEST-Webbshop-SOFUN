@@ -1,6 +1,16 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { Product, products } from '../data';
-import { useLocalStorageState } from '../hooks/useLocalstorage';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
+export interface Product {
+  _id: string;
+  categoryIDs: string[];
+  title: string;
+  imageID: string;
+  description: string;
+  price: number;
+  stockLevel: number;
+  imageURL: string;
+  isArchived: boolean;
+}
 
 interface ContextValue {
   product: Product[];
@@ -18,8 +28,22 @@ interface Props {
   children: ReactNode;
 }
 
-export default function ProductInventory({ children }: Props) {
-  const [product, setProduct] = useLocalStorageState<Product[]>(products, 'products');
+export default function ProductProvider({ children }: Props) {
+  const [product, setProduct] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const clearProduct = () => {
     setProduct([]);
@@ -31,14 +55,14 @@ export default function ProductInventory({ children }: Props) {
 
   function removeProduct(product: Product) {
     setProduct(prevProduct => {
-      const updatedProduct = prevProduct.filter(item => item.id !== product.id);
+      const updatedProduct = prevProduct.filter(item => item._id !== product._id);
       return updatedProduct;
     });
   }
 
   const updateProduct = (id: string, newData: Product) => {
     setProduct(prevState => {
-      const index = prevState.findIndex(x => x.id === id);
+      const index = prevState.findIndex(x => x._id === id);
       if (index === -1) return prevState;
       const updatedItem = {
         ...prevState[index],
@@ -49,6 +73,20 @@ export default function ProductInventory({ children }: Props) {
       return newArray;
     });
   };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, [setProduct]);
 
   return (
     <ProductContext.Provider

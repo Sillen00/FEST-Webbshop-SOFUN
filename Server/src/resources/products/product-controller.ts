@@ -21,7 +21,13 @@ const productSchema = Yup.object().shape({
 });
 
 export async function getAllProducts(req: Request, res: Response) {
-  console.log('Placeholder för getAllProducts');
+  try {
+    const products = await ProductModel.find();
+    res.json(products);
+  } catch (error) {
+    console.error('Error getting all products:', error);
+    res.status(500).json({ message: 'Error getting all products' });
+  }
 }
 
 export async function getProductById(req: Request, res: Response) {

@@ -11,10 +11,6 @@ export const theme = createTheme({
       main: '#fffaf5',
       contrastText: '#090809',
     },
-    info: {
-      main: '#1B98E0',
-      dark: 'rgb(18, 106, 156)',
-    },
     error: {
       main: '#d32f2f',
       dark: '#c62828',
@@ -22,6 +18,11 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: ['Ariata Display'].join(','),
+    h3: {
+      fontWeight: 100,
+      fontFamily: 'Ariata Display',
+      fontSize: '26px',
+    },
     h4: {
       fontWeight: 600,
       fontFamily: 'Ariata Display',
