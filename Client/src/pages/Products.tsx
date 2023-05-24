@@ -28,7 +28,6 @@ export default function Products() {
   return (
     <>
       <Carousel />
-
       <Box
         sx={{
           display: 'flex',
