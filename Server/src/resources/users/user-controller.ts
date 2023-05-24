@@ -65,7 +65,7 @@ export async function logOutUser(req: Request, res: Response) {
   const user = await UserModel.findOne({ username: req.session!.username });
 
   !user && res.status(401).json('You are already logged out');
-  
+
   req.session = null;
   res.status(204).json(req.session);
   // req.session.destroy((err) => {

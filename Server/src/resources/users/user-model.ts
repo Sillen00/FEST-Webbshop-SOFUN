@@ -1,5 +1,3 @@
-
-
 import argon2 from 'argon2';
 import { InferSchemaType, model, Schema } from 'mongoose';
 

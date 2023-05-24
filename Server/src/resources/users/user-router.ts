@@ -5,8 +5,8 @@
 // PUT /api/users/assignAsAdmin A
 
 import express from 'express';
-import { getAllUsers, signUpUser, logInUser, logOutUser, assignAsAdmin } from './user-controller';
 import { authAdmin } from '../middlewares';
+import { assignAsAdmin, getAllUsers, logInUser, logOutUser, signUpUser } from './user-controller';
 
 const userRouter = express
   .Router()
