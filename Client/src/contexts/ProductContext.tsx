@@ -91,7 +91,7 @@ export default function ProductProvider({ children }: Props) {
         },
         body: JSON.stringify(newData),
       });
-  
+
       if (response.ok) {
         const updatedProduct = await response.json();
         setProduct(prevProducts =>
@@ -105,7 +105,6 @@ export default function ProductProvider({ children }: Props) {
       console.error('Error updating product:', error);
     }
   }
-  
 
   return (
     <ProductContext.Provider
