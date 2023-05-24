@@ -10,8 +10,8 @@ import { createOrder, getAllOrders, getOrderById, updateOrderStatus } from './or
 const orderRouter = express
   .Router()
   .get('/api/orders', authAdmin, getAllOrders)
-  .get('/api/orders/:id', authAdmin, getOrderById)
-  .put('/api/orders/status/:id', authAdmin, updateOrderStatus)
+  .get('/api/orders/:id', authLogin, getOrderById)
+  .put('/api/orders/status/:id', authLogin, updateOrderStatus)
   .post('/api/orders', authLogin, createOrder);
 
 export default orderRouter;

@@ -5,17 +5,22 @@
 // DELETE /api/products/:id A L
 
 import express from 'express';
-import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct, productQuantity } from './product-controller';
-import { authAdmin } from '../middlewares';
-
+import { authAdmin, authLogin } from '../middlewares';
+import {
+  createProduct,
+  deleteProduct,
+  getAllProducts,
+  getProductById,
+  productQuantity,
+  updateProduct,
+} from './product-controller';
 
 const productRouter = express
   .Router()
   .get('/api/products', getAllProducts)
   .get('/api/products/:id', getProductById, productQuantity)
-  .post('/api/products', createProduct)
-  .put('/api/products/:id', authAdmin, updateProduct)
-  .delete('/api/products/:id', authAdmin, deleteProduct);
+  .post('/api/products', authAdmin, authLogin, createProduct)
+  .put('/api/products/:id', authAdmin, authLogin, updateProduct)
+  .delete('/api/products/:id', authAdmin, authLogin, deleteProduct);
 
 export default productRouter;
-
