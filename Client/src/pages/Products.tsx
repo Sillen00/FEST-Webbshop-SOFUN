@@ -11,14 +11,7 @@ export default function Products() {
   const { product } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [lastAddedProduct, setLastAddedProduct] = useState<
-    | {
-        title: string;
-        price: number;
-        image: string;
-      }
-    | undefined
-  >(undefined);
+  const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
 
   const handleSnackbarClose = (
     event: React.SyntheticEvent<Element, Event> | Event,
@@ -31,6 +24,7 @@ export default function Products() {
   };
 
   const matches = useMediaQuery('(min-width:500px)');
+
   return (
     <>
       <Carousel />
@@ -51,6 +45,52 @@ export default function Products() {
         {product.map(product => (
           <Card
             key={product.id}
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        backgroundColor: 'secondary.main',
+        '& a': {
+          color: 'black',
+          textDecoration: 'none',
+        },
+      }}
+    >
+      {product.map(product => (
+        <Card
+          key={product._id}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            margin: '1rem',
+
+            maxHeight: matches ? '33rem' : 'none',
+            justifyContent: 'center',
+            height: '100%',
+            width: matches ? '22rem' : '100%',
+            backgroundColor: 'primary.main',
+          }}
+          data-cy='product'
+        >
+          <Link to={'/product/' + product._id}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '27rem',
+                width: '22rem',
+                overflow: 'hidden',
+              }}
+            >
+              <img src={product.imageID} alt={product.title} width='100%' />
+            </Box>
+          </Link>
+          <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -78,7 +118,11 @@ export default function Products() {
               >
                 <img src={product.image} alt={product.title} width='100%' />
               </Box>
+
             </Link>
+
+            </Box>
+
             <Box
               sx={{
                 display: 'flex',
@@ -94,6 +138,7 @@ export default function Products() {
                   width: '100%',
                   margin: '1rem',
                 }}
+
               >
                 <Box>
                   <Typography variant='h4' data-cy='product-title'>
@@ -116,6 +161,26 @@ export default function Products() {
                   marginLeft: '0',
                   width: '100%',
                   height: '2rem',
+
+                data-cy='product-buy-button'
+                onClick={() => {
+                  const cartItem: CartItem = {
+                    id: product._id,
+                    title: product.title,
+                    price: product.price,
+                    quantity: 1,
+                    imageURL: product.imageID,
+                  };
+                  addProduct(cartItem);
+                  setSnackbarOpen(true);
+                  setLastAddedProduct({
+                    title: product.title,
+                    price: product.price,
+                    imageURL: product.imageID,
+                    id: product._id,
+                    quantity: 1,
+                  });
+
                 }}
               >
                 <Button
@@ -146,6 +211,7 @@ export default function Products() {
                 </Button>
               </Box>
             </Box>
+
           </Card>
         ))}
         <Snackbar
@@ -156,5 +222,21 @@ export default function Products() {
         />
       </Box>
     </>
+
+          </Box>
+        </Card>
+      ))}
+      <Snackbar
+        data-cy='added-to-cart-toast'
+        open={snackbarOpen}
+        handleClose={handleSnackbarClose}
+        lastAddedProduct={{
+          title: lastAddedProduct?.title || '',
+          price: lastAddedProduct?.price || 0,
+          image: lastAddedProduct?.imageURL || '',
+        }}
+      />
+    </Box>
+
   );
 }

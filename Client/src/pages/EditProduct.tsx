@@ -1,13 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import AdminForm from '../components/AdminForm';
-import { useProduct } from '../contexts/ProductContext';
+import { useProduct, Product } from '../contexts/ProductContext';
 
 export default function EditProduct() {
   const params = useParams();
   const { product } = useProduct();
 
-  const selectedProduct = product.find(chosen => chosen.id === params.id);
+  const selectedProduct = product.find(chosen => chosen._id === params.id) as Product;
+
+  const handleSubmit = (updatedProduct: Product) => {
+    // Handle the form submission
+    console.log(updatedProduct);
+  };
 
   return (
     <Box
@@ -23,7 +28,7 @@ export default function EditProduct() {
         Redigera produkt
       </Typography>
       <Box sx={{ display: 'flex' }}>
-        <AdminForm product={selectedProduct} isNewProduct={false} />
+        <AdminForm product={selectedProduct} isNewProduct={false} onSubmit={handleSubmit} />
       </Box>
     </Box>
   );
