@@ -49,7 +49,7 @@ export default function ProductProvider({ children }: Props) {
     setProduct([]);
   };
 
-  async function addProduct  (newProduct: Product)  {
+  async function addProduct(newProduct: Product) {
     try {
       const response = await fetch('/api/products', {
         method: 'POST',
