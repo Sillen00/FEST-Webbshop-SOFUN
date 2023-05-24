@@ -4,14 +4,14 @@
 // POST /api/orders L
 
 import express from 'express';
-import { getAllOrders, getOrderById, updateOrderStatus, createOrder } from './order-controller';
-import { authAdmin, authUser } from '../middlewares'
+import { authAdmin, authLogin } from '../middlewares';
+import { createOrder, getAllOrders, getOrderById, updateOrderStatus } from './order-controller';
 
 const orderRouter = express
   .Router()
   .get('/api/orders', authAdmin, getAllOrders)
-  .get('/api/orders/:id', authAdmin, getOrderById)
-  .put('/api/orders/status/:id', authAdmin, updateOrderStatus)
-  .post('/api/orders', authUser, createOrder); 
+  .get('/api/orders/:id', authLogin, getOrderById)
+  .put('/api/orders/status/:id', authLogin, updateOrderStatus)
+  .post('/api/orders', authLogin, createOrder);
 
 export default orderRouter;

@@ -1,4 +1,5 @@
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import * as Icon from '@mui/icons-material';
+
 import {
   Box,
   Button,
@@ -142,7 +143,7 @@ export default function Admin() {
                     }}
                     data-cy='admin-edit-product'
                   >
-                    <ModeEditIcon sx={{ color: 'secondary.contrastText' }} />
+                    <Icon.ModeEdit sx={{ color: 'secondary.contrastText' }} />
                   </Button>
                 </TableCell>
               </TableRow>
