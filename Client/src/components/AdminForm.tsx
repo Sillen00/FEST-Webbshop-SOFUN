@@ -2,6 +2,7 @@ import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useImage } from '../contexts/ImageContext';
@@ -38,7 +39,9 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { uploadImage } = useImage();
+  const { uploadImage, getImage } = useImage();
+
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
@@ -77,11 +80,19 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     try {
       const imageID = await uploadImage(file);
       formik.setFieldValue('imageID', imageID);
+      const imageUrl = await getImage(imageID);
+      setImageUrl(imageUrl);
     } catch (error) {
-      console.error('Error uploading image:', error);
       formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
     }
   };
+
+  // const renderImage = async () => {
+  //   if (imageUrl) {
+  //     return <img src={imageUrl} alt={title} />;
+  //   }
+  //   return <p>Error loading image.</p>;
+  // };
 
   return (
     <>
@@ -133,7 +144,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           id='image'
           type='file'
           name='image'
-          label='Bild-URL'
+          // label='Bild-URL'
           // value={formik.values.image}
           onChange={handleFileUpload}
           // onBlur={formik.handleBlur}
@@ -207,7 +218,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                     overflow: 'hidden',
                   }}
                 >
-                  <img src={formik.values.imageID} alt={formik.values.title} width='100%' />
+                  <img src={imageUrl} alt={formik.values.title} width='100%' />
                 </Box>
               </Box>
 
