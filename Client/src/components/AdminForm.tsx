@@ -25,6 +25,7 @@ export const defaultValues: AdminValues = {
   description: '',
   imageID: '',
   price: 0,
+  // imageUrl: '',
 };
 
 type AdminFormProps = {
@@ -39,15 +40,20 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { uploadImage, getImage, imageUrl } = useImage();
+  const { uploadImage, getImage } = useImage();
 
-  // const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>('');
+  // const imageUrl = formik.values.imageUrl || '';
+  // const setImageUrl = (url: string) => {
+  //   formik.setFieldValue('imageUrl', url);
+  // };
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
     imageID: product?.imageID || defaultValues.imageID,
     price: product?.price || defaultValues.price,
+    // imageUrl: product?.imageURL || defaultValues.imageUrl,
   };
 
   const formik = useFormik<AdminValues>({
@@ -61,7 +67,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         imageID: 'hardcoded-image-id',
         price: values.price,
         stockLevel: 100,
-        imageURL: 'placeholder',
+        imageURL: imageUrl,
         isArchived: false,
       };
 
@@ -80,8 +86,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     try {
       const imageID = await uploadImage(file);
       formik.setFieldValue('imageID', imageID);
-      // const imageUrl = await getImage(imageID);
-      // setImageUrl(imageUrl);
+      const imageUrl = await getImage(imageID);
+      setImageUrl(imageUrl);
     } catch (error) {
       formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
     }
@@ -143,7 +149,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           fullWidth
           id='image'
           type='file'
-          name='image'
+          name='imageUrl'
           // label='Bild-URL'
           // value={formik.values.image}
           onChange={handleFileUpload}
