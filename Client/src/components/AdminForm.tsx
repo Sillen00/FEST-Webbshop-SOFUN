@@ -39,9 +39,9 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { uploadImage, getImage } = useImage();
+  const { uploadImage, getImage, imageUrl } = useImage();
 
-  const [imageUrl, setImageUrl] = useState<string>('');
+  // const [imageUrl, setImageUrl] = useState<string>('');
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
@@ -80,8 +80,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     try {
       const imageID = await uploadImage(file);
       formik.setFieldValue('imageID', imageID);
-      const imageUrl = await getImage(imageID);
-      setImageUrl(imageUrl);
+      // const imageUrl = await getImage(imageID);
+      // setImageUrl(imageUrl);
     } catch (error) {
       formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
     }
