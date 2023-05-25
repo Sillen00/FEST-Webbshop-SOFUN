@@ -1,8 +1,7 @@
-import DeleteIcon from '@mui/icons-material/Delete';
+import * as Icon from '@mui/icons-material';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 import { useState } from 'react';
-import { useProduct } from '../contexts/ProductContext';
-import { Product } from '../data';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 export default function DeleteDialog(props: Product) {
   const { removeProduct } = useProduct();
@@ -24,7 +23,7 @@ export default function DeleteDialog(props: Product) {
         sx={{ display: 'flex', justifyContent: 'flex-end', color: 'secondary.contrastText' }}
         onClick={handleClickOpen}
       >
-        <DeleteIcon sx={{ color: 'secondary.contrastText' }} />
+        <Icon.Delete sx={{ color: 'secondary.contrastText' }} />
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>

@@ -2,9 +2,9 @@ import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Product } from '../data/index';
+import { Product } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
@@ -28,10 +28,12 @@ export const defaultValues: AdminValues = {
 type AdminFormProps = {
   product?: Product;
   isNewProduct: boolean;
+  onSubmit: (newProduct: Product) => void;
 };
 
-export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
+export default function AdminForm({ product, isNewProduct, onSubmit }: AdminFormProps) {
   const matches = useMediaQuery('(min-width:500px)');
+  const navigate = useNavigate();
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -39,7 +41,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    image: product?.image || defaultValues.image,
+    image: product?.imageID || defaultValues.image,
     price: product?.price || defaultValues.price,
   };
 
@@ -47,7 +49,7 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
     initialValues,
     validationSchema: AdminSchema,
     onSubmit: async values => {
-      const product = {
+      const newProduct: Product = {
         categoryIDs: [],
         title: values.title,
         description: values.description,
@@ -59,23 +61,8 @@ export default function AdminForm({ product, isNewProduct }: AdminFormProps) {
       };
 
       try {
-        const response = await fetch('/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(product),
-        });
-
-        console.log('Response status:', response.status);
-
-        if (response.ok) {
-          const createdProduct = await response.json();
-          console.log('Product created successfully:', createdProduct);
-        } else {
-          const message = await response.text();
-          throw new Error(message);
-        }
+        await onSubmit(newProduct); // Wait for the onSubmit function to complete
+        navigate('/admin'); // Navigate to the desired route
       } catch (error) {
         console.error('Error creating product:', error);
       }

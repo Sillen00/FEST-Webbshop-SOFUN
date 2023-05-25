@@ -13,3 +13,19 @@ content-type: application/json
   "imageURL": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcRRv9ICxXjK-LVFv-lKRId6gB45BFoNCLsZ4dk7bZpYGblPLPG-9aYss0Z0wt2PmWDb",
   "isArchived": false
 }
+
+### 
+# @name deleteProduct
+DELETE http://localhost:3000/api/products/646bdd54297a44c534e558e2
+
+###
+# @name updateProduct
+
+PUT http://localhost:3000/api/products/646df8c61c20756a17cc6cf9
+Content-Type: application/json
+
+{
+  "title": "Updated Product",
+  "description": "This is the updated product",
+  "price": 129.99
+}

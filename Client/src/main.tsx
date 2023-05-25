@@ -12,6 +12,7 @@ import App from './App';
 import ShoppingCart from './contexts/CartContext';
 import OrderProvider from './contexts/OrderContext';
 import ProductInventory from './contexts/ProductContext';
+import UserProvider from './contexts/UserContext';
 import './index.css';
 import Admin from './pages/Admin';
 import Checkout from './pages/Checkout';
@@ -45,7 +46,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <OrderProvider>
         <ShoppingCart>
           <ProductInventory>
-            <RouterProvider router={router} />
+            <UserProvider>
+              <RouterProvider router={router} />
+            </UserProvider>
           </ProductInventory>
         </ShoppingCart>
       </OrderProvider>

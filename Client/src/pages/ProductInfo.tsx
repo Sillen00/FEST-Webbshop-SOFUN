@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Snackbar from '../components/Snackbar';
 import { useCart } from '../contexts/CartContext';
-import { useProduct } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
 export default function ProductInfo() {
@@ -42,7 +42,10 @@ export default function ProductInfo() {
     setSnackbarOpen(false);
   };
 
-  const selectedProduct = product.find(product => product.id === params.id);
+  const backgroundImage =
+    'https://www.ski-doo.com/content/dam/global/en/ski-doo/my22/images/models/Ski-Doo-Model-Essential-Background.jpg';
+
+  const selectedProduct = product.find((product: Product) => product._id === params.id) as Product;
 
   const card = (
     <React.Fragment>
@@ -61,7 +64,16 @@ export default function ProductInfo() {
               padding: '0.5rem 0.8rem',
             }}
           >
-            <Box>
+            <Avatar
+              src={selectedProduct?.imageID}
+              alt='avatar'
+              sx={{
+                width: '10rem',
+                height: '5rem',
+                padding: '0.5rem',
+              }}
+            />
+            <Box sx={{ padding: '1.2rem' }}>
               <Typography data-cy='product-title' variant='h3' marginBottom={'0.3rem'}>
                 {selectedProduct?.title}
               </Typography>
@@ -165,12 +177,19 @@ export default function ProductInfo() {
                 }}
                 data-cy='product-buy-button'
                 onClick={() => {
-                  addProduct(selectedProduct as CartItem);
+                  const cartItem: CartItem = {
+                    id: selectedProduct._id,
+                    title: selectedProduct.title,
+                    price: selectedProduct.price,
+                    quantity: 1,
+                    imageURL: selectedProduct.imageID,
+                  };
+                  addProduct(cartItem);
                   setSnackbarOpen(true);
                   setLastAddedProduct({
                     title: selectedProduct.title,
                     price: selectedProduct.price,
-                    image: selectedProduct.image,
+                    image: selectedProduct.imageID,
                   });
                 }}
               >
@@ -185,7 +204,6 @@ export default function ProductInfo() {
             left: '10%',
             width: '50%',
             height: '50%',
-            backgroundImage: matches ? `url(${selectedProduct?.background})` : 'none',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
           }}

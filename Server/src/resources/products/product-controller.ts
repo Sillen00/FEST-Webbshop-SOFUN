@@ -21,7 +21,13 @@ const productSchema = Yup.object().shape({
 });
 
 export async function getAllProducts(req: Request, res: Response) {
-  console.log('Placeholder för getAllProducts');
+  try {
+    const products = await ProductModel.find();
+    res.json(products);
+  } catch (error) {
+    console.error('Error getting all products:', error);
+    res.status(500).json({ message: 'Error getting all products' });
+  }
 }
 
 export async function getProductById(req: Request, res: Response) {
@@ -46,12 +52,46 @@ export async function createProduct(req: Request, res: Response) {
 }
 
 export async function updateProduct(req: Request, res: Response) {
-  console.log('Placeholder för updateProduct');
+  try {
+    const { id } = req.params;
+    const { title, description, price } = req.body;
+
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      id,
+      { title, description, price },
+      { new: true } //behövs för att skicka tillbaka den uppdaterade produkten
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: 'Error updating product' });
+  }
 }
 
 export async function deleteProduct(req: Request, res: Response) {
-  console.log('Placeholder för deleteProduct');
+  try {
+    const product = await ProductModel.findById(req.params.id);
+    if (!product) {
+      const responseObj = req.params.id + " not found";
+      res.status(404).json(responseObj);
+      return;
+    }
+    await ProductModel.findByIdAndDelete(req.params.id);
+    res.status(204).json(product);
+  } catch (error) {
+    res.status(404).json({
+      message: "Error finding the product",
+      error: (error as any).message,
+    });
+  }
 }
+
+
 
 export async function productQuantity(req: Request, res: Response) {
   console.log('Placeholder för productQuantity');

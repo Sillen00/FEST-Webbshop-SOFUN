@@ -1,6 +1,16 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { Product, products } from '../data';
-import { useLocalStorageState } from '../hooks/useLocalstorage';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
+export interface Product {
+  _id?: string;
+  categoryIDs: string[];
+  title: string;
+  imageID: string;
+  description: string;
+  price: number;
+  stockLevel: number;
+  imageURL: string;
+  isArchived: boolean;
+}
 
 interface ContextValue {
   product: Product[];
@@ -18,37 +28,83 @@ interface Props {
   children: ReactNode;
 }
 
-export default function ProductInventory({ children }: Props) {
-  const [product, setProduct] = useLocalStorageState<Product[]>(products, 'products');
+export default function ProductProvider({ children }: Props) {
+  const [product, setProduct] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const clearProduct = () => {
     setProduct([]);
   };
 
-  function addProduct(product: Product) {
-    setProduct(prevProduct => [...prevProduct, product]);
+  async function addProduct(newProduct: Product) {
+    try {
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
+      });
+
+      if (response.ok) {
+        const createdProduct = await response.json();
+        setProduct(prevProducts => [...prevProducts, createdProduct]);
+      } else {
+        const message = await response.text();
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error('Error creating product:', error);
+    }
   }
 
-  function removeProduct(product: Product) {
-    setProduct(prevProduct => {
-      const updatedProduct = prevProduct.filter(item => item.id !== product.id);
-      return updatedProduct;
-    });
+  async function removeProduct(product: Product) {
+    try {
+      await fetch(`/api/products/${product._id}`, {
+        method: 'DELETE',
+      });
+      setProduct(prevProducts => prevProducts.filter(item => item._id !== product._id));
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
   }
 
-  const updateProduct = (id: string, newData: Product) => {
-    setProduct(prevState => {
-      const index = prevState.findIndex(x => x.id === id);
-      if (index === -1) return prevState;
-      const updatedItem = {
-        ...prevState[index],
-        ...newData,
-      };
-      const newArray = [...prevState];
-      newArray[index] = updatedItem;
-      return newArray;
-    });
-  };
+  async function updateProduct(id: string, newData: Product) {
+    try {
+      const response = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      });
+
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        setProduct(prevProducts =>
+          prevProducts.map(item => (item._id === id ? updatedProduct : item))
+        );
+      } else {
+        const message = await response.text();
+        throw new Error(message);
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
 
   return (
     <ProductContext.Provider

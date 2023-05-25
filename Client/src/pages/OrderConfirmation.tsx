@@ -1,6 +1,5 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
-import { generateId } from '../data';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
@@ -59,7 +58,7 @@ export default function OrderConfirmation() {
               >
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <img
-                    src={product.image}
+                    src={product.imageURL}
                     alt={product.title}
                     style={{ width: '8rem', height: 'auto' }}
                   />
@@ -122,7 +121,6 @@ export default function OrderConfirmation() {
             }}
           >
             <p>Tack för din beställning!</p>
-            <p>Ditt ordernummer: {generateId()}</p>
           </Box>
           <Typography
             component='h4'
