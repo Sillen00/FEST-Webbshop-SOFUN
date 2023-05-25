@@ -20,6 +20,7 @@ interface UserContextValue {
   allUsers: User[];
   assignAsAdmin: (userId: string) => void;
   removeAsAdmin: (userId: string) => void;
+  logoutUser: () => void;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -98,6 +99,18 @@ export default function UserProvider({ children }: Props) {
       });
   };
 
+  const logoutUser = async () => {
+    axios
+      .post('/api/users/logout', {}, { withCredentials: true })
+      .then(function (response) {
+        console.log(response);
+        setIsLoggedIn(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const assignAsAdmin = async (userId: string) => {
     axios
       .put(`/api/users/${userId}/assignAsAdmin`, {}, { withCredentials: true })
@@ -140,6 +153,7 @@ export default function UserProvider({ children }: Props) {
         allUsers,
         assignAsAdmin,
         removeAsAdmin,
+        logoutUser,
       }}
     >
       {children}
