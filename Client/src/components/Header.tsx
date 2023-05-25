@@ -16,6 +16,17 @@ export default function Header() {
   const { open, handleOpen, handleClose, isLoggedIn } = useUser();
 
   return (
+    <>
+    {/* LOGIN MODAL --------------------------------------------------------------------- */}
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby='modal-modal-title'
+      aria-describedby='modal-modal-description'
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+      <LoginRegisterModal />
+    </Modal>
     <Box
       sx={{
         backgroundColor: '#fffaf5',
@@ -33,22 +44,12 @@ export default function Header() {
         color: 'black',
       }}
     >
-      {/* LOGIN MODAL --------------------------------------------------------------------- */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <LoginRegisterModal />
-      </Modal>
 
       <Box
         sx={{
           alignItems: 'center',
         }}
-      >
+        >
         <NavLink style={{ textDecoration: 'none' }} to='./'>
           <Logo />
         </NavLink>
@@ -72,7 +73,7 @@ export default function Header() {
             },
           },
         }}
-      >
+        >
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
             <Icon.ModeEdit
@@ -82,7 +83,7 @@ export default function Header() {
                   fontSize: '1.7rem',
                 },
               }}
-            />
+              />
           </IconButton>
         </NavLink>
 
@@ -96,7 +97,7 @@ export default function Header() {
                     fontSize: '1.7rem',
                   },
                 }}
-              />
+                />
             </IconButton>
           </NavLink>
         </Tooltip>
@@ -109,11 +110,11 @@ export default function Header() {
                   aria-label='cart'
                   data-cy='cart-link'
                   sx={{ color: 'secondary.contrastText' }}
-                >
+                  >
                   <StyledBadge
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
                     data-cy='cart-items-count-badge'
-                  >
+                    >
                     <Icon.ShoppingCart
                       sx={{
                         fontSize: '2.5rem',
@@ -121,7 +122,7 @@ export default function Header() {
                           fontSize: '1.7rem',
                         },
                       }}
-                    />
+                      />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
@@ -135,7 +136,7 @@ export default function Header() {
                   <StyledBadge
                     badgeContent={cart.reduce((total, item) => total + item.quantity, 0) || '0'}
                     data-cy='cart-items-count-badge'
-                  >
+                    >
                     <Icon.ShoppingCart
                       sx={{
                         fontSize: '2.5rem',
@@ -143,7 +144,7 @@ export default function Header() {
                           fontSize: '1.7rem',
                         },
                       }}
-                    />
+                      />
                   </StyledBadge>
                 </IconButton>
               </NavLink>
@@ -152,5 +153,6 @@ export default function Header() {
         </Box>
       </Box>
     </Box>
+            </>
   );
 }
