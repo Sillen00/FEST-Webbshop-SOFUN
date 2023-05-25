@@ -18,7 +18,7 @@ export default function ImageProvider({ children }: Props) {
     formData.append('image', file);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/image', formData, {
+      const response = await axios.post('/api/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
