@@ -4,12 +4,13 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useImage } from '../contexts/ImageContext';
 import { Product } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
-  image: Yup.string().required('Ange bild').url('Bilden måste vara en giltig URL'),
+  imageID: Yup.string().required('Ange bild'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -21,7 +22,7 @@ type AdminValues = Yup.InferType<typeof AdminSchema>;
 export const defaultValues: AdminValues = {
   title: '',
   description: '',
-  image: '',
+  imageID: '',
   price: 0,
 };
 
@@ -37,11 +38,12 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { uploadImage } = useImage();
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    image: product?.imageID || defaultValues.image,
+    imageID: product?.imageID || defaultValues.imageID,
     price: product?.price || defaultValues.price,
   };
 
@@ -68,6 +70,18 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
       }
     },
   });
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const imageID = await uploadImage(file);
+      formik.setFieldValue('imageID', imageID);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
+    }
+  };
 
   return (
     <>
@@ -117,14 +131,14 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         <TextField
           fullWidth
           id='image'
-          type='text'
+          type='file'
           name='image'
           label='Bild-URL'
-          value={formik.values.image}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.image && Boolean(formik.errors.image)}
-          helperText={formik.touched.image && formik.errors.image}
+          // value={formik.values.image}
+          onChange={handleFileUpload}
+          // onBlur={formik.handleBlur}
+          error={formik.touched.imageID && Boolean(formik.errors.imageID)}
+          helperText={formik.touched.imageID && formik.errors.imageID}
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
@@ -193,7 +207,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                     overflow: 'hidden',
                   }}
                 >
-                  <img src={formik.values.image} alt={formik.values.title} width='100%' />
+                  <img src={formik.values.imageID} alt={formik.values.title} width='100%' />
                 </Box>
               </Box>
 

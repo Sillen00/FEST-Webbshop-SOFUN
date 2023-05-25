@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import AdminForm, { defaultValues } from '../components/AdminForm';
-import { useProduct, Product } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 export default function EditProduct() {
   const { addProduct } = useProduct();
@@ -13,7 +13,7 @@ export default function EditProduct() {
     _id: '',
     categoryIDs: [],
     title: defaultValues.title,
-    imageID: defaultValues.image,
+    imageID: defaultValues.imageID,
     description: defaultValues.description,
     price: defaultValues.price,
     stockLevel: 0,
