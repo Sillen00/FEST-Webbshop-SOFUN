@@ -17,7 +17,6 @@ export default function OrderPage() {
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'secondary.main',
-        margin: '2rem',
       }}
     >
       <Typography variant='h3'>Odrar</Typography>

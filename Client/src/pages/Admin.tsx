@@ -33,6 +33,7 @@ export default function Admin() {
         alignItems: 'center',
         gap: '1rem',
         marginBottom: '2rem',
+        backgroundColor: 'secondary.main',
       }}
     >
       <Typography variant='h3' marginBottom='2rem'>
@@ -48,7 +49,7 @@ export default function Admin() {
             border: '1px solid',
             paddingLeft: '1rem',
             paddingRight: '1rem',
-            backgroundColor: 'primary.main',
+            backgroundColor: 'secondary.main',
             color: 'secondary.contrastText',
             '&:hover': {
               backgroundColor: 'primary.main',

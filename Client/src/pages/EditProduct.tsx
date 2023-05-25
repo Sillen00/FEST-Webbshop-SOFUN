@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import AdminForm from '../components/AdminForm';
-import { useProduct, Product } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 export default function EditProduct() {
   const params = useParams();
@@ -21,14 +21,13 @@ export default function EditProduct() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '1rem',
-        marginBottom: '3rem',
+        backgroundColor: 'secondary.main',
       }}
     >
       <Typography variant='h3' sx={{ marginBottom: '3rem' }}>
         Redigera produkt
       </Typography>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', marginBottom: '3rem' }}>
         <AdminForm product={selectedProduct} isNewProduct={false} onSubmit={handleSubmit} />
       </Box>
     </Box>
