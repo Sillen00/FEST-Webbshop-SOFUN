@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface User {
+  _id: string;
   username: string;
   password: string;
+  isAdmin: boolean;
 }
 
 interface UserContextValue {
@@ -14,6 +16,8 @@ interface UserContextValue {
   loginUser: (values: User) => void;
   isLoggedIn: boolean;
   isNotValid: boolean;
+  fetchAllUsers: () => void;
+  allUsers: User[];
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -30,11 +34,27 @@ export default function UserProvider({ children }: Props) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false); // or false, depending on the user's login status
   const [isNotValid, setIsNotValid] = useState(false);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
+
+  const fetchAllUsers = async () => {
+    axios
+      .get('/api/users', { withCredentials: true })
+      .then(function (response) {
+        setAllUsers(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const registerUser = async (values: User) => {
     await axios
       .post(
-        'http://localhost:3000/api/users/signup',
+        '/api/users/signup',
         {
           username: values.username,
           password: values.password,
@@ -56,7 +76,7 @@ export default function UserProvider({ children }: Props) {
   const loginUser = async (values: User) => {
     axios
       .post(
-        'http://localhost:3000/api/users/login',
+        '/api/users/login',
         {
           username: values.username,
           password: values.password,
@@ -86,6 +106,8 @@ export default function UserProvider({ children }: Props) {
         loginUser,
         isLoggedIn,
         isNotValid,
+        fetchAllUsers,
+        allUsers,
       }}
     >
       {children}
