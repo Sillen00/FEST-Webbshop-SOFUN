@@ -18,6 +18,8 @@ interface UserContextValue {
   isNotValid: boolean;
   fetchAllUsers: () => void;
   allUsers: User[];
+  assignAsAdmin: (userId: string) => void;
+  removeAsAdmin: (userId: string) => void;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -96,6 +98,34 @@ export default function UserProvider({ children }: Props) {
       });
   };
 
+  const assignAsAdmin = async (userId: string) => {
+    axios
+      .put(`/api/users/${userId}/assignAsAdmin`, {}, { withCredentials: true })
+      .then(function (response) {
+        console.log(response);
+        setAllUsers(prevUsers =>
+          prevUsers.map(user => (user._id === userId ? { ...user, isAdmin: true } : user))
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const removeAsAdmin = async (userId: string) => {
+    axios
+      .put(`/api/users/${userId}/removeAsAdmin`, {}, { withCredentials: true })
+      .then(function (response) {
+        console.log(response);
+        setAllUsers(prevUsers =>
+          prevUsers.map(user => (user._id === userId ? { ...user, isAdmin: false } : user))
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -108,6 +138,8 @@ export default function UserProvider({ children }: Props) {
         isNotValid,
         fetchAllUsers,
         allUsers,
+        assignAsAdmin,
+        removeAsAdmin,
       }}
     >
       {children}

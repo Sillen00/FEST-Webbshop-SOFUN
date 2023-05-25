@@ -25,7 +25,7 @@ export default function Admin() {
   const theme = useTheme();
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { allUsers } = useUser();
+  const { allUsers, assignAsAdmin, removeAsAdmin } = useUser();
 
   return (
     <Box
@@ -205,7 +205,11 @@ export default function Admin() {
                     variant='contained'
                     color='primary'
                     onClick={() => {
-                      // Logik för att ändra admin status
+                      if (user.isAdmin) {
+                        removeAsAdmin(user._id);
+                      } else {
+                        assignAsAdmin(user._id);
+                      }
                     }}
                   >
                     {user.isAdmin ? 'Remove Admin' : 'Make Admin'}

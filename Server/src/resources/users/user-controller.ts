@@ -97,3 +97,20 @@ export async function assignAsAdmin(req: Request, res: Response) {
 
   res.status(200).json(user);
 }
+
+export async function removeAsAdmin(req: Request, res: Response) {
+  const { id } = req.params;
+  if (!req.session?.isAdmin) {
+    return res.status(401).json('You are not authorized to perform this action');
+  }
+
+  const user = await UserModel.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: { isAdmin: false },
+    },
+    { new: true, timestamps: false }
+  ).select('-password');
+
+  res.status(200).json(user);
+}
