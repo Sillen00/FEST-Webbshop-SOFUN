@@ -34,7 +34,7 @@ export default function UserProvider({ children }: Props) {
   const registerUser = async (values: User) => {
     await axios
       .post(
-        'http://localhost:3000/api/users/signup',
+        '/api/users/signup',
         {
           username: values.username,
           password: values.password,
@@ -56,7 +56,7 @@ export default function UserProvider({ children }: Props) {
   const loginUser = async (values: User) => {
     axios
       .post(
-        'http://localhost:3000/api/users/login',
+        '/api/users/login',
         {
           username: values.username,
           password: values.password,
