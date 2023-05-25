@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
 interface ImageContextValue {
   uploadImage: (file: File) => Promise<string>;
@@ -14,8 +14,6 @@ interface Props {
 }
 
 export default function ImageProvider({ children }: Props) {
-
-
   // FUNCTION TO UPLOAD IMAGE TO SERVER -----------------------------------------------------------
   const uploadImage = async (file: File) => {
     const formData = new FormData();
@@ -44,6 +42,8 @@ export default function ImageProvider({ children }: Props) {
         responseType: 'blob', // Set the response type to 'blob' to handle binary data
       });
 
+      
+
       const file = new File([response.data], 'image.jpg', { type: 'image/jpeg' });
       const url = URL.createObjectURL(file);
 
@@ -52,6 +52,15 @@ export default function ImageProvider({ children }: Props) {
       console.error('Error getting image:', error);
       throw error;
     }
+
+    // try {
+    //     const response = await axios.get(`/api/image/${imageID}`);
+    //     const url = response.data.imageUrl;
+    //     return url;
+    //   } catch (error) {
+    //     console.error('Error getting image:', error);
+    //     throw error;
+    //   }
   };
 
   // RETURN -------------------------------------------------------------------------------------

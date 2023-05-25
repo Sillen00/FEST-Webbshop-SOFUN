@@ -116,7 +116,7 @@ export default function Admin() {
                     variant="rounded"
                   /> */}
                   <img
-                    src={product.imageID}
+                    src={product.imageURL}
                     alt={product.title}
                     style={{
                       maxWidth: isSmallScreen ? '5rem' : '20rem',

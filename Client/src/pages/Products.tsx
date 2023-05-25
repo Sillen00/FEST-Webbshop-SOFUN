@@ -70,7 +70,7 @@ export default function Products() {
                   overflow: 'hidden',
                 }}
               >
-                <img src={product.imageID} alt={product.title} width='100%' />
+                <img src={product.imageURL} alt={product.title} width='100%' />
               </Box>
             </Link>
             <Box
@@ -131,14 +131,14 @@ export default function Products() {
                       title: product.title,
                       price: product.price,
                       quantity: 1,
-                      imageURL: product.imageID,
+                      imageURL: product.imageURL,
                     };
                     addProduct(cartItem);
                     setSnackbarOpen(true);
                     setLastAddedProduct({
                       title: product.title,
                       price: product.price,
-                      imageURL: product.imageID,
+                      imageURL: product.imageURL,
                       id: product._id,
                       quantity: 1,
                     });

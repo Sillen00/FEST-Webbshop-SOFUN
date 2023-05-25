@@ -13,12 +13,12 @@ export default function EditProduct() {
     _id: '',
     categoryIDs: [],
     title: defaultValues.title,
-    imageID: defaultValues.imageID,
+    imageID: '',
     description: defaultValues.description,
     price: defaultValues.price,
     stockLevel: 0,
     // imageURL: defaultValues.imageUrl,
-    imageURL: '',
+    imageURL: defaultValues.imageURL,
     isArchived: false,
   };
 

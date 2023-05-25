@@ -11,7 +11,8 @@ import { Product } from '../contexts/ProductContext';
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
-  imageID: Yup.string().required('Ange bild'),
+  // imageID: Yup.string().required('Ange bild'),
+  imageURL: Yup.string().required('Ange bild'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -23,9 +24,9 @@ type AdminValues = Yup.InferType<typeof AdminSchema>;
 export const defaultValues: AdminValues = {
   title: '',
   description: '',
-  imageID: '',
+  // imageID: '',
+  imageURL: '',
   price: 0,
-  // imageUrl: '',
 };
 
 type AdminFormProps = {
@@ -42,6 +43,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { uploadImage, getImage } = useImage();
 
+  const [imageId, setImageId] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
   // const imageUrl = formik.values.imageUrl || '';
   // const setImageUrl = (url: string) => {
@@ -51,9 +53,9 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    imageID: product?.imageID || defaultValues.imageID,
+    // imageID: product?.imageID || defaultValues.imageID,
+    imageURL: product?.imageURL || defaultValues.imageURL,
     price: product?.price || defaultValues.price,
-    // imageUrl: product?.imageURL || defaultValues.imageUrl,
   };
 
   const formik = useFormik<AdminValues>({
@@ -64,7 +66,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         categoryIDs: [],
         title: values.title,
         description: values.description,
-        imageID: 'hardcoded-image-id',
+        imageID: imageId,
         price: values.price,
         stockLevel: 100,
         imageURL: imageUrl,
@@ -72,7 +74,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
       };
 
       try {
-        await onSubmit(newProduct); // Wait for the onSubmit function to complete
+        onSubmit(newProduct); // Wait for the onSubmit function to complete
         navigate('/admin'); // Navigate to the desired route
       } catch (error) {
         console.error('Error creating product:', error);
@@ -85,20 +87,16 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
 
     try {
       const imageID = await uploadImage(file);
-      formik.setFieldValue('imageID', imageID);
+      setImageId(imageID);
+
       const imageUrl = await getImage(imageID);
+      formik.setFieldValue('imageURL', imageUrl);
       setImageUrl(imageUrl);
     } catch (error) {
-      formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
+      formik.setFieldError('imageURL', 'Kunde inte ladda upp bilden');
     }
   };
 
-  // const renderImage = async () => {
-  //   if (imageUrl) {
-  //     return <img src={imageUrl} alt={title} />;
-  //   }
-  //   return <p>Error loading image.</p>;
-  // };
 
   return (
     <>
@@ -149,13 +147,12 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           fullWidth
           id='image'
           type='file'
-          name='imageUrl'
+          name='imageURL'
           // label='Bild-URL'
-          // value={formik.values.image}
           onChange={handleFileUpload}
           // onBlur={formik.handleBlur}
-          error={formik.touched.imageID && Boolean(formik.errors.imageID)}
-          helperText={formik.touched.imageID && formik.errors.imageID}
+          error={formik.touched.imageURL && Boolean(formik.errors.imageURL)}
+          helperText={formik.touched.imageURL && formik.errors.imageURL}
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
