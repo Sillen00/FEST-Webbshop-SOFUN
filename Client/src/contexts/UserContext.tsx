@@ -9,11 +9,11 @@ interface User {
 }
 
 interface UserContextValue {
-  registerUser: (values: User) => void;
+  registerUser: (values: {username: string, password: string}) => void;
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
-  loginUser: (values: User) => void;
+  loginUser: (values: {username: string, password: string}) => void;
   isLoggedIn: boolean;
   isNotValid: boolean;
   fetchAllUsers: () => void;
@@ -54,7 +54,7 @@ export default function UserProvider({ children }: Props) {
       });
   };
 
-  const registerUser = async (values: User) => {
+  const loginUser = async (values: {username: string, password: string}) => {
     await axios
       .post(
         '/api/users/signup',
@@ -76,7 +76,7 @@ export default function UserProvider({ children }: Props) {
       });
   };
 
-  const loginUser = async (values: User) => {
+  const registerUser = async (values: {username: string, password: string}) => {
     axios
       .post(
         '/api/users/login',
