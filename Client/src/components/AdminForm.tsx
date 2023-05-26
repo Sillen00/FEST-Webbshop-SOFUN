@@ -76,7 +76,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         sx={{
           '& > :not(style)': {
             m: 1,
-            width: '25ch',
             display: 'flex',
             flexDirection: 'column',
           },
@@ -142,7 +141,21 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           inputProps={{ 'data-cy': 'product-price' }}
           FormHelperTextProps={{ 'data-cy': 'product-price-error' } as any}
         />
-        <Button color='secondary' variant='contained' fullWidth type='submit'>
+        <Button
+          variant='contained'
+          color='primary'
+          fullWidth
+          sx={{
+            fontSize: '12px',
+            border: '1px solid',
+            padding: '0.5rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
           {buttonText}
         </Button>
       </Box>
@@ -154,7 +167,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
             justifyContent: 'center',
             alignItems: 'center',
             height: '100%',
-            backgroundColor: 'background.default',
             '& a': {
               color: 'black',
               textDecoration: 'none',
@@ -166,7 +178,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              margin: '1rem',
+              marginLeft: '1.5rem',
               padding: '2rem',
               maxHeight: matches ? '29.6rem' : 'none',
               justifyContent: 'center',
@@ -235,7 +247,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                 padding: '0.5rem',
               }}
             >
-              <Button
+              {/* <Button
                 variant='contained'
                 color='secondary'
                 sx={{
@@ -247,7 +259,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                 }}
               >
                 Lägg till i kundvagnen
-              </Button>
+              </Button> */}
             </Box>
           </Card>
         </Box>
