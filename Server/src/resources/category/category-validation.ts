@@ -1,12 +1,5 @@
+import * as yup from "yup";
 
-
-import express from 'express';
-import { createCategory } from './category-controller';
-
-
-const categoryRouter = express
- .Router()
- .post('/api/categories', createCategory);
-
-
-export default categoryRouter;
+export const CategorySchema = yup.object({
+  name: yup.string().required("Category name required"),
+});
