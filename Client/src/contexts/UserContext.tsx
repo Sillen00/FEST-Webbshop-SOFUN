@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface User {
   _id: string;
@@ -39,10 +39,6 @@ export default function UserProvider({ children }: Props) {
   const [isNotValid, setIsNotValid] = useState(false);
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    fetchAllUsers();
-  }, []);
-
   const fetchAllUsers = async () => {
     axios
       .get('/api/users', { withCredentials: true })
@@ -67,6 +63,7 @@ export default function UserProvider({ children }: Props) {
       .then(function (response) {
         handleClose();
         setIsLoggedIn(true);
+        fetchAllUsers();
         console.log(response);
       })
       .catch(function (error) {
@@ -100,11 +97,12 @@ export default function UserProvider({ children }: Props) {
   };
 
   const logoutUser = async () => {
-    axios
+    await axios
       .post('/api/users/logout', {}, { withCredentials: true })
       .then(function (response) {
         console.log(response);
         setIsLoggedIn(false);
+        setAllUsers([]);
       })
       .catch(function (error) {
         console.log(error);
