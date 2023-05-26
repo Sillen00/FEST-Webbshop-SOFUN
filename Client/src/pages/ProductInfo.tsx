@@ -43,9 +43,6 @@ export default function ProductInfo() {
     setSnackbarOpen(false);
   };
 
-  const backgroundImage =
-    'https://www.ski-doo.com/content/dam/global/en/ski-doo/my22/images/models/Ski-Doo-Model-Essential-Background.jpg';
-
   const selectedProduct = product.find((product: Product) => product._id === params.id) as Product;
 
   const card = (
