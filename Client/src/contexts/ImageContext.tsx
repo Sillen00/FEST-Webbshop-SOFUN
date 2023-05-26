@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext } from 'react';
 
 interface ImageContextValue {
   uploadImage: (file: File) => Promise<string>;
-  getImage: (imageID: string) => Promise<string>;
+  // getImage: (imageID: string) => Promise<string>;
 }
 
 export const ImageContext = createContext<ImageContextValue>(null as any);
@@ -34,34 +34,6 @@ export default function ImageProvider({ children }: Props) {
     }
   };
 
-  // GET IMAGE FROM SERVER -----------------------------------------------------------------------
-
-  const getImage = async (imageID: string) => {
-    try {
-      const response = await axios.get(`/api/image/${imageID}`, {
-        responseType: 'blob', // Set the response type to 'blob' to handle binary data
-      });
-
-      
-
-      const file = new File([response.data], 'image.jpg', { type: 'image/jpeg' });
-      const url = URL.createObjectURL(file);
-
-      return url;
-    } catch (error) {
-      console.error('Error getting image:', error);
-      throw error;
-    }
-
-    // try {
-    //     const response = await axios.get(`/api/image/${imageID}`);
-    //     const url = response.data.imageUrl;
-    //     return url;
-    //   } catch (error) {
-    //     console.error('Error getting image:', error);
-    //     throw error;
-    //   }
-  };
 
   // RETURN -------------------------------------------------------------------------------------
 
@@ -69,7 +41,7 @@ export default function ImageProvider({ children }: Props) {
     <ImageContext.Provider
       value={{
         uploadImage,
-        getImage,
+        // getImage,
       }}
     >
       {children}

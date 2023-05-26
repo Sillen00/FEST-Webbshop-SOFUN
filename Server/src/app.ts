@@ -35,7 +35,7 @@ app.use(imageRouter);
 
 // ERROR HANDLING --------------------------------------------------------------------------------------------------------------------
 app.use((req, res, next) => {
-  res.status(401).json('The resource you are looking for does not exist');
+  res.status(404).json('The resource you are looking for does not exist');
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

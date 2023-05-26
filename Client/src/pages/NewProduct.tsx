@@ -17,8 +17,6 @@ export default function EditProduct() {
     description: defaultValues.description,
     price: defaultValues.price,
     stockLevel: 0,
-    // imageURL: defaultValues.imageUrl,
-    imageURL: defaultValues.imageURL,
     isArchived: false,
   };
 

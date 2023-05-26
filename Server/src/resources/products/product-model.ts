@@ -26,10 +26,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    imageURL: {
-        type: String,
-        required: true,
-    },
     isArchived: {
         type: Boolean,
         default: false,

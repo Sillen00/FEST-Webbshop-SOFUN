@@ -175,14 +175,14 @@ export default function ProductInfo() {
                     title: selectedProduct.title,
                     price: selectedProduct.price,
                     quantity: 1,
-                    imageURL: selectedProduct.imageURL,
+                    imageID: selectedProduct.imageID,
                   };
                   addProduct(cartItem);
                   setSnackbarOpen(true);
                   setLastAddedProduct({
                     title: selectedProduct.title,
                     price: selectedProduct.price,
-                    image: selectedProduct.imageURL,
+                    image: selectedProduct.imageID,
                   });
                 }}
               >

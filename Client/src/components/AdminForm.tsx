@@ -2,7 +2,6 @@ import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useImage } from '../contexts/ImageContext';
@@ -11,8 +10,7 @@ import { Product } from '../contexts/ProductContext';
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
-  // imageID: Yup.string().required('Ange bild'),
-  imageURL: Yup.string().required('Ange bild'),
+  imageID: Yup.string().required('Ange bild'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -24,8 +22,7 @@ type AdminValues = Yup.InferType<typeof AdminSchema>;
 export const defaultValues: AdminValues = {
   title: '',
   description: '',
-  // imageID: '',
-  imageURL: '',
+  imageID: '',
   price: 0,
 };
 
@@ -41,20 +38,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { uploadImage, getImage } = useImage();
+  const { uploadImage } = useImage();
 
-  const [imageId, setImageId] = useState<string>('');
-  const [imageUrl, setImageUrl] = useState<string>('');
-  // const imageUrl = formik.values.imageUrl || '';
-  // const setImageUrl = (url: string) => {
-  //   formik.setFieldValue('imageUrl', url);
-  // };
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    // imageID: product?.imageID || defaultValues.imageID,
-    imageURL: product?.imageURL || defaultValues.imageURL,
+    imageID: product?.imageID || defaultValues.imageID,
     price: product?.price || defaultValues.price,
   };
 
@@ -66,10 +56,9 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         categoryIDs: [],
         title: values.title,
         description: values.description,
-        imageID: imageId,
+        imageID: values.imageID,
         price: values.price,
         stockLevel: 100,
-        imageURL: imageUrl,
         isArchived: false,
       };
 
@@ -87,16 +76,12 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
 
     try {
       const imageID = await uploadImage(file);
-      setImageId(imageID);
 
-      const imageUrl = await getImage(imageID);
-      formik.setFieldValue('imageURL', imageUrl);
-      setImageUrl(imageUrl);
+      formik.setFieldValue('imageID', imageID);
     } catch (error) {
-      formik.setFieldError('imageURL', 'Kunde inte ladda upp bilden');
+      formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
     }
   };
-
 
   return (
     <>
@@ -147,12 +132,12 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           fullWidth
           id='image'
           type='file'
-          name='imageURL'
+          name='imageID'
           // label='Bild-URL'
           onChange={handleFileUpload}
           // onBlur={formik.handleBlur}
-          error={formik.touched.imageURL && Boolean(formik.errors.imageURL)}
-          helperText={formik.touched.imageURL && formik.errors.imageURL}
+          error={formik.touched.imageID && Boolean(formik.errors.imageID)}
+          helperText={formik.touched.imageID && formik.errors.imageID}
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
@@ -221,7 +206,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                     overflow: 'hidden',
                   }}
                 >
-                  <img src={imageUrl} alt={formik.values.title} width='100%' />
+                  {formik.values.imageID && (
+                    <img
+                      src={'/api/image/' + formik.values.imageID}
+                      alt={formik.values.title}
+                      width='100%'
+                    />
+                  )}
                 </Box>
               </Box>
 

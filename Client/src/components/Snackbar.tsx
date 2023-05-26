@@ -82,7 +82,7 @@ export default function Snackbar({ open, handleClose, lastAddedProduct }: Snackb
             >
               <Box sx={{ marginRight: '1rem' }}>
                 <img
-                  src={lastAddedProduct.image}
+                  src={'/api/image/' + lastAddedProduct.image}
                   alt='product'
                   style={{
                     width: '70px',
