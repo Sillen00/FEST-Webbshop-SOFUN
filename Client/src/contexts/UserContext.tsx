@@ -102,7 +102,7 @@ export default function UserProvider({ children }: Props) {
       .then(function (response) {
         console.log(response);
         setIsLoggedIn(false);
-        setAllUsers([]); 
+        setAllUsers([]);
       })
       .catch(function (error) {
         console.log(error);
