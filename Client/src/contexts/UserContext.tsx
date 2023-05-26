@@ -39,9 +39,6 @@ export default function UserProvider({ children }: Props) {
   const [isNotValid, setIsNotValid] = useState(false);
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    fetchAllUsers();
-  }, []);
 
   const fetchAllUsers = async () => {
     axios
@@ -67,6 +64,7 @@ export default function UserProvider({ children }: Props) {
       .then(function (response) {
         handleClose();
         setIsLoggedIn(true);
+        fetchAllUsers();
         console.log(response);
       })
       .catch(function (error) {
