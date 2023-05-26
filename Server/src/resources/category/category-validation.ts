@@ -1,4 +1,3 @@
-// GET /api/category
 
 
 import express from 'express';
