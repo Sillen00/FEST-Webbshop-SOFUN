@@ -6,7 +6,7 @@
 
 import express from 'express';
 import { authAdmin, authLogin } from '../middlewares';
-import { assignAsAdmin, getAllUsers, logInUser, logOutUser, signUpUser } from './user-controller';
+import { assignAsAdmin, getAllUsers, logInUser, logOutUser, signUpUser, removeAsAdmin } from './user-controller';
 
 const userRouter = express
   .Router()
@@ -14,6 +14,7 @@ const userRouter = express
   .post('/api/users/signup', signUpUser)
   .post('/api/users/login', logInUser)
   .post('/api/users/logout', authLogin, logOutUser)
-  .put('/api/users/assignAsAdmin', authAdmin, assignAsAdmin);
+  .put('/api/users/:id/assignAsAdmin', authAdmin, assignAsAdmin)
+  .put('/api/users/:id/removeAsAdmin', authAdmin, removeAsAdmin);
 
 export default userRouter;
