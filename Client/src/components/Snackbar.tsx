@@ -1,6 +1,6 @@
 import * as Icon from '@mui/icons-material';
 
-import { Box, Button, IconButton, Paper, Snackbar as MuiSnackbar, Typography } from '@mui/material';
+import { Box, Button, IconButton, Snackbar as MuiSnackbar, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
