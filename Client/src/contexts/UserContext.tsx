@@ -57,7 +57,7 @@ export default function UserProvider({ children }: Props) {
   const loginUser = async (values: { username: string; password: string }) => {
     await axios
       .post(
-        '/api/users/signup',
+        '/api/users/login',
         {
           username: values.username,
           password: values.password,
@@ -79,7 +79,7 @@ export default function UserProvider({ children }: Props) {
   const registerUser = async (values: { username: string; password: string }) => {
     axios
       .post(
-        '/api/users/login',
+        '/api/users/signup',
         {
           username: values.username,
           password: values.password,
