@@ -21,14 +21,13 @@ export default function EditProduct() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '1rem',
-        marginBottom: '1rem',
+        backgroundColor: 'secondary.main',
       }}
     >
-      <Typography variant='h4' sx={{ marginBottom: '1rem' }}>
+      <Typography variant='h3' sx={{ marginBottom: '3rem' }}>
         Redigera produkt
       </Typography>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', marginBottom: '3rem' }}>
         <AdminForm product={selectedProduct} isNewProduct={false} onSubmit={handleSubmit} />
       </Box>
     </Box>

@@ -1,0 +1,11 @@
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "username": "edvinadmin",
+  "password": "1234"
+}
+
+### Get all users
+GET http://localhost:3000/api/users 

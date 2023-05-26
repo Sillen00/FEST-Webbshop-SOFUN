@@ -100,7 +100,7 @@ const LoginRegisterModal = forwardRef<HTMLDivElement>((props, ref) => {
               type='submit'
               sx={{ width: '100%', marginTop: '1em' }}
               variant='contained'
-              color='secondary'
+              color='primary'
             >
               Logga in
             </Button>
@@ -115,7 +115,7 @@ const LoginRegisterModal = forwardRef<HTMLDivElement>((props, ref) => {
             onClick={() => setRegister(false)}
             sx={{ width: '100%' }}
             variant='contained'
-            color='secondary'
+            color='primary'
           >
             Skapa Konto
           </Button>

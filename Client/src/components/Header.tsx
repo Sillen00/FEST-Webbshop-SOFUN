@@ -1,8 +1,8 @@
 import * as Icon from '@mui/icons-material';
-import { Box, IconButton, Modal, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Modal, Tooltip, Typography } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useUser } from '../contexts/UserContext';
 import { theme } from '../theme';
@@ -13,7 +13,8 @@ export default function Header() {
   const { cart } = useCart();
   const location = useLocation();
 
-  const { open, handleOpen, handleClose, isLoggedIn } = useUser();
+  const { open, handleOpen, handleClose, isLoggedIn, logoutUser } = useUser();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -150,6 +151,16 @@ export default function Header() {
               )}
             </Tooltip>
           </Box>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => {
+              logoutUser();
+              navigate('/');
+            }}
+          >
+            <Typography variant='body1'>Logga ut </Typography>
+          </Button>
         </Box>
       </Box>
     </>
