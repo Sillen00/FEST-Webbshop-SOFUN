@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import AdminForm from '../components/AdminForm';
-import { useProduct, Product } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 export default function EditProduct() {
   const params = useParams();

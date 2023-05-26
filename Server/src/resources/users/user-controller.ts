@@ -74,7 +74,6 @@ export async function logOutUser(req: Request, res: Response) {
   //   }
   //   res.status(204).end();
   // });
-  
 }
 
 // ADMIN - UPDATE USER ROLE TO ADMIN ---------------------------------------------------------

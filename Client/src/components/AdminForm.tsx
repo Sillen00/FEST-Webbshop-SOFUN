@@ -40,7 +40,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { uploadImage } = useImage();
 
-
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,

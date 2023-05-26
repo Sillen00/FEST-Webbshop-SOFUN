@@ -58,7 +58,7 @@ export default function OrderPage() {
               >
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <img
-                    src={"/api/image/" + product.imageID}
+                    src={'/api/image/' + product.imageID}
                     alt={product.title}
                     style={{ width: '8rem', height: 'auto' }}
                   />

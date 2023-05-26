@@ -66,7 +66,7 @@ export default function BasicTable() {
               <TableCell component='th' scope='row' sx={{ width: '40%' }}>
                 <Avatar
                   alt={product.title}
-                  src={"/api/image/" + product.imageID}
+                  src={'/api/image/' + product.imageID}
                   sx={{
                     width: 'auto',
                     height: 'auto',
