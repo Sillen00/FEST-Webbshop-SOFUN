@@ -39,7 +39,6 @@ export default function UserProvider({ children }: Props) {
   const [isNotValid, setIsNotValid] = useState(false);
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
-
   const fetchAllUsers = async () => {
     axios
       .get('/api/users', { withCredentials: true })
