@@ -17,10 +17,9 @@ export default function OrderConfirmation() {
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'secondary.main',
-        margin: '2rem',
       }}
     >
-      <Typography variant='h3'>Bokningsbekräftelse</Typography>
+      <Typography variant='h3' m={2.5}>Bokningsbekräftelse</Typography>
 
       <Box
         sx={{

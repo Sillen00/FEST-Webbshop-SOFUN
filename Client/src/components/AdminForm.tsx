@@ -156,6 +156,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         <Button
           variant='contained'
           color='primary'
+          type='submit'
           fullWidth
           sx={{
             fontSize: '12px',
