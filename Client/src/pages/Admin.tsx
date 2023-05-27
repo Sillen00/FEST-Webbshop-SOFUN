@@ -84,14 +84,16 @@ export default function Admin() {
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Bild
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                ID
-              </TableCell>
+              {!isSmallScreen ? (
+                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+                  ID
+                </TableCell>
+              ) : null}
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Titel
               </TableCell>
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Pris{' '}
+                Pris
               </TableCell>
               <TableCell align='center'></TableCell>
               <TableCell align='center'></TableCell>
@@ -102,43 +104,35 @@ export default function Admin() {
               <TableRow
                 key={product._id}
                 sx={{
-                  '&:last-child td, &:last-child th': {},
+                  '&:last-child td': {}, // style last row
                 }}
                 data-cy='product'
               >
-                <TableCell component='th' scope='row' sx={{ width: '20%' }}>
-                  {/* <Avatar
-                    alt={product.title}
-                    src={product.image}
-                    sx={{
-                      width: "auto",
-                      height: "auto",
-                      maxHeight: "15rem",
-                      minHeight: "5rem",
-                    }}
-                    variant="rounded"
-                  /> */}
+                <TableCell component='th' scope='row'>
                   <img
                     src={'/api/image/' + product.imageID}
                     alt={product.title}
                     style={{
-                      maxWidth: isSmallScreen ? '5rem' : '20rem',
+                      maxWidth: '6rem',
                     }}
                   />
                 </TableCell>
-                <TableCell align='center' data-cy='product-id' sx={{ width: '16%' }}>
-                  {product._id}
-                </TableCell>
-                <TableCell align='center' sx={{ width: '16%' }} data-cy='product-title'>
+                {!isSmallScreen ? (
+                  <TableCell align='center' data-cy='product-id'>
+                    {product._id}
+                  </TableCell>
+                ) : null}
+                <TableCell align='center' data-cy='product-title'>
                   {product.title}
                 </TableCell>
                 <TableCell align='center' data-cy='product-price'>
                   {product.price}
                 </TableCell>
-                <TableCell align='center' sx={{ width: '6%' }}>
+                {/* <TableCell align='center' sx={{ width: '6%' }}> */}
+                <TableCell align='center'>
                   <DeleteDialog {...product} />
                 </TableCell>
-                <TableCell align='center' sx={{ width: '6%' }}>
+                <TableCell align='center'>
                   <Button
                     sx={{ color: 'secondary.contrastText' }}
                     onClick={() => {
