@@ -1,31 +1,12 @@
-import * as Icon from '@mui/icons-material';
-
-import {
-  Box,
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import DeleteDialog from '../components/Dialog';
-import { useProduct } from '../contexts/ProductContext';
-import { useUser } from '../contexts/UserContext';
+import AdminAllProductsTable from '../components/AdminAllProductsTable';
+import AdminAllUsersTable from '../components/AdminAllUsersTable';
 
 export default function Admin() {
   const navigate = useNavigate();
-  const { product } = useProduct();
-  const theme = useTheme();
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { allUsers, assignAsAdmin, removeAsAdmin } = useUser();
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
@@ -64,157 +45,8 @@ export default function Admin() {
           Lägg till produkt
         </Button>
       </Box>
-      <TableContainer
-        component={Paper}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minWidth: 330,
-          maxWidth: 800,
-        }}
-      >
-        <Table aria-label='simple table' size='small' padding='none'>
-          <TableHead>
-            <TableRow
-              sx={{
-                bgcolor: 'secondary.contrastText',
-              }}
-            >
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Bild
-              </TableCell>
-              {!isSmallScreen ? (
-                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                  ID
-                </TableCell>
-              ) : null}
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Titel
-              </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Pris
-              </TableCell>
-              <TableCell align='center'></TableCell>
-              <TableCell align='center'></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {product.map(product => (
-              <TableRow
-                key={product._id}
-                sx={{
-                  '&:last-child td': {}, // style last row
-                }}
-                data-cy='product'
-              >
-                <TableCell component='th' scope='row'>
-                  <img
-                    src={'/api/image/' + product.imageID}
-                    alt={product.title}
-                    style={{
-                      maxWidth: '6rem',
-                    }}
-                  />
-                </TableCell>
-                {!isSmallScreen ? (
-                  <TableCell align='center' data-cy='product-id'>
-                    {product._id}
-                  </TableCell>
-                ) : null}
-                <TableCell align='center' data-cy='product-title'>
-                  {product.title}
-                </TableCell>
-                <TableCell align='center' data-cy='product-price'>
-                  {product.price}
-                </TableCell>
-                {/* <TableCell align='center' sx={{ width: '6%' }}> */}
-                <TableCell align='center'>
-                  <DeleteDialog {...product} />
-                </TableCell>
-                <TableCell align='center'>
-                  <Button
-                    sx={{ color: 'secondary.contrastText' }}
-                    onClick={() => {
-                      navigate('/admin/product/' + product._id);
-                    }}
-                    data-cy='admin-edit-product'
-                  >
-                    <Icon.ModeEdit sx={{ color: 'secondary.contrastText' }} />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer
-        component={Paper}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minWidth: 330,
-          maxWidth: 800,
-        }}
-      >
-        <Table aria-label='simple table' size='small' padding='none'>
-          <TableHead>
-            <TableRow
-              sx={{
-                bgcolor: 'secondary.contrastText',
-              }}
-            >
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                User ID
-              </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Username
-              </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Admin
-              </TableCell>
-              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                Change Admin Status
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {allUsers.map(user => (
-              <TableRow
-                key={user._id}
-                sx={{
-                  '&:last-child td, &:last-child th': {},
-                }}
-                data-cy='user'
-              >
-                <TableCell align='center' data-cy='user-id'>
-                  {user._id}
-                </TableCell>
-                <TableCell align='center' data-cy='user-name'>
-                  {user.username}
-                </TableCell>
-                <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
-                <TableCell align='center'>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      if (user.isAdmin) {
-                        removeAsAdmin(user._id);
-                      } else {
-                        assignAsAdmin(user._id);
-                      }
-                    }}
-                  >
-                    {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <AdminAllProductsTable />
+      <AdminAllUsersTable />
     </Box>
   );
 }
