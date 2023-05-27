@@ -180,7 +180,7 @@ export default function ProductInfo() {
                     title: selectedProduct.title,
                     price: selectedProduct.price,
                     quantity: 1,
-                    imageURL: selectedProduct.imageID,
+                    imageID: selectedProduct.imageID,
                   };
                   addProduct(cartItem);
                   setSnackbarOpen(true);

@@ -16,7 +16,7 @@ const productSchema = Yup.object().shape({
   description: Yup.string().required(),
   price: Yup.number().required(),
   stockLevel: Yup.number().required(),
-  imageURL: Yup.string().required(),
+  // imageURL: Yup.string().required(),
   isArchived: Yup.boolean().required(),
 });
 
@@ -77,7 +77,7 @@ export async function deleteProduct(req: Request, res: Response) {
   try {
     const product = await ProductModel.findById(req.params.id);
     if (!product) {
-      const responseObj = req.params.id + " not found";
+      const responseObj = req.params.id + ' not found';
       res.status(404).json(responseObj);
       return;
     }
@@ -85,13 +85,11 @@ export async function deleteProduct(req: Request, res: Response) {
     res.status(204).json(product);
   } catch (error) {
     res.status(404).json({
-      message: "Error finding the product",
+      message: 'Error finding the product',
       error: (error as any).message,
     });
   }
 }
-
-
 
 export async function productQuantity(req: Request, res: Response) {
   console.log('Placeholder för productQuantity');
