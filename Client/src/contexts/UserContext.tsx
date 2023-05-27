@@ -40,7 +40,7 @@ export default function UserProvider({ children }: Props) {
   const [isNotValid, setIsNotValid] = useState(false);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isLoading , setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAllUsers = async () => {
     axios
