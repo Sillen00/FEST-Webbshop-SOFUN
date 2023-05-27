@@ -59,53 +59,56 @@ export default function AdminAllProductsTable() {
         </TableHead>
         <TableBody>
           {product.map(product => (
-            <TableRow
-              key={product._id}
-              sx={{
-                '&:last-child td': {}, // style last row
-              }}
-              data-cy='product'
-            >
-              <TableCell component='th' scope='row'>
-                <img
-                  src={'/api/image/' + product.imageID}
-                  alt={product.title}
-                  style={{
-                    maxWidth: '6rem',
-                  }}
-                />
-              </TableCell>
-              {!isSmallScreen ? (
-                <TableCell align='center' data-cy='product-id'>
-                  {product._id}
+            <>
+              <TableRow
+                key={product._id}
+                sx={{
+                  '&:last-child td': {}, // style last row
+                }}
+                data-cy='product'
+              >
+                <TableCell component='th' scope='row'>
+                  <img
+                    src={'/api/image/' + product.imageID}
+                    alt={product.title}
+                    style={{
+                      maxWidth: '6rem',
+                    }}
+                  />
                 </TableCell>
-              ) : null}
-              <TableCell align='center' data-cy='product-title'>
-                {product.title}
-              </TableCell>
-              <TableCell align='center' data-cy='product-price'>
-                {product.price}
-              </TableCell>
-              {/* <TableCell align='center' sx={{ width: '6%' }}> */}
-              <TableCell align='center'>
-                <DeleteDialog {...product} />
-              </TableCell>
-              <TableCell align='center'>
-                <Button
-                  sx={{ color: 'secondary.contrastText' }}
-                  onClick={() => {
-                    navigate('/admin/product/' + product._id);
-                  }}
-                  data-cy='admin-edit-product'
-                >
-                  <Icon.ModeEdit sx={{ color: 'secondary.contrastText' }} />
-                </Button>
-              </TableCell>
-            </TableRow>
+                {!isSmallScreen ? (
+                  <TableCell align='center' data-cy='product-id'>
+                    {product._id}
+                  </TableCell>
+                ) : null}
+                <TableCell align='center' data-cy='product-title'>
+                  {product.title}
+                </TableCell>
+                <TableCell align='center' data-cy='product-price'>
+                  {product.price}
+                </TableCell>
+                {/* <TableCell align='center' sx={{ width: '6%' }}> */}
+                <TableCell align='center'>
+                  <DeleteDialog {...product} />
+                </TableCell>
+                <TableCell align='center'>
+                  <Button
+                    sx={{ color: 'secondary.contrastText' }}
+                    onClick={() => {
+                      navigate('/admin/product/' + product._id);
+                    }}
+                    data-cy='admin-edit-product'
+                  >
+                    <Icon.ModeEdit sx={{ color: 'secondary.contrastText' }} />
+                  </Button>
+                </TableCell>
+              </TableRow>
+              {/* Stocklevel count. */}
+              <input value={product.stockLevel.toString()} type='number' name="stockLevel" style={{ width:"6em", borderRadius: '4px'}} />
+            </>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
-

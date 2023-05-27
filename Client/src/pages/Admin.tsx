@@ -50,14 +50,40 @@ export default function Admin() {
       </Box>
 
       <ButtonGroup
-        variant='contained'
-        aria-label='outlined primary button group'
-        sx={{ width: "100%", maxWidth: "800px" }}
+        variant="contained"
+        aria-label='contained primary button group'
+        sx={{ width: '100%', maxWidth: '800px', border:"1px solid" }}
       >
-        <Button onClick={() => setShowUser_Product('product')} sx={{ width: '50%' }}>
+        <Button
+          onClick={() => setShowUser_Product('product')}
+          sx={{
+            width: '50%',
+            fontSize: '16px',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
           Products
         </Button>
-        <Button onClick={() => setShowUser_Product('user')} sx={{ width: '50%' }}>
+        <Button
+          onClick={() => setShowUser_Product('user')}
+          sx={{
+            width: '50%',
+            fontSize: '16px',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
           Users
         </Button>
       </ButtonGroup>
