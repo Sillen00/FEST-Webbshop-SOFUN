@@ -25,7 +25,7 @@ export default function Admin() {
   const theme = useTheme();
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { allUsers, assignAsAdmin, removeAsAdmin, isLoggedIn } = useUser();
+  const { allUsers, assignAsAdmin, removeAsAdmin } = useUser();
 
   return (
     <Box
@@ -154,75 +154,73 @@ export default function Admin() {
           </TableBody>
         </Table>
       </TableContainer>
-      {isLoggedIn && (
-        <TableContainer
-          component={Paper}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minWidth: 330,
-            maxWidth: 800,
-          }}
-        >
-          <Table aria-label='simple table' size='small' padding='none'>
-            <TableHead>
+      <TableContainer
+        component={Paper}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minWidth: 330,
+          maxWidth: 800,
+        }}
+      >
+        <Table aria-label='simple table' size='small' padding='none'>
+          <TableHead>
+            <TableRow
+              sx={{
+                bgcolor: 'secondary.contrastText',
+              }}
+            >
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+                User ID
+              </TableCell>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+                Username
+              </TableCell>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+                Admin
+              </TableCell>
+              <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+                Change Admin Status
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {allUsers.map(user => (
               <TableRow
+                key={user._id}
                 sx={{
-                  bgcolor: 'secondary.contrastText',
+                  '&:last-child td, &:last-child th': {},
                 }}
+                data-cy='user'
               >
-                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                  User ID
+                <TableCell align='center' data-cy='user-id'>
+                  {user._id}
                 </TableCell>
-                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                  Username
+                <TableCell align='center' data-cy='user-name'>
+                  {user.username}
                 </TableCell>
-                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                  Admin
-                </TableCell>
-                <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                  Change Admin Status
+                <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
+                <TableCell align='center'>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => {
+                      if (user.isAdmin) {
+                        removeAsAdmin(user._id);
+                      } else {
+                        assignAsAdmin(user._id);
+                      }
+                    }}
+                  >
+                    {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                  </Button>
                 </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {allUsers.map(user => (
-                <TableRow
-                  key={user._id}
-                  sx={{
-                    '&:last-child td, &:last-child th': {},
-                  }}
-                  data-cy='user'
-                >
-                  <TableCell align='center' data-cy='user-id'>
-                    {user._id}
-                  </TableCell>
-                  <TableCell align='center' data-cy='user-name'>
-                    {user.username}
-                  </TableCell>
-                  <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
-                  <TableCell align='center'>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      onClick={() => {
-                        if (user.isAdmin) {
-                          removeAsAdmin(user._id);
-                        } else {
-                          assignAsAdmin(user._id);
-                        }
-                      }}
-                    >
-                      {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 }

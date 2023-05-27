@@ -15,6 +15,7 @@ export default function Header() {
 
   const { open, handleOpen, handleClose, isLoggedIn, logoutUser } = useUser();
   const navigate = useNavigate();
+  const { currentUser } = useUser();
 
   return (
     <>
@@ -74,18 +75,20 @@ export default function Header() {
             },
           }}
         >
-          <NavLink to='./admin' data-cy='admin-link'>
-            <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-              <Icon.ModeEdit
-                sx={{
-                  fontSize: '2.5rem',
-                  [theme.breakpoints.down('sm')]: {
-                    fontSize: '1.7rem',
-                  },
-                }}
-              />
-            </IconButton>
-          </NavLink>
+          {currentUser?.isAdmin && (
+            <NavLink to='./admin' data-cy='admin-link'>
+              <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
+                <Icon.ModeEdit
+                  sx={{
+                    fontSize: '2.5rem',
+                    [theme.breakpoints.down('sm')]: {
+                      fontSize: '1.7rem',
+                    },
+                  }}
+                />
+              </IconButton>
+            </NavLink>
+          )}
 
           <Tooltip title='Orders'>
             <NavLink to='./orders' data-cy='admin-link'>
