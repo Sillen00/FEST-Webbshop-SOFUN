@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { ZodError } from 'zod';
 import categoryRouter from './resources/category/category-router';
+import imageRouter from './resources/image/image-router';
 import orderRouter from './resources/orders/order-router';
 import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
@@ -30,10 +31,11 @@ app.use(userRouter);
 app.use(productRouter);
 app.use(orderRouter);
 app.use(categoryRouter);
+app.use(imageRouter);
 
 // ERROR HANDLING --------------------------------------------------------------------------------------------------------------------
 app.use((req, res, next) => {
-  res.status(401).json('The resource you are looking for does not exist');
+  res.status(404).json('The resource you are looking for does not exist');
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

@@ -1,0 +1,19 @@
+
+### Retrieve File
+GET http://localhost:3000/api/image/646f429486dd7519e9d7b25f
+
+### Delete File
+DELETE http://localhost:3000/api/image/646f429486dd7519e9d7b25f
+
+
+### Upload File
+
+POST http://localhost:3000/api/image
+Content-Type: multipart/form-data; boundary=FormDataRow
+
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="R1.png"
+Content-Type: image/png
+
+< ./R1.png
+--FormDataRow--

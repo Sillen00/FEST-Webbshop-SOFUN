@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import ShoppingCart from './contexts/CartContext';
+import ImageProvider from './contexts/ImageContext';
 import OrderProvider from './contexts/OrderContext';
 import ProductInventory from './contexts/ProductContext';
 import UserProvider, { useUser } from './contexts/UserContext';
@@ -83,13 +84,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <OrderProvider>
-        <ShoppingCart>
-          <ProductInventory>
-            <UserProvider>
-              <RouterProvider router={router} />
-            </UserProvider>
-          </ProductInventory>
-        </ShoppingCart>
+        <ImageProvider>
+          <ShoppingCart>
+            <ProductInventory>
+              <UserProvider>
+                <RouterProvider router={router} />
+              </UserProvider>
+            </ProductInventory>
+          </ShoppingCart>
+        </ImageProvider>
       </OrderProvider>
     </ThemeProvider>
   </React.StrictMode>

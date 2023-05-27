@@ -167,7 +167,22 @@ export default function CheckoutForm() {
           autoComplete='tel'
         />
 
-        <Button color='secondary' variant='contained' fullWidth type='submit'>
+        <Button
+          variant='contained'
+          fullWidth
+          type='submit'
+          color='primary'
+          sx={{
+            fontSize: '12px',
+            border: '1px solid',
+            padding: '0.5rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
           Beställ
         </Button>
       </Box>
