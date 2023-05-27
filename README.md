@@ -41,7 +41,7 @@ Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 
 **Krav för godkänt**
 
-- [x] Alla sidor skall vara responsiva.
+- [ ] Alla sidor skall vara responsiva.
 - [x] Arbetet ska implementeras med en React frontend och en Express backend.
 - [ ] Express backenden ska ha validering på samtliga endpoints.
 - [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G
