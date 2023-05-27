@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useUser } from '../contexts/UserContext';
 
-function AdminAllUsersTable() {
+export default function AdminAllUsersTable() {
   const { allUsers, assignAsAdmin, removeAsAdmin } = useUser();
 
   return (
@@ -83,5 +83,3 @@ function AdminAllUsersTable() {
     </TableContainer>
   );
 }
-
-export default AdminAllUsersTable;

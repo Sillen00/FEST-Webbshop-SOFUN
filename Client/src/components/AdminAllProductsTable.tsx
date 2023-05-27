@@ -15,7 +15,7 @@ import { useProduct } from '../contexts/ProductContext';
 import { theme } from '../theme';
 import DeleteDialog from './Dialog';
 
-function AdminAllProductsTable() {
+export default function AdminAllProductsTable() {
   const navigate = useNavigate();
 
   const { product } = useProduct();
@@ -109,4 +109,3 @@ function AdminAllProductsTable() {
   );
 }
 
-export default AdminAllProductsTable;
