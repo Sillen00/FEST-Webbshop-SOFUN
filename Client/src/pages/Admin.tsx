@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminAllProductsTable from '../components/AdminAllProductsTable';
 import AdminAllUsersTable from '../components/AdminAllUsersTable';
@@ -7,6 +8,8 @@ export default function Admin() {
   const navigate = useNavigate();
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [showUser_Product, setShowUser_Product] = useState<'user' | 'product'>('product');
 
   return (
     <Box
@@ -45,8 +48,22 @@ export default function Admin() {
           Lägg till produkt
         </Button>
       </Box>
-      <AdminAllProductsTable />
-      <AdminAllUsersTable />
+
+      <ButtonGroup
+        variant='contained'
+        aria-label='outlined primary button group'
+        sx={{ width: "100%", maxWidth: "800px" }}
+      >
+        <Button onClick={() => setShowUser_Product('product')} sx={{ width: '50%' }}>
+          Products
+        </Button>
+        <Button onClick={() => setShowUser_Product('user')} sx={{ width: '50%' }}>
+          Users
+        </Button>
+      </ButtonGroup>
+
+      {showUser_Product === 'product' ? <AdminAllProductsTable /> : null}
+      {showUser_Product === 'user' ? <AdminAllUsersTable /> : null}
     </Box>
   );
 }
