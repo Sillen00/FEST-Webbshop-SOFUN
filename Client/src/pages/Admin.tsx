@@ -25,7 +25,7 @@ export default function Admin() {
   const theme = useTheme();
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { allUsers, assignAsAdmin, removeAsAdmin, isLoggedIn } = useUser();
+  const { allUsers, assignAsAdmin, removeAsAdmin, } = useUser();
 
   return (
     <Box
@@ -153,7 +153,6 @@ export default function Admin() {
           </TableBody>
         </Table>
       </TableContainer>
-      {isLoggedIn && (
         <TableContainer
           component={Paper}
           sx={{
@@ -221,7 +220,6 @@ export default function Admin() {
             </TableBody>
           </Table>
         </TableContainer>
-      )}
     </Box>
   );
 }

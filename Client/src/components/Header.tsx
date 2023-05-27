@@ -74,6 +74,7 @@ export default function Header() {
           },
         }}
       >
+        {isLoggedIn && (
         <NavLink to='./admin' data-cy='admin-link'>
           <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
             <Icon.ModeEdit
@@ -86,6 +87,7 @@ export default function Header() {
             />
           </IconButton>
         </NavLink>
+        )}
 
         <Tooltip title='Orders'>
           <NavLink to='./orders' data-cy='admin-link'>
