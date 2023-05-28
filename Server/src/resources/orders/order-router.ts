@@ -11,7 +11,7 @@ const orderRouter = express
   .Router()
   .get('/api/orders', authAdmin, getAllOrders)
   .get('/api/orders/user/:id', authLogin, getOrdersByUser)
-  .put('/api/orders/status/:id', authLogin, updateOrderStatus)
+  .put('/api/orders/status/:id', authAdmin, updateOrderStatus)
   .post('/api/orders', authLogin, createOrder);
 
 export default orderRouter;

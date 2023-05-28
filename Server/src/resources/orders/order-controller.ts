@@ -52,8 +52,19 @@ export async function getOrdersByUser(req: Request, res: Response) {
 
 
 export async function updateOrderStatus(req: Request, res: Response) {
-  console.log('Placeholder för updateOrderStatus');
+  const orderId = req.params.id;
+  try {
+    const order = await OrderModel.findByIdAndUpdate(orderId, { isShipped: true }, { new: true });
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ error: (error as any).message });
+  }
 }
+
+
 
 export async function createOrder(req: Request, res: Response) {
   try {

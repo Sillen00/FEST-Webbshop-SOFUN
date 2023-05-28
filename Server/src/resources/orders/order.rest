@@ -22,6 +22,16 @@ content-type: application/json
 }
 
 ###
+# @name updateOrderStatus
+PUT http://localhost:3000/api/orders/status/647332a9195df23c8b2110fe
+Content-Type: application/json
+
+{
+  "isShipped": true
+}
+
+
+###
 # @name getAllOrders
 GET http://localhost:3000/api/orders
 
@@ -37,6 +47,6 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "username": "edvinadmin",
+  "username": "edvinNoAdmin",
   "password": "1234"
 }
