@@ -37,9 +37,19 @@ export async function getAllOrders(req: Request, res: Response) {
   }
 }
 
-export async function getOrderById(req: Request, res: Response) {
-  console.log('Placeholder för getOrderById');
+export async function getOrdersByUser(req: Request, res: Response) {
+  const userId = req.params.id;
+  try {
+    const orders = await OrderModel.find({ userID: userId });
+    if (!orders) {
+      return res.status(404).json({ error: 'No orders found for this user' });
+    }
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: (error as any).message });
+  }
 }
+
 
 export async function updateOrderStatus(req: Request, res: Response) {
   console.log('Placeholder för updateOrderStatus');

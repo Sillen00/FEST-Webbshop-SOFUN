@@ -25,6 +25,11 @@ content-type: application/json
 # @name getAllOrders
 GET http://localhost:3000/api/orders
 
+###
+# @name getOrdersByUser
+GET http://localhost:3000/api/orders/user/646f5195d06894db3841e675
+
+
 
 
 ### Login
