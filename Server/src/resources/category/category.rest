@@ -3,5 +3,16 @@ POST http://localhost:3000/api/categories
 Content-Type: application/json
 
 {
- "name": "Kategori test"
+ "name": "TEST2"
 }
+
+GET http://localhost:3000/api/categories/6473e302ffe85c382201fa7d
+
+
+
+
+
+
+
+
+
