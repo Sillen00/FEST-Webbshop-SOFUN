@@ -29,7 +29,12 @@ const orderSchema = Yup.object().shape({
 });
 
 export async function getAllOrders(req: Request, res: Response) {
-  console.log('Placeholder för getAllOrders');
+  try {
+    const orders = await OrderModel.find();
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: (error as any).message });
+  }
 }
 
 export async function getOrderById(req: Request, res: Response) {
