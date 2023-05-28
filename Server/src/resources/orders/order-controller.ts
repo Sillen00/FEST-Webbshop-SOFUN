@@ -41,5 +41,13 @@ export async function updateOrderStatus(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-  console.log('Placeholder för createOrder');
+  try {
+    const validatedOrder = await orderSchema.validate(req.body);
+    const newOrder = new OrderModel(validatedOrder);
+    const savedOrder = await newOrder.save();
+
+    res.status(201).json(savedOrder);
+  } catch (error) {
+    res.status(400).json({ error: (error as any).message });
+  }
 }
