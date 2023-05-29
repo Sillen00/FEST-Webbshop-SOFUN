@@ -105,7 +105,7 @@ export default function AdminAllProductsTable() {
               </TableCell>
               <TableCell align='center' sx={{ padding: 0 }}>
                 <Button
-                  sx={{ color: 'secondary.contrastText', minWidth: 0}}
+                  sx={{ color: 'secondary.contrastText', minWidth: 0 }}
                   onClick={() => {
                     navigate('/admin/product/' + product._id);
                   }}
