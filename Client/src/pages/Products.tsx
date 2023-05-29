@@ -8,7 +8,7 @@ import { useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
 export default function Products() {
-  const { product } = useProduct();
+  const { products } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
@@ -42,7 +42,7 @@ export default function Products() {
           },
         }}
       >
-        {product.map(product => (
+        {products.map(product => (
           <Card
             key={product._id}
             sx={{

@@ -20,7 +20,7 @@ export default function ProductInfo() {
   const matches = useMediaQuery('(min-width:1280px)');
   const params = useParams();
 
-  const { product } = useProduct();
+  const { products } = useProduct();
   const { addProduct } = useCart();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function ProductInfo() {
     setSnackbarOpen(false);
   };
 
-  const selectedProduct = product.find((product: Product) => product._id === params.id) as Product;
+  const selectedProduct = products.find((product: Product) => product._id === params.id) as Product;
 
   const card = (
     <React.Fragment>
