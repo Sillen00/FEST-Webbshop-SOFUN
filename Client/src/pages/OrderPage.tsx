@@ -1,15 +1,14 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
-import { generateId } from '../data';
+import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderPage() {
   const { order } = useOrder();
+  const { product: productContext } = useProduct(); // Update this line
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const totalCost = order.products.reduce((acc, item) => {
-    return acc + item.quantity * item.price;
-  }, 0);
+  
   return (
     <Box
       sx={{
@@ -27,11 +26,18 @@ export default function OrderPage() {
           width: isSmallScreen ? '95%' : '30rem',
         }}
       >
-        {order.products.map(product => (
+        {order?.orderItems.map(orderItem => {
+          const product = productContext.find(p => p._id === orderItem.productID); // Update this line
+
+          if (!product) {
+            // Product not found
+            return null;
+          }
+          return (
           <Card
             variant='outlined'
             data-cy='product'
-            key={product.id}
+            key={orderItem.productID}
             sx={{
               backgroundColor: 'white',
               borderBottom: '1px solid black',
@@ -68,7 +74,7 @@ export default function OrderPage() {
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2'>{product.quantity}</Typography>
+                  <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <Typography variant='subtitle2' data-cy='product-price'>
@@ -78,7 +84,8 @@ export default function OrderPage() {
               </Box>
             </CardContent>
           </Card>
-        ))}
+          );
+        })}
         <Box>
           <Typography
             variant='h6'
@@ -98,7 +105,7 @@ export default function OrderPage() {
                 paddingRight: '1rem',
               }}
             >
-              <p>Summa: {totalCost.toLocaleString('sv-SE')} kr </p>
+              <p>Summa: {order?.totalPrice.toLocaleString('sv-SE')} kr </p>
             </Box>
           </Typography>
         </Box>
@@ -120,7 +127,7 @@ export default function OrderPage() {
             }}
           >
             <p>Tack för din beställning!</p>
-            <p>Ditt ordernummer: {generateId()}</p>
+            <p>Ditt ordernummer: {2131}</p>
           </Box>
           <Typography
             component='h4'
@@ -142,18 +149,15 @@ export default function OrderPage() {
             }}
           >
             <Typography variant='subtitle1' data-cy='customer-name'>
-              {order.customer.name}
+              {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}
             </Typography>
             <Typography variant='subtitle1'>
-              <span data-cy='customer-address'>{order.customer.street},</span>
-              <span data-cy='customer-zipcode'>{order.customer.zipcode},</span>
-              <span data-cy='customer-city'> {order.customer.city}</span>
-            </Typography>
-            <Typography variant='subtitle1' data-cy='customer-email'>
-              {order.customer.email}
+              <span data-cy='customer-address'>{order?.deliveryAddress.address},</span>
+              <span data-cy='customer-zipcode'>{order?.deliveryAddress.zipCode},</span>
+              <span data-cy='customer-city'> {order?.deliveryAddress.city}</span>
             </Typography>
             <Typography variant='subtitle1' data-cy='customer-phone'>
-              {order.customer.phone}
+              {order?.deliveryAddress.phoneNumber}
             </Typography>
           </Box>
         </Box>

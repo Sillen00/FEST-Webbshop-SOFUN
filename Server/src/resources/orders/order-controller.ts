@@ -50,7 +50,6 @@ export async function getOrdersByUser(req: Request, res: Response) {
   }
 }
 
-
 export async function updateOrderStatus(req: Request, res: Response) {
   const orderId = req.params.id;
   try {
@@ -64,16 +63,17 @@ export async function updateOrderStatus(req: Request, res: Response) {
   }
 }
 
-
-
 export async function createOrder(req: Request, res: Response) {
   try {
-    const validatedOrder = await orderSchema.validate(req.body);
-    const newOrder = new OrderModel(validatedOrder);
-    const savedOrder = await newOrder.save();
-
-    res.status(201).json(savedOrder);
+    await orderSchema.validate(req.body);
+    const newOrder = await OrderModel.create(req.body);
+    res.status(201).json(newOrder);
   } catch (error) {
-    res.status(400).json({ error: (error as any).message });
+    console.error('Error creating order:', error);
+    if (error instanceof Yup.ValidationError) {
+      res.status(400).json(error.errors);
+    } else {
+      res.status(500).json({ message: 'Error creating order' });
+    }
   }
 }

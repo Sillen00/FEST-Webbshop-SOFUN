@@ -9,6 +9,7 @@ content-type: application/json
   "deliveryAddress": {
     "firstName": "Edvin",
     "lastName": "Djulic",
+    "address": "Gatan 1",
     "zipCode": 12345,
     "city": "Gbg",
     "phoneNumber": 1234567890
