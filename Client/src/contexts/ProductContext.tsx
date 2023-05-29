@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useOrder } from './OrderContext';
 
 export interface Product {
   _id?: string;
@@ -30,6 +31,8 @@ interface Props {
 export default function ProductProvider({ children }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
 
+  const { order } = useOrder();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -42,7 +45,7 @@ export default function ProductProvider({ children }: Props) {
     };
 
     fetchProducts();
-  }, []);
+  }, [order]);
 
   const clearProduct = () => {
     setProducts([]);
