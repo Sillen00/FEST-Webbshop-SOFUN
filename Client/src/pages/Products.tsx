@@ -57,6 +57,7 @@ export default function Products() {
     padding: '6px',
     borderRadius: '3px',
     marginRight: '10px',
+    backgroundColor: 'white',
   };
 
   return (
@@ -65,6 +66,7 @@ export default function Products() {
       <Box
         sx={{
           padding: '1em 4em 1em 4em',
+          backgroundColor: '#fffaf5',
         }}
       >
         <Button style={categoryButton}>alla</Button>
