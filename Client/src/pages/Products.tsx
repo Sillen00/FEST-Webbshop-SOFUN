@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import Snackbar from '../components/Snackbar';
 import { useCart } from '../contexts/CartContext';
-import { useProduct } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
 export default function Products() {
@@ -24,6 +24,29 @@ export default function Products() {
   };
 
   const matches = useMediaQuery('(min-width:500px)');
+
+  function handleAddToCart(product: Product) {
+    if (product.stockLevel >= 0) {
+      const cartItem: CartItem = {
+        id: product._id,
+        title: product.title,
+        price: product.price,
+        imageID: product.imageID,
+        quantity: 1,
+      };
+      addProduct(cartItem);
+      setSnackbarOpen(true);
+      setLastAddedProduct({
+        title: product.title,
+        price: product.price,
+        imageID: product.imageID,
+        id: product._id,
+        quantity: 1,
+      });
+    } else {
+      alert('Det finns inga fler produkter i lager');
+    }
+  }
 
   return (
     <>
@@ -126,22 +149,7 @@ export default function Products() {
                   }}
                   data-cy='product-buy-button'
                   onClick={() => {
-                    const cartItem: CartItem = {
-                      id: product._id,
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      quantity: 1,
-                    };
-                    addProduct(cartItem);
-                    setSnackbarOpen(true);
-                    setLastAddedProduct({
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      id: product._id,
-                      quantity: 1,
-                    });
+                    handleAddToCart(product);
                   }}
                 >
                   Lägg i kundvagnen
