@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 export interface DeliveryAddress {
   firstName: string;
@@ -16,6 +16,7 @@ interface OrderItem {
 }
 
 export interface Order {
+  _id: string;
   userID: string;
   totalPrice: number;
   deliveryAddress: DeliveryAddress;
@@ -27,7 +28,8 @@ interface OrderContextValue {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
   createOrder: (order: Order) => Promise<void>;
-  getAllOrders: () => Promise<Order[]>;
+  fetchAllOrders: () => Promise<void>;
+  allOrders: Order[];
   getOrdersByUser: (userId: string) => Promise<Order[]>;
 }
 
@@ -40,13 +42,32 @@ interface Props {
 
 export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
+
+  const fetchAllOrders = async () => {
+    try {
+      const response = await axios.get('/api/orders', { withCredentials: true });
+
+      if (response.status === 200) {
+        setAllOrders(response.data);
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllOrders(); // Call fetchAllOrders on component mount
+  }, []); // Empty dependency array to ensure it's called only once
 
   const createOrder = async (newOrder: Order) => {
     try {
       console.log('Creating order:', newOrder);
 
       const response = await axios.post('/api/orders', newOrder);
-  
+
       if (response.status === 201) {
         console.log('Order created:', response.data);
         setOrder(response.data);
@@ -55,16 +76,6 @@ export default function OrderProvider({ children }: Props) {
       }
     } catch (error) {
       console.error('Error creating order:', error);
-    }
-  };
-
-  const getAllOrders = async () => {
-    try {
-      const response = await axios.get('/api/orders');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-      return [];
     }
   };
 
@@ -83,8 +94,9 @@ export default function OrderProvider({ children }: Props) {
       value={{
         order,
         setOrder,
+        allOrders,
         createOrder,
-        getAllOrders,
+        fetchAllOrders,
         getOrdersByUser,
       }}
     >
@@ -92,4 +104,3 @@ export default function OrderProvider({ children }: Props) {
     </OrderContext.Provider>
   );
 }
-
