@@ -20,7 +20,7 @@ export default function DeleteDialog(props: Product) {
     <>
       <Button
         data-cy='admin-remove-product'
-        sx={{ display: 'flex', justifyContent: 'flex-end', color: 'secondary.contrastText' }}
+        sx={{ display: 'flex', justifyContent: 'flex-end', color: 'secondary.contrastText', minWidth: 0 }}
         onClick={handleClickOpen}
       >
         <Icon.Delete sx={{ color: 'secondary.contrastText' }} />
