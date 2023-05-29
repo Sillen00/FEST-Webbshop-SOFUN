@@ -26,26 +26,22 @@ export default function Products() {
   const matches = useMediaQuery('(min-width:500px)');
 
   function handleAddToCart(product: Product) {
-    if (product.stockLevel >= 0) {
-      const cartItem: CartItem = {
-        id: product._id,
-        title: product.title,
-        price: product.price,
-        imageID: product.imageID,
-        quantity: 1,
-      };
-      addProduct(cartItem);
-      setSnackbarOpen(true);
-      setLastAddedProduct({
-        title: product.title,
-        price: product.price,
-        imageID: product.imageID,
-        id: product._id,
-        quantity: 1,
-      });
-    } else {
-      alert('Det finns inga fler produkter i lager');
-    }
+    const cartItem: CartItem = {
+      id: product._id,
+      title: product.title,
+      price: product.price,
+      imageID: product.imageID,
+      quantity: 1,
+    };
+    addProduct(cartItem);
+    setSnackbarOpen(true);
+    setLastAddedProduct({
+      title: product.title,
+      price: product.price,
+      imageID: product.imageID,
+      id: product._id,
+      quantity: 1,
+    });
   }
 
   return (

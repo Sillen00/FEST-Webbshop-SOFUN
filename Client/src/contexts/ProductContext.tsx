@@ -45,7 +45,7 @@ export default function ProductProvider({ children }: Props) {
     };
 
     fetchProducts();
-  }, [order]);
+  }, [order, products]);
 
   const clearProduct = () => {
     setProducts([]);

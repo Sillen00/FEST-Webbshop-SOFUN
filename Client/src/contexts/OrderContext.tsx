@@ -48,23 +48,6 @@ export default function OrderProvider({ children }: Props) {
     try {
       console.log('Creating order:', newOrder);
 
-      // Reduce stock level for each ordered item
-      const orderedItems = newOrder.orderItems;
-      for (const item of orderedItems) {
-        const { productID, quantity } = item;
-
-        // Retrieve the product that you want to order from the database
-        const productResponse = await axios.get(`/api/products/${productID}`);
-        const product = productResponse.data;
-
-        // Update the stock level
-        const updatedStockLevel = product.stockLevel - quantity;
-
-        // Save the updated stock level back to the database
-        await axios.put(`/api/products/${productID}`, { stockLevel: updatedStockLevel });
-      }
-
-
       const response = await axios.post('/api/orders', newOrder);
 
       if (response.status === 201) {

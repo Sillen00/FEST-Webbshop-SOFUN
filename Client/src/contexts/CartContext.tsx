@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, ReactNode, useContext } from 'react';
 import { CartItem } from '../data';
 import { useLocalStorageState } from '../hooks/useLocalstorage';
@@ -24,15 +25,35 @@ export default function ShoppingCart({ children }: Props) {
     setCart([]);
   };
 
-  const addProduct = (product: CartItem) => {
-    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+  const addProduct = async (cartItem: CartItem) => {
+    // Reduce stock level for each ordered item
+    const productID = cartItem.id;
+    const quantity = cartItem.quantity; // Alltid 1 så som det är nu...
+    
+    // Retrieve the product that you want to order from the database
+    const productResponse = await axios.get(`/api/products/${productID}`);
+    const product = productResponse.data;
+    
+    if (product.stockLevel > 0) {
+      // Update the stock level
+      const updatedStockLevel = product.stockLevel - quantity;
 
-    if (existingProductIndex === -1) {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      // Save the updated stock level back to the database
+      await axios.put(`/api/products/${productID}`, { stockLevel: updatedStockLevel });
+
+      console.log('KOMMER IN I ADDPRODUCT');
+      const existingProductIndex = cart.findIndex(item => item.id === cartItem.id);
+
+      if (existingProductIndex === -1) {
+        setCart([...cart, { ...cartItem, quantity: 1 }]);
+      } else {
+        const updatedCart = [...cart];
+        updatedCart[existingProductIndex].quantity++;
+        setCart(updatedCart);
+      }
     } else {
-      const updatedCart = [...cart];
-      updatedCart[existingProductIndex].quantity++;
-      setCart(updatedCart);
+      alert('Det finns inga fler produkter i lager');
+      return;
     }
   };
 
