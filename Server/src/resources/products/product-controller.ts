@@ -7,6 +7,7 @@
 
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
+import { ValidationError } from 'yup';
 import { ProductModel } from './product-model';
 
 const productSchema = Yup.object().shape({
@@ -34,8 +35,6 @@ export async function getProductById(req: Request, res: Response) {
   console.log('Placeholder för getProductById');
 }
 
-import { ValidationError } from 'yup';
-
 export async function createProduct(req: Request, res: Response) {
   try {
     await productSchema.validate(req.body);
@@ -54,11 +53,11 @@ export async function createProduct(req: Request, res: Response) {
 export async function updateProduct(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { title, description, price } = req.body;
+    const { title, description, price, stockLevel } = req.body;
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       id,
-      { title, description, price },
+      { title, description, price, stockLevel },
       { new: true } //behövs för att skicka tillbaka den uppdaterade produkten
     );
 
@@ -91,6 +90,6 @@ export async function deleteProduct(req: Request, res: Response) {
   }
 }
 
-export async function productQuantity(req: Request, res: Response) {
+export async function getProductQuantity(req: Request, res: Response) {
   console.log('Placeholder för productQuantity');
 }
