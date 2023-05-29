@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import { useOrder } from './OrderContext';
 
 export interface Product {
-  _id: string;
+  _id?: string;
   categoryIDs: string[];
   title: string;
   imageID: string;
