@@ -1,10 +1,3 @@
-// getAllProducts()
-// getProductById()
-// createProduct()
-// updateProduct()
-// deleteProduct()
-// productQuantity()
-
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
 import { ValidationError } from 'yup';
