@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -62,7 +61,7 @@ export default function ProductInfo() {
               padding: '0.5rem 0.8rem',
             }}
           >
-            <Avatar
+            {/* <Avatar
               src={selectedProduct?.imageID}
               alt='avatar'
               sx={{
@@ -70,7 +69,7 @@ export default function ProductInfo() {
                 height: '5rem',
                 padding: '0.5rem',
               }}
-            />
+            /> */}
             <Box sx={{ padding: '1.2rem' }}>
               <Typography data-cy='product-title' variant='h3' marginBottom={'0.3rem'}>
                 {selectedProduct?.title}
@@ -79,9 +78,9 @@ export default function ProductInfo() {
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              padding: '0.5rem 1rem',
+              // display: 'flex',
+              // justifyContent: 'space-between',
+              padding: '1.2rem',
               fontSize: '60px',
             }}
           >
