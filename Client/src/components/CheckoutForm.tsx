@@ -32,9 +32,9 @@ export default function CheckoutForm() {
       firstName: '',
       lastName: '',
       address: '',
-      zipCode: 0, 
+      zipCode: 0,
       city: '',
-      phoneNumber: 0, 
+      phoneNumber: 0,
     },
     validationSchema: CheckoutSchema,
     onSubmit: async values => {
