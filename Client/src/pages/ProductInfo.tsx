@@ -58,29 +58,18 @@ export default function ProductInfo() {
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              padding: '0.5rem 0.8rem',
+              padding: '0.3rem',
             }}
           >
-            {/* <Avatar
-              src={selectedProduct?.imageID}
-              alt='avatar'
-              sx={{
-                width: '10rem',
-                height: '5rem',
-                padding: '0.5rem',
-              }}
-            /> */}
-            <Box sx={{ padding: '1.2rem' }}>
-              <Typography data-cy='product-title' variant='h3' marginBottom={'0.3rem'}>
+            <Box>
+              <Typography data-cy='product-title' variant='h3'>
                 {selectedProduct?.title}
               </Typography>
             </Box>
           </Box>
           <Box
             sx={{
-              // display: 'flex',
-              // justifyContent: 'space-between',
-              padding: '1.2rem',
+              padding: '0.5rem',
               fontSize: '60px',
             }}
           >
@@ -93,7 +82,7 @@ export default function ProductInfo() {
         <Divider />
         <Box
           sx={{
-            padding: '0.8rem',
+            padding: '0.5rem',
             display: 'flex',
             flexWrap: 'wrap',
           }}
@@ -122,6 +111,7 @@ export default function ProductInfo() {
         alignItems: 'flex-end',
         justifyContent: 'center',
         padding: matches ? '5rem' : '0rem',
+        backgroundColor: 'secondary.main',
       }}
     >
       <Box
@@ -139,7 +129,6 @@ export default function ProductInfo() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            // height: matches ? '32rem' : '36rem',
             marginBottom: '3rem',
           }}
           variant='outlined'
