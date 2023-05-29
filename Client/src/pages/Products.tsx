@@ -1,5 +1,5 @@
 import { Box, Button, Card, Typography, useMediaQuery } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import Snackbar from '../components/Snackbar';
@@ -8,7 +8,7 @@ import { useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
 export default function Products() {
-  const { product } = useProduct();
+  const { product, setProduct } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
@@ -25,9 +25,63 @@ export default function Products() {
 
   const matches = useMediaQuery('(min-width:500px)');
 
+  // CATEGORY SECTION
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+        const categories = await response.json();
+        setProduct(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, [setProduct]);
+
+  // CATEGORY SECTION
+  const handleCategoryButtonClick = async (categoryId: string) => {
+    try {
+      const response = await fetch(`/api/categories/${categoryId}`);
+      const products = await response.json();
+      setProduct(products);
+    } catch (error) {
+      console.error('Error fetching products by category:', error);
+    }
+  };
+
+  const categoryButton = {
+    color: 'black',
+    border: '1px solid black',
+    padding: '6px',
+    borderRadius: '3px',
+    marginRight: '10px',
+  };
+
   return (
     <>
       <Carousel />
+      <Box
+        sx={{
+          padding: '1em 4em 1em 4em',
+        }}
+      >
+        <Button style={categoryButton}>alla</Button>
+        <Button
+          style={categoryButton}
+          onClick={() => handleCategoryButtonClick('6473e2eeffe85c382201fa7b')}
+        >
+          två-sits
+        </Button>
+        <Button
+          style={categoryButton}
+          onClick={() => handleCategoryButtonClick('6473e302ffe85c382201fa7d')}
+        >
+          tre-sits
+        </Button>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
