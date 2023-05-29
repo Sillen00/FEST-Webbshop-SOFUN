@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext } from 'react';
 import { useLocalStorageState } from '../hooks/useLocalstorage';
 
 export interface CartItem {
-  id: string;
+  id?: string;
   title: string;
   price: number;
   quantity: number;

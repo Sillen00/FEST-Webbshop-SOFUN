@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import Snackbar from '../components/Snackbar';
-import { useCart } from '../contexts/CartContext';
+import { CartItem, useCart } from '../contexts/CartContext';
 import { Product, useProduct } from '../contexts/ProductContext';
-import { CartItem } from '../data';
 
 export default function Products() {
   const { products } = useProduct();
