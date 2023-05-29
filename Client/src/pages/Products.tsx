@@ -12,6 +12,7 @@ export default function Products() {
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
+  const matches = useMediaQuery('(min-width:500px)');
 
   const handleSnackbarClose = (
     event: React.SyntheticEvent<Element, Event> | Event,
@@ -22,8 +23,6 @@ export default function Products() {
     }
     setSnackbarOpen(false);
   };
-
-  const matches = useMediaQuery('(min-width:500px)');
 
   // CATEGORY SECTION
   useEffect(() => {
@@ -40,14 +39,28 @@ export default function Products() {
     fetchCategories();
   }, [setProduct]);
 
-  // CATEGORY SECTION
-  const handleCategoryButtonClick = async (categoryId: string) => {
+  const fetchAllProducts = async () => {
     try {
-      const response = await fetch(`/api/categories/${categoryId}`);
+      const response = await fetch('/api/products');
       const products = await response.json();
       setProduct(products);
     } catch (error) {
-      console.error('Error fetching products by category:', error);
+      console.error('Error fetching all products:', error);
+    }
+  };
+
+  // CATEGORY SECTION
+  const handleCategoryButtonClick = async (categoryId: string) => {
+    if (categoryId === 'all') {
+      fetchAllProducts();
+    } else {
+      try {
+        const response = await fetch(`/api/categories/${categoryId}`);
+        const products = await response.json();
+        setProduct(products);
+      } catch (error) {
+        console.error('Error fetching products by category:', error);
+      }
     }
   };
 
@@ -69,7 +82,9 @@ export default function Products() {
           backgroundColor: '#fffaf5',
         }}
       >
-        <Button style={categoryButton}>alla</Button>
+        <Button style={categoryButton} onClick={() => handleCategoryButtonClick('all')}>
+          alla
+        </Button>
         <Button
           style={categoryButton}
           onClick={() => handleCategoryButtonClick('6473e2eeffe85c382201fa7b')}
