@@ -34,14 +34,16 @@ export default function Products() {
       quantity: 1,
     };
     addProduct(cartItem);
-    setSnackbarOpen(true);
-    setLastAddedProduct({
-      title: product.title,
-      price: product.price,
-      imageID: product.imageID,
-      id: product._id,
-      quantity: 1,
-    });
+    if (product.stockLevel > 0) {
+      setSnackbarOpen(true);
+      setLastAddedProduct({
+        title: product.title,
+        price: product.price,
+        imageID: product.imageID,
+        id: product._id,
+        quantity: 1,
+      });
+    }
   }
 
   return (

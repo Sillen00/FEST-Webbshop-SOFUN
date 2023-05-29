@@ -183,12 +183,14 @@ export default function ProductInfo() {
                     imageID: selectedProduct.imageID,
                   };
                   addProduct(cartItem);
-                  setSnackbarOpen(true);
-                  setLastAddedProduct({
-                    title: selectedProduct.title,
-                    price: selectedProduct.price,
-                    image: selectedProduct.imageID,
-                  });
+                  if (selectedProduct.stockLevel > 0) {
+                    setSnackbarOpen(true);
+                    setLastAddedProduct({
+                      title: selectedProduct.title,
+                      price: selectedProduct.price,
+                      image: selectedProduct.imageID,
+                    });
+                  }
                 }}
               >
                 Lägg i kundvagnen
