@@ -127,7 +127,7 @@ export default function Products() {
                   data-cy='product-buy-button'
                   onClick={() => {
                     const cartItem: CartItem = {
-                      id: product._id,
+                      id: product?._id || '',
                       title: product.title,
                       price: product.price,
                       imageID: product.imageID,
@@ -139,7 +139,7 @@ export default function Products() {
                       title: product.title,
                       price: product.price,
                       imageID: product.imageID,
-                      id: product._id,
+                      id: product?._id || '',
                       quantity: 1,
                     });
                   }}
