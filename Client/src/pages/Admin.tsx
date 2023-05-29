@@ -50,9 +50,9 @@ export default function Admin() {
       </Box>
 
       <ButtonGroup
-        variant="contained"
+        variant='contained'
         aria-label='contained primary button group'
-        sx={{ width: '100%', maxWidth: '800px', border:"1px solid" }}
+        sx={{ width: '100%', maxWidth: '800px', border: '1px solid' }}
       >
         <Button
           onClick={() => setShowUser_Product('product')}
