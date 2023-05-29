@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useUser } from './UserContext';
 
 export interface DeliveryAddress {
   firstName: string;
@@ -44,6 +45,8 @@ export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
+  const { isLoggedIn } = useUser();
+
   const fetchAllOrders = async () => {
     try {
       const response = await axios.get('/api/orders', { withCredentials: true });
@@ -59,8 +62,10 @@ export default function OrderProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    fetchAllOrders(); // Call fetchAllOrders on component mount
-  }, []); // Empty dependency array to ensure it's called only once
+    if (isLoggedIn) {
+      fetchAllOrders();
+    }
+  }, [isLoggedIn]);
 
   const createOrder = async (newOrder: Order) => {
     try {
