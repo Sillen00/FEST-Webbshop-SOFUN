@@ -32,6 +32,7 @@ interface OrderContextValue {
   fetchAllOrders: () => Promise<void>;
   allOrders: Order[];
   getOrdersByUser: (userId: string) => Promise<Order[]>;
+  updateOrderStatus: (orderId: string) => Promise<void>;
 }
 
 export const OrderContext = createContext<OrderContextValue>(null as any);
@@ -94,6 +95,22 @@ export default function OrderProvider({ children }: Props) {
     }
   };
 
+  const updateOrderStatus = async (orderId: string) => {
+    try {
+      const response = await axios.put(`/api/orders/status/${orderId}`);
+      if (response.status === 200) {
+        const updatedOrder = response.data;
+        setAllOrders((prevOrders) =>
+          prevOrders.map((order) => (order._id === updatedOrder._id ? updatedOrder : order))
+        );
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -103,6 +120,7 @@ export default function OrderProvider({ children }: Props) {
         createOrder,
         fetchAllOrders,
         getOrdersByUser,
+        updateOrderStatus,
       }}
     >
       {children}

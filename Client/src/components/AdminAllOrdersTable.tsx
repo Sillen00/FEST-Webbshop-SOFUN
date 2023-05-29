@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -10,8 +11,8 @@ import {
 import { useOrder } from '../contexts/OrderContext';
 
 export default function AdminAllOrdersTable() {
-  const { allOrders } = useOrder();
-  
+  const { allOrders, updateOrderStatus } = useOrder();
+
   return (
     <TableContainer
       component={Paper}
@@ -37,15 +38,18 @@ export default function AdminAllOrdersTable() {
               User ID
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Total Price
+              Total kostnad
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Shipped
+              Skickad
+            </TableCell>
+            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
+              Admin
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {allOrders.map((order) => (
+          {allOrders.map(order => (
             <TableRow
               key={order._id}
               sx={{
@@ -64,6 +68,24 @@ export default function AdminAllOrdersTable() {
               </TableCell>
               <TableCell align='center' data-cy='order-shipped'>
                 {order.isShipped ? 'Yes' : 'No'}
+              </TableCell>
+              <TableCell align='center'>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  disabled={order.isShipped}
+                  onClick={() => {
+                    updateOrderStatus(order._id);
+                  }}
+                  sx={{
+                    width: '60%',
+                    fontSize: '0.8rem',
+                    mb: '0.5rem',
+                    mt: '0.5rem'
+                  }}
+                >
+                  Ändra status
+                </Button>
               </TableCell>
             </TableRow>
           ))}
