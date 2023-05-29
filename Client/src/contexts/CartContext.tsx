@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext } from 'react';
-import { CartItem } from '../data';
 import { useLocalStorageState } from '../hooks/useLocalstorage';
+
+export interface CartItem {
+  id: string;
+  title: string;
+  price: number;
+  quantity: number;
+  imageID: string;
+}
 
 interface ContextValue {
   cart: CartItem[];
