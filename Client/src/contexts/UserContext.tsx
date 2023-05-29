@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface User {
   _id: string;
   username: string;
-  password: string;
   isAdmin: boolean;
 }
 
@@ -21,6 +20,8 @@ interface UserContextValue {
   assignAsAdmin: (userId: string) => void;
   removeAsAdmin: (userId: string) => void;
   logoutUser: () => void;
+  currentUser: User | null;
+  isLoading: boolean;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -38,6 +39,8 @@ export default function UserProvider({ children }: Props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // or false, depending on the user's login status
   const [isNotValid, setIsNotValid] = useState(false);
   const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAllUsers = async () => {
     axios
@@ -64,6 +67,7 @@ export default function UserProvider({ children }: Props) {
         handleClose();
         setIsLoggedIn(true);
         fetchAllUsers();
+        setCurrentUser(response.data);
         console.log(response);
       })
       .catch(function (error) {
@@ -72,6 +76,28 @@ export default function UserProvider({ children }: Props) {
         // setUsernameTakenError(error.response.data);
       });
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get('/api/users/checkSession', { withCredentials: true })
+      .then(response => {
+        if (response.data.loggedIn) {
+          setIsLoggedIn(true);
+          setCurrentUser(response.data.user);
+          fetchAllUsers();
+        } else {
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+          setIsLoading(false);
+        }
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  }, []);
 
   const registerUser = async (values: { username: string; password: string }) => {
     axios
@@ -103,6 +129,7 @@ export default function UserProvider({ children }: Props) {
         console.log(response);
         setIsLoggedIn(false);
         setAllUsers([]);
+        setCurrentUser(null);
       })
       .catch(function (error) {
         console.log(error);
@@ -152,6 +179,8 @@ export default function UserProvider({ children }: Props) {
         assignAsAdmin,
         removeAsAdmin,
         logoutUser,
+        currentUser,
+        isLoading,
       }}
     >
       {children}

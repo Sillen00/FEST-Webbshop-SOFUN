@@ -4,12 +4,13 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useImage } from '../contexts/ImageContext';
 import { Product } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
-  image: Yup.string().required('Ange bild').url('Bilden måste vara en giltig URL'),
+  imageID: Yup.string().required('Ange bild'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -21,7 +22,7 @@ type AdminValues = Yup.InferType<typeof AdminSchema>;
 export const defaultValues: AdminValues = {
   title: '',
   description: '',
-  image: '',
+  imageID: '',
   price: 0,
 };
 
@@ -37,11 +38,12 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const buttonText = isNewProduct ? 'Lägg till produkt' : 'Ändra produkt';
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { uploadImage } = useImage();
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
-    image: product?.imageID || defaultValues.image,
+    imageID: product?.imageID || defaultValues.imageID,
     price: product?.price || defaultValues.price,
   };
 
@@ -53,21 +55,32 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         categoryIDs: [],
         title: values.title,
         description: values.description,
-        imageID: 'hardcoded-image-id',
+        imageID: values.imageID,
         price: values.price,
         stockLevel: 100,
-        imageURL: 'placeholder',
         isArchived: false,
       };
 
       try {
-        await onSubmit(newProduct); // Wait for the onSubmit function to complete
+        onSubmit(newProduct); // Wait for the onSubmit function to complete
         navigate('/admin'); // Navigate to the desired route
       } catch (error) {
         console.error('Error creating product:', error);
       }
     },
   });
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const imageID = await uploadImage(file);
+
+      formik.setFieldValue('imageID', imageID);
+    } catch (error) {
+      formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
+    }
+  };
 
   return (
     <>
@@ -76,7 +89,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         sx={{
           '& > :not(style)': {
             m: 1,
-            width: '25ch',
             display: 'flex',
             flexDirection: 'column',
           },
@@ -117,14 +129,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         <TextField
           fullWidth
           id='image'
-          type='text'
-          name='image'
-          label='Bild-URL'
-          value={formik.values.image}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.image && Boolean(formik.errors.image)}
-          helperText={formik.touched.image && formik.errors.image}
+          type='file'
+          name='imageID'
+          // label='Bild-URL'
+          onChange={handleFileUpload}
+          // onBlur={formik.handleBlur}
+          error={formik.touched.imageID && Boolean(formik.errors.imageID)}
+          helperText={formik.touched.imageID && formik.errors.imageID}
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
@@ -142,7 +153,22 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           inputProps={{ 'data-cy': 'product-price' }}
           FormHelperTextProps={{ 'data-cy': 'product-price-error' } as any}
         />
-        <Button color='secondary' variant='contained' fullWidth type='submit'>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          fullWidth
+          sx={{
+            fontSize: '12px',
+            border: '1px solid',
+            padding: '0.5rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
           {buttonText}
         </Button>
       </Box>
@@ -154,7 +180,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
             justifyContent: 'center',
             alignItems: 'center',
             height: '100%',
-            backgroundColor: 'background.default',
             '& a': {
               color: 'black',
               textDecoration: 'none',
@@ -166,7 +191,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              margin: '1rem',
+              marginLeft: '1.5rem',
               padding: '2rem',
               maxHeight: matches ? '29.6rem' : 'none',
               justifyContent: 'center',
@@ -193,7 +218,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                     overflow: 'hidden',
                   }}
                 >
-                  <img src={formik.values.image} alt={formik.values.title} width='100%' />
+                  {formik.values.imageID && (
+                    <img
+                      src={'/api/image/' + formik.values.imageID}
+                      alt={formik.values.title}
+                      width='100%'
+                    />
+                  )}
                 </Box>
               </Box>
 
@@ -235,7 +266,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                 padding: '0.5rem',
               }}
             >
-              <Button
+              {/* <Button
                 variant='contained'
                 color='secondary'
                 sx={{
@@ -247,7 +278,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
                 }}
               >
                 Lägg till i kundvagnen
-              </Button>
+              </Button> */}
             </Box>
           </Card>
         </Box>

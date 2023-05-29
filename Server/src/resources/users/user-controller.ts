@@ -74,7 +74,6 @@ export async function logOutUser(req: Request, res: Response) {
   //   }
   //   res.status(204).end();
   // });
-  
 }
 
 // ADMIN - UPDATE USER ROLE TO ADMIN ---------------------------------------------------------
@@ -113,4 +112,12 @@ export async function removeAsAdmin(req: Request, res: Response) {
   ).select('-password');
 
   res.status(200).json(user);
+}
+
+export async function checkSession(req: Request, res: Response) {
+  if (req.session?._id) {
+    res.status(200).json({ loggedIn: true, user: req.session });
+  } else {
+    res.status(200).json({ loggedIn: false });
+  }
 }

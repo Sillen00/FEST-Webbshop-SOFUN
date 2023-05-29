@@ -17,7 +17,6 @@ export default function OrderPage() {
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'secondary.main',
-        margin: '2rem',
       }}
     >
       <Typography variant='h3'>Odrar</Typography>
@@ -58,7 +57,7 @@ export default function OrderPage() {
               >
                 <Box sx={{ display: 'flex', flex: '1' }}>
                   <img
-                    src={product.imageURL}
+                    src={'/api/image/' + product.imageID}
                     alt={product.title}
                     style={{ width: '8rem', height: 'auto' }}
                   />

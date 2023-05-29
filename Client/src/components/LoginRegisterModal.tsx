@@ -2,11 +2,14 @@ import { Box } from '@mui/material';
 
 import { Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useUser } from '../contexts/UserContext';
 
-function LoginRegisterModal() {
+// const MyButton = React.forwardRef((props, ref) =>
+// +  <div role="button" {...props} ref={ref} />);
+
+const LoginRegisterModal = forwardRef<HTMLDivElement>((props, ref) => {
   const [register, setRegister] = useState(true);
 
   const { registerUser, loginUser, isNotValid } = useUser();
@@ -53,7 +56,7 @@ function LoginRegisterModal() {
   });
 
   return (
-    <>
+    <div {...props} ref={ref}>
       {register ? (
         <Box sx={{ background: 'white', padding: '4em' }}>
           <form onSubmit={formikLogin.handleSubmit}>
@@ -97,7 +100,7 @@ function LoginRegisterModal() {
               type='submit'
               sx={{ width: '100%', marginTop: '1em' }}
               variant='contained'
-              color='secondary'
+              color='primary'
             >
               Logga in
             </Button>
@@ -112,7 +115,7 @@ function LoginRegisterModal() {
             onClick={() => setRegister(false)}
             sx={{ width: '100%' }}
             variant='contained'
-            color='secondary'
+            color='primary'
           >
             Skapa Konto
           </Button>
@@ -176,8 +179,8 @@ function LoginRegisterModal() {
           </Button>
         </Box>
       )}
-    </>
+    </div>
   );
-}
+});
 
 export default LoginRegisterModal;

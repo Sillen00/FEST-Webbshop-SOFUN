@@ -3,7 +3,7 @@
 // DELETE /api/image:id A L
 
 import express from 'express';
-import { authAdmin, authLogin } from '../middlewares';
+import { authAdmin } from '../middlewares';
 import { deleteImageById, getImageById, uploadImage } from './image-controller';
 
 const imageRouter = express
