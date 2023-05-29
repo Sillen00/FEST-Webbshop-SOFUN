@@ -124,7 +124,7 @@ export default function Products() {
                   overflow: 'hidden',
                 }}
               >
-                <img src={product.imageID} alt={product.title} width='100%' />
+                <img src={'/api/image/' + product.imageID} alt={product.title} width='100%' />
               </Box>
             </Link>
             <Box
@@ -184,15 +184,15 @@ export default function Products() {
                       id: product._id,
                       title: product.title,
                       price: product.price,
+                      imageID: product.imageID,
                       quantity: 1,
-                      imageURL: product.imageID,
                     };
                     addProduct(cartItem);
                     setSnackbarOpen(true);
                     setLastAddedProduct({
                       title: product.title,
                       price: product.price,
-                      imageURL: product.imageID,
+                      imageID: product.imageID,
                       id: product._id,
                       quantity: 1,
                     });
@@ -211,7 +211,7 @@ export default function Products() {
           lastAddedProduct={{
             title: lastAddedProduct?.title || '',
             price: lastAddedProduct?.price || 0,
-            image: lastAddedProduct?.imageURL || '',
+            image: lastAddedProduct?.imageID || '',
           }}
         />
       </Box>

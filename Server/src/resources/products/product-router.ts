@@ -5,7 +5,7 @@
 // DELETE /api/products/:id A L
 
 import express from 'express';
-import { authAdmin, authLogin } from '../middlewares';
+import { authAdmin } from '../middlewares';
 import {
   createProduct,
   deleteProduct,

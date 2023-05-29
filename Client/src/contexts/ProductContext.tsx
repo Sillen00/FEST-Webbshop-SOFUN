@@ -8,7 +8,6 @@ export interface Product {
   description: string;
   price: number;
   stockLevel: number;
-  imageURL: string;
   isArchived: boolean;
 }
 
