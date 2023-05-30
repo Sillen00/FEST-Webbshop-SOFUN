@@ -42,28 +42,28 @@ Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 **Krav för godkänt**
 
 - [ ] Alla sidor skall vara responsiva.
-- [ ] Arbetet ska implementeras med en React frontend och en Express backend.
+- [x] Arbetet ska implementeras med en React frontend och en Express backend.
 - [ ] Express backenden ska ha validering på samtliga endpoints.
-- [ ] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G)
-- [ ] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet
+- [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G
+- [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet
 - [ ] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm)
-- [ ] Man ska kunna logga in som administratör i systemet
-- [ ] Inga Lösenord får sparas i klartext i databasen
-- [ ] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen
-- [ ] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan
-- [ ] Administratörer ska kunna se en lista på alla gjorda beställningar
+- [x] Man ska kunna logga in som administratör i systemet
+- [x] Inga Lösenord får sparas i klartext i databasen
+- [x] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen
+- [x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan
+- [x] Administratörer ska kunna se en lista på alla gjorda beställningar
 - [ ] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera
 - [ ] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori
 - [ ] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten
-- [ ] En besökare som gör en beställning ska få möjligheten att registrera sig samt logga in och måste vara inloggad som kund innan beställningen skapas
-- [ ] Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält
+- [x] En besökare som gör en beställning ska få möjligheten att registrera sig samt logga in och måste vara inloggad som kund innan beställningen skapas
+- [x] Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält
 
 **Krav för välgodkänt**
 
-- [ ] Ett CI flöde ska sättas upp (i början av projektet) som kontrollerar prettier, eslint, typescript & tester i varje PR, tester kan lånas ifrån tidigare uppgifter
+- [x] Ett CI flöde ska sättas upp (i början av projektet) som kontrollerar prettier, eslint, typescript & tester i varje PR, tester kan lånas ifrån tidigare uppgifter
 - [ ] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte
 - [ ] Administratörer ska kunna redigera produkt inklusive vilka kategorier den tillhör
-- [ ] Administratörer ska kunna lägga till och ta bort produkter
-- [ ] Backendapplikationen ska ha en fungerande global felhantering
-- [ ] En administratör ska kunna uppgradera en användare till administratör
+- [x] Administratörer ska kunna lägga till och ta bort produkter
+- [x] Backendapplikationen ska ha en fungerande global felhantering
+- [x] En administratör ska kunna uppgradera en användare till administratör
 - [ ] Administratörer ska kunna markera beställningar som skickade
