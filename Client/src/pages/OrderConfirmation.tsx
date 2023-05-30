@@ -1,14 +1,12 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
+import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
+  const { products } = useProduct();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const totalCost = order.products.reduce((acc, item) => {
-    return acc + item.quantity * item.price;
-  }, 0);
 
   return (
     <Box
@@ -29,58 +27,68 @@ export default function OrderConfirmation() {
           width: isSmallScreen ? '95%' : '30rem',
         }}
       >
-        {order.products.map(product => (
-          <Card
-            variant='outlined'
-            data-cy='product'
-            key={product.id}
-            sx={{
-              backgroundColor: 'white',
-              borderBottom: '1px solid black',
-            }}
-          >
-            <CardContent
+        {order?.orderItems?.map(orderItem => {
+          const orderedProducts = products.find(p => p._id === orderItem.productID); // Update this line
+
+          if (!order) {
+            // Product not found
+            <h1>HITTADE INTE</h1>;
+          }
+
+          return (
+            <Card
+              variant='outlined'
+              data-cy='product'
+              key={orderItem.productID}
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
+                backgroundColor: 'white',
+                borderBottom: '1px solid black',
               }}
             >
-              <Box
+              <CardContent
                 sx={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  gap: '1rem',
                   justifyContent: 'center',
-                  flex: '1',
                   alignItems: 'center',
+                  height: '100%',
                 }}
               >
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <img
-                    src={'/api/image/' + product.imageID}
-                    alt={product.title}
-                    style={{ width: '8rem', height: 'auto' }}
-                  />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    flex: '1',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <img
+                      src={'/api/image/' + orderedProducts?.imageID}
+                      alt={orderedProducts?.title}
+                      style={{ width: '8rem', height: 'auto' }}
+                    />
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2' data-cy='product-title'>
+                      {orderedProducts?.title}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2' data-cy='product-price'>
+                      {orderedProducts?.price} kr
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2' data-cy='product-title'>
-                    {product.title}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2'>{product.quantity}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2' data-cy='product-price'>
-                    {product.price} kr
-                  </Typography>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
+
         <Box>
           <Typography
             variant='h6'
@@ -100,7 +108,7 @@ export default function OrderConfirmation() {
                 paddingRight: '1rem',
               }}
             >
-              <p>Summa: {totalCost.toLocaleString('sv-SE')} kr </p>
+              <p>Summa: {order?.totalPrice.toLocaleString('sv-SE')} kr </p>
             </Box>
           </Typography>
         </Box>
@@ -143,18 +151,15 @@ export default function OrderConfirmation() {
             }}
           >
             <Typography variant='subtitle1' data-cy='customer-name'>
-              {order.customer.name}
+              {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}
             </Typography>
             <Typography variant='subtitle1'>
-              <span data-cy='customer-address'>{order.customer.street},</span>
-              <span data-cy='customer-zipcode'>{order.customer.zipcode},</span>
-              <span data-cy='customer-city'> {order.customer.city}</span>
-            </Typography>
-            <Typography variant='subtitle1' data-cy='customer-email'>
-              {order.customer.email}
+              <span data-cy='customer-address'>{order?.deliveryAddress.address},</span>
+              <span data-cy='customer-zipcode'>{order?.deliveryAddress.zipCode},</span>
+              <span data-cy='customer-city'> {order?.deliveryAddress.city}</span>
             </Typography>
             <Typography variant='subtitle1' data-cy='customer-phone'>
-              {order.customer.phone}
+              {order?.deliveryAddress.phoneNumber}
             </Typography>
           </Box>
         </Box>

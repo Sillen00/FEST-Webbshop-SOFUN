@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useCart } from '../contexts/CartContext';
 
-export default function BasicTable() {
+export default function CheckoutOrderTable() {
   const { cart, addProduct, removeProduct } = useCart();
   const totalCost = cart.reduce((acc, item) => {
     return acc + item.quantity * item.price;

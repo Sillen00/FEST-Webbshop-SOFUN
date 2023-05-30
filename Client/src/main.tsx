@@ -83,17 +83,17 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <OrderProvider>
-        <ImageProvider>
-          <ShoppingCart>
-            <ProductInventory>
-              <UserProvider>
+      <UserProvider>
+        <OrderProvider>
+          <ImageProvider>
+            <ShoppingCart>
+              <ProductInventory>
                 <RouterProvider router={router} />
-              </UserProvider>
-            </ProductInventory>
-          </ShoppingCart>
-        </ImageProvider>
-      </OrderProvider>
+              </ProductInventory>
+            </ShoppingCart>
+          </ImageProvider>
+        </OrderProvider>
+      </UserProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

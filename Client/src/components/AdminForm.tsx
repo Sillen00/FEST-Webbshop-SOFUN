@@ -60,8 +60,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
       const newProduct: Product = {
         categoryIDs: [],
         title: values.title,
-        description: values.description,
         imageID: values.imageID,
+        description: values.description,
         price: values.price,
         stockLevel: values.stockLevel,
         isArchived: false,
