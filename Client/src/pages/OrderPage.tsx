@@ -47,8 +47,9 @@ export default function OrderPage() {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'row',
-          width: '80vw',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100vw',
           gap: '1rem',
         }}
       >
@@ -60,19 +61,39 @@ export default function OrderPage() {
               backgroundColor: 'white',
               borderBottom: '1px solid black',
               marginBottom: '1rem',
-              width: '30rem',
+              width: '80%',
             }}
           >
             <CardContent
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 height: '100%',
+
               }}
             >
-              <Typography variant='h5'>{order._id}</Typography>
+              <Box>
+                <Typography variant='h5'>{order.totalPrice} kr</Typography>
+              </Box>
+              <Box>
+                <Typography variant='h5'>Levereras till</Typography>
+                <Typography variant='h5'>{order.deliveryAddress.firstName} {order.deliveryAddress.lastName} </Typography>
+                <Typography variant='h5'>{order.deliveryAddress.address}</Typography>
+                <Typography variant='h5'>{order.deliveryAddress.zipCode} {order.deliveryAddress.city}</Typography>
+                <Typography variant='h5'>{order.deliveryAddress.phoneNumber}</Typography>
+
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+{/* <Typography variant='h5'>{order._id}</Typography>
               <Typography variant='h5'>{order.totalPrice} kr</Typography>
               <Typography variant='h5'>
                 {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
@@ -84,11 +105,4 @@ export default function OrderPage() {
               <Typography variant='h5'> Skickad {order.isShipped ? 'Ja' : 'Nej'}</Typography>
               <Typography variant='h5'>
                 Skapad: {new Date(order.createdAt).toLocaleDateString('sv-SE')}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
-    </Box>
-  );
-}
+              </Typography> */}

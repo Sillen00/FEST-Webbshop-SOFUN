@@ -8,7 +8,7 @@ export interface DeliveryAddress {
   address: string;
   zipCode: number;
   city: string;
-  phoneNumber: number;
+  phoneNumber: string;
 }
 
 interface OrderItem {
