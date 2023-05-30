@@ -23,6 +23,7 @@ export interface Order {
   deliveryAddress: DeliveryAddress;
   isShipped: boolean;
   orderItems: OrderItem[];
+  createdAt: Date;
 }
 
 interface OrderContextValue {
