@@ -1,0 +1,53 @@
+### 
+# @name createOrder
+POST http://localhost:3000/api/orders
+content-type: application/json
+
+{
+  "userID": "646f5195d06894db3841e675",
+  "totalPrice": 120.50,
+  "deliveryAddress": {
+    "firstName": "Edvin",
+    "lastName": "Djulic",
+    "address": "Gatan 1",
+    "zipCode": 12345,
+    "city": "Gbg",
+    "phoneNumber": 1234567890
+  },
+  "orderItems": [
+    {
+      "productID": "6470ae6c95b0b4e95f7f6331",
+      "quantity": 2
+    }
+  ]
+}
+
+###
+# @name updateOrderStatus
+PUT http://localhost:3000/api/orders/status/647332a9195df23c8b2110fe
+Content-Type: application/json
+
+{
+  "isShipped": true
+}
+
+
+###
+# @name getAllOrders
+GET http://localhost:3000/api/orders
+
+###
+# @name getOrdersByUser
+GET http://localhost:3000/api/orders/user/646f5195d06894db3841e675
+
+
+
+
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "username": "edvinNoAdmin",
+  "password": "1234"
+}

@@ -19,7 +19,7 @@ import DeleteDialog from './Dialog';
 export default function AdminAllProductsTable() {
   const navigate = useNavigate();
 
-  const { product } = useProduct();
+  const { products } = useProduct();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -66,7 +66,7 @@ export default function AdminAllProductsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {product.map(product => (
+          {products.map(product => (
             <TableRow
               key={product._id}
               sx={{

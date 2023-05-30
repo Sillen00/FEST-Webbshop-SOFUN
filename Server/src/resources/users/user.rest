@@ -7,5 +7,11 @@ Content-Type: application/json
   "password": "1234"
 }
 
+### Logout
+POST http://localhost:3000/api/users/logout
+
 ### Get all users
 GET http://localhost:3000/api/users 
+
+### Get session of current user
+GET http://localhost:3000/api/users/checkSession

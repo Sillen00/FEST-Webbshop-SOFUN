@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import Snackbar from '../components/Snackbar';
-import { useCart } from '../contexts/CartContext';
-import { useProduct } from '../contexts/ProductContext';
-import { CartItem } from '../data';
+import { CartItem, useCart } from '../contexts/CartContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 const categoryButton = {
   color: 'black',
@@ -17,7 +16,7 @@ const categoryButton = {
 };
 
 export default function Products() {
-  const { product, setProduct, fetchProductsByCategory } = useProduct();
+  const { products, setProducts, fetchProductsByCategory } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
@@ -40,6 +39,27 @@ export default function Products() {
       fetchProductsByCategory(categoryId);
     }
   };
+
+  function handleAddToCart(product: Product) {
+    const cartItem: CartItem = {
+      id: product._id,
+      title: product.title,
+      price: product.price,
+      imageID: product.imageID,
+      quantity: 1,
+    };
+    addProduct(cartItem);
+    if (product.stockLevel > 0) {
+      setSnackbarOpen(true);
+      setLastAddedProduct({
+        title: product.title,
+        price: product.price,
+        imageID: product.imageID,
+        id: product._id,
+        quantity: 1,
+      });
+    }
+  }
 
   return (
     <>
@@ -81,7 +101,7 @@ export default function Products() {
           },
         }}
       >
-        {product.map(product => (
+        {products.map(product => (
           <Card
             key={product._id}
             sx={{
@@ -125,7 +145,7 @@ export default function Products() {
                   display: 'flex',
                   flexDirection: 'column',
                   width: '100%',
-                  margin: '1rem',
+                  margin: '0.5rem',
                 }}
               >
                 <Box>
@@ -144,7 +164,7 @@ export default function Products() {
                   display: 'flex',
                   justifyContent: 'flex-end',
                   margin: '1rem',
-                  marginTop: '2rem',
+                  marginTop: '1.5rem',
                   marginLeft: '0',
                   width: '100%',
                   height: '2rem',
@@ -165,22 +185,7 @@ export default function Products() {
                   }}
                   data-cy='product-buy-button'
                   onClick={() => {
-                    const cartItem: CartItem = {
-                      id: product._id,
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      quantity: 1,
-                    };
-                    addProduct(cartItem);
-                    setSnackbarOpen(true);
-                    setLastAddedProduct({
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      id: product._id,
-                      quantity: 1,
-                    });
+                    handleAddToCart(product);
                   }}
                 >
                   Lägg i kundvagnen

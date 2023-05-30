@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -12,15 +11,14 @@ import {
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Snackbar from '../components/Snackbar';
-import { useCart } from '../contexts/CartContext';
+import { CartItem, useCart } from '../contexts/CartContext';
 import { Product, useProduct } from '../contexts/ProductContext';
-import { CartItem } from '../data';
 
 export default function ProductInfo() {
   const matches = useMediaQuery('(min-width:1280px)');
   const params = useParams();
 
-  const { product } = useProduct();
+  const { products } = useProduct();
   const { addProduct } = useCart();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -43,7 +41,7 @@ export default function ProductInfo() {
     setSnackbarOpen(false);
   };
 
-  const selectedProduct = product.find((product: Product) => product._id === params.id) as Product;
+  const selectedProduct = products.find((product: Product) => product._id === params.id) as Product;
 
   const card = (
     <React.Fragment>
@@ -59,29 +57,18 @@ export default function ProductInfo() {
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              padding: '0.5rem 0.8rem',
+              padding: '0.3rem',
             }}
           >
-            <Avatar
-              src={selectedProduct?.imageID}
-              alt='avatar'
-              sx={{
-                width: '10rem',
-                height: '5rem',
-                padding: '0.5rem',
-              }}
-            />
-            <Box sx={{ padding: '1.2rem' }}>
-              <Typography data-cy='product-title' variant='h3' marginBottom={'0.3rem'}>
+            <Box>
+              <Typography data-cy='product-title' variant='h3'>
                 {selectedProduct?.title}
               </Typography>
             </Box>
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              padding: '0.5rem 1rem',
+              padding: '0.5rem',
               fontSize: '60px',
             }}
           >
@@ -94,7 +81,7 @@ export default function ProductInfo() {
         <Divider />
         <Box
           sx={{
-            padding: '0.8rem',
+            padding: '0.5rem',
             display: 'flex',
             flexWrap: 'wrap',
           }}
@@ -123,6 +110,7 @@ export default function ProductInfo() {
         alignItems: 'flex-end',
         justifyContent: 'center',
         padding: matches ? '5rem' : '0rem',
+        backgroundColor: 'secondary.main',
       }}
     >
       <Box
@@ -140,7 +128,6 @@ export default function ProductInfo() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            // height: matches ? '32rem' : '36rem',
             marginBottom: '3rem',
           }}
           variant='outlined'
@@ -183,12 +170,14 @@ export default function ProductInfo() {
                     imageID: selectedProduct.imageID,
                   };
                   addProduct(cartItem);
-                  setSnackbarOpen(true);
-                  setLastAddedProduct({
-                    title: selectedProduct.title,
-                    price: selectedProduct.price,
-                    image: selectedProduct.imageID,
-                  });
+                  if (selectedProduct.stockLevel > 0) {
+                    setSnackbarOpen(true);
+                    setLastAddedProduct({
+                      title: selectedProduct.title,
+                      price: selectedProduct.price,
+                      image: selectedProduct.imageID,
+                    });
+                  }
                 }}
               >
                 Lägg i kundvagnen
