@@ -14,7 +14,7 @@ const CheckoutSchema = Yup.object().shape({
   address: Yup.string().required('Ange din adress'),
   zipCode: Yup.number().required('Ange ditt postnummer'),
   city: Yup.string().required('Ange din stad'),
-  phoneNumber: Yup.number()
+  phoneNumber: Yup.string()
     .typeError('Telefonnumret måste bestå av siffror')
     .required('Ange ditt telefonnummer'),
 });
@@ -34,7 +34,7 @@ export default function CheckoutForm() {
       address: '',
       zipCode: 0,
       city: '',
-      phoneNumber: 0,
+      phoneNumber: '',
     },
     validationSchema: CheckoutSchema,
     onSubmit: async values => {
@@ -45,14 +45,6 @@ export default function CheckoutForm() {
         quantity: item.quantity,
       }));
       const totalPrice = cart.reduce((total, item) => total + item.quantity * item.price, 0);
-
-      // const newOrder: Order = {
-      //   userID: currentUser ? currentUser._id : '',
-      //   totalPrice,
-      //   deliveryAddress: values,
-      //   isShipped: false,
-      //   orderItems,
-      // };
 
       await createOrder({
         userID: currentUser ? currentUser._id : '',
@@ -167,10 +159,10 @@ export default function CheckoutForm() {
         <TextField
           fullWidth
           id='phoneNumber'
-          type='number'
+          type='text'
           name='phoneNumber'
           label='Telefonnummer'
-          value={formik.values.phoneNumber}
+          value={formik.values.phoneNumber.toString()}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}

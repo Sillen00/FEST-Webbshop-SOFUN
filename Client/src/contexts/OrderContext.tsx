@@ -16,20 +16,25 @@ interface OrderItem {
   quantity: number;
 }
 
-export interface Order {
-  _id: string;
+// Skapa en order
+interface CreateOrder {
   userID: string;
   totalPrice: number;
   deliveryAddress: DeliveryAddress;
   isShipped: boolean;
   orderItems: OrderItem[];
+}
+
+// Hämta information om en order
+export interface Order extends CreateOrder {
+  _id: string;
   createdAt: Date;
 }
 
 interface OrderContextValue {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
-  createOrder: (order: Order) => Promise<void>;
+  createOrder: (order: CreateOrder) => Promise<void>;
   fetchAllOrders: () => Promise<void>;
   allOrders: Order[];
   getOrdersByUser: (userId: string) => Promise<Order[]>;
@@ -48,7 +53,16 @@ export default function OrderProvider({ children }: Props) {
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
   const { isLoggedIn } = useUser();
-
+  
+  const getOrdersByUser = async (userId: string) => {
+    try {
+      const response = await axios.get(`/api/orders/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching orders by user:', error);
+      return [];
+    }
+  };
   const fetchAllOrders = async () => {
     try {
       const response = await axios.get('/api/orders', { withCredentials: true });
@@ -72,7 +86,7 @@ export default function OrderProvider({ children }: Props) {
   //
   // Create a new order in the database and reduce the stock level for each ordered item in the order.
   //
-  const createOrder = async (newOrder: Order) => {
+  const createOrder = async (newOrder: CreateOrder) => {
     try {
       console.log('Creating order:', newOrder);
 
@@ -87,16 +101,6 @@ export default function OrderProvider({ children }: Props) {
       }
     } catch (error) {
       console.error('Error creating order:', error);
-    }
-  };
-
-  const getOrdersByUser = async (userId: string) => {
-    try {
-      const response = await axios.get(`/api/orders/user/${userId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching orders by user:', error);
-      return [];
     }
   };
 

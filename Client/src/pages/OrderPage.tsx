@@ -13,13 +13,15 @@ export default function OrderPage() {
   useEffect(() => {
     const fetchUserOrders = async () => {
       try {
-        const orders = await getOrdersByUser(currentUser?._id || '');
-        setUserOrders(orders);
+        if (currentUser?._id) {
+          const orders = await getOrdersByUser(currentUser._id);
+          setUserOrders(orders);
+        }
       } catch (error) {
         console.error('Error fetching user orders:', error);
       }
     };
-
+  
     fetchUserOrders();
   }, [getOrdersByUser, currentUser?._id]);
 
