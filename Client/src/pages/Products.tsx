@@ -1,5 +1,5 @@
 import { Box, Button, Card, Typography, useMediaQuery } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import Snackbar from '../components/Snackbar';
@@ -8,7 +8,7 @@ import { useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
 export default function Products() {
-  const { product, setProduct } = useProduct();
+  const { product, setProduct, fetchProductsByCategory } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
@@ -24,43 +24,11 @@ export default function Products() {
     setSnackbarOpen(false);
   };
 
-  // CATEGORY SECTION
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-        const categories = await response.json();
-        setProduct(categories);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchCategories();
-  }, [setProduct]);
-
-  const fetchAllProducts = async () => {
-    try {
-      const response = await fetch('/api/products');
-      const products = await response.json();
-      setProduct(products);
-    } catch (error) {
-      console.error('Error fetching all products:', error);
-    }
-  };
-
-  // CATEGORY SECTION
-  const handleCategoryButtonClick = async (categoryId: string) => {
+  const handleCategoryButtonClick = (categoryId: string) => {
     if (categoryId === 'all') {
-      fetchAllProducts();
+      fetchProductsByCategory(''); // Pass an empty string to fetch all products
     } else {
-      try {
-        const response = await fetch(`/api/categories/${categoryId}`);
-        const products = await response.json();
-        setProduct(products);
-      } catch (error) {
-        console.error('Error fetching products by category:', error);
-      }
+      fetchProductsByCategory(categoryId);
     }
   };
 
@@ -87,13 +55,13 @@ export default function Products() {
         </Button>
         <Button
           style={categoryButton}
-          onClick={() => handleCategoryButtonClick('6473e2eeffe85c382201fa7b')}
+          onClick={() => handleCategoryButtonClick('6475b46636699a608b3da6ea')}
         >
           två-sits
         </Button>
         <Button
           style={categoryButton}
-          onClick={() => handleCategoryButtonClick('6473e302ffe85c382201fa7d')}
+          onClick={() => handleCategoryButtonClick('6475b47836699a608b3da6ec')}
         >
           tre-sits
         </Button>
