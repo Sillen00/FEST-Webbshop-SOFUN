@@ -19,6 +19,7 @@ interface ContextValue {
   removeProduct: (product: Product) => void;
   clearProduct: () => void;
   updateProduct: (id: string, newData: Product) => void;
+  fetchProductsByCategory: (categoryId: string) => void;
 }
 
 export const ProductContext = createContext<ContextValue>(null as any);
@@ -45,10 +46,26 @@ export default function ProductProvider({ children }: Props) {
     };
 
     fetchProducts();
-  }, [order, products]);
+  }, [order]);
 
   const clearProduct = () => {
     setProducts([]);
+  };
+
+  // FETCH PRODUCTS BY CATEGORY
+  const fetchProductsByCategory = async (categoryId: string) => {
+    try {
+      let response;
+      if (categoryId === '') {
+        response = await fetch('/api/products');
+      } else {
+        response = await fetch(`/api/categories/${categoryId}`);
+      }
+      const products = await response.json();
+      setProducts(products);
+    } catch (error) {
+      console.error('Error fetching products by category:', error);
+    }
   };
 
   async function addProduct(newProduct: Product) {
@@ -117,6 +134,7 @@ export default function ProductProvider({ children }: Props) {
         removeProduct,
         clearProduct,
         updateProduct,
+        fetchProductsByCategory,
       }}
     >
       {children}
