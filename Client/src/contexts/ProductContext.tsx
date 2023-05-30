@@ -12,8 +12,14 @@ export interface Product {
   isArchived: boolean;
 }
 
+export interface Category {
+  _id: string;
+  name: string;
+}
+
 interface ContextValue {
   products: Product[];
+  categories: Category[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   addProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
@@ -31,6 +37,7 @@ interface Props {
 
 export default function ProductProvider({ children }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const { order } = useOrder();
 
@@ -52,6 +59,21 @@ export default function ProductProvider({ children }: Props) {
     setProducts([]);
   };
 
+  // GET ALL CATEGORIES
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+        const data = await response.json();
+        console.log(data);
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   // FETCH PRODUCTS BY CATEGORY
   const fetchProductsByCategory = async (categoryId: string) => {
     try {
@@ -60,7 +82,10 @@ export default function ProductProvider({ children }: Props) {
         response = await fetch('/api/products');
       } else {
         response = await fetch(`/api/categories/${categoryId}`);
+        console.log(response);
+        // setCategories(response);
       }
+
       const products = await response.json();
       setProducts(products);
     } catch (error) {
@@ -129,6 +154,7 @@ export default function ProductProvider({ children }: Props) {
     <ProductContext.Provider
       value={{
         products,
+        categories,
         setProducts,
         addProduct,
         removeProduct,
