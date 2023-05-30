@@ -86,7 +86,7 @@ export default function Products() {
                   display: 'flex',
                   flexDirection: 'column',
                   width: '100%',
-                  margin: '1rem',
+                  margin: '0.5rem',
                 }}
               >
                 <Box>
@@ -105,7 +105,7 @@ export default function Products() {
                   display: 'flex',
                   justifyContent: 'flex-end',
                   margin: '1rem',
-                  marginTop: '2rem',
+                  marginTop: '1.5rem',
                   marginLeft: '0',
                   width: '100%',
                   height: '2rem',
