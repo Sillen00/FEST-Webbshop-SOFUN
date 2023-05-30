@@ -25,7 +25,7 @@ export default function OrderPage() {
         <Button
           variant='contained'
           color='primary'
-          sx={{margin: "0 0 5em 0"}}
+          sx={{ margin: '0 0 5em 0' }}
           onClick={() => {
             logoutUser();
             navigate('/');
