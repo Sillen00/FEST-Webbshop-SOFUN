@@ -7,6 +7,15 @@ import { useCart } from '../contexts/CartContext';
 import { useProduct } from '../contexts/ProductContext';
 import { CartItem } from '../data';
 
+const categoryButton = {
+  color: 'black',
+  border: '1px solid black',
+  padding: '6px',
+  borderRadius: '3px',
+  marginRight: '10px',
+  backgroundColor: 'white',
+};
+
 export default function Products() {
   const { product, setProduct, fetchProductsByCategory } = useProduct();
   const { addProduct } = useCart();
@@ -26,19 +35,10 @@ export default function Products() {
 
   const handleCategoryButtonClick = (categoryId: string) => {
     if (categoryId === 'all') {
-      fetchProductsByCategory(''); // Pass an empty string to fetch all products
+      fetchProductsByCategory('');
     } else {
       fetchProductsByCategory(categoryId);
     }
-  };
-
-  const categoryButton = {
-    color: 'black',
-    border: '1px solid black',
-    padding: '6px',
-    borderRadius: '3px',
-    marginRight: '10px',
-    backgroundColor: 'white',
   };
 
   return (

@@ -49,6 +49,7 @@ export default function ProductProvider({ children }: Props) {
     setProduct([]);
   };
 
+  // FETCH PRODUCTS BY CATEGORY
   const fetchProductsByCategory = async (categoryId: string) => {
     try {
       let response;
