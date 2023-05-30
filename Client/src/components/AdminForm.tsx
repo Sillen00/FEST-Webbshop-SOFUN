@@ -1,16 +1,27 @@
-import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Button,
+  Card,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useImage } from '../contexts/ImageContext';
-import { Product } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
   imageID: Yup.string().required('Ange bild'),
+  category: Yup.string().required('Ange Kategori'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -27,6 +38,7 @@ export const defaultValues: AdminValues = {
   title: '',
   description: '',
   imageID: '',
+  category: '',
   price: 0,
   stockLevel: 0,
 };
@@ -44,11 +56,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { uploadImage } = useImage();
+  const { categories } = useProduct();
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
     imageID: product?.imageID || defaultValues.imageID,
+    category: product?.categoryIDs || defaultValues.category,
     price: product?.price || defaultValues.price,
     stockLevel: product?.stockLevel || defaultValues.stockLevel,
   };
@@ -58,7 +72,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     validationSchema: AdminSchema,
     onSubmit: async values => {
       const newProduct: Product = {
-        categoryIDs: [],
+        categoryIDs: values.category,
         title: values.title,
         imageID: values.imageID,
         description: values.description,
@@ -145,6 +159,24 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
+
+        <FormControl fullWidth>
+          <InputLabel id='demo-simple-select-label'>Kategori</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={formik.values.category}
+            label='Kategori'
+            onChange={formik.handleChange}
+          >
+            {categories?.map(category => (
+              <MenuItem key={category._id} value={category.name}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <TextField
           fullWidth
           id='price'
