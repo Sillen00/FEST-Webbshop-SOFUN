@@ -4,7 +4,7 @@ import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
-  const { product: productContext } = useProduct(); // Update this line
+  const { products } = useProduct();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -27,12 +27,12 @@ export default function OrderConfirmation() {
           width: isSmallScreen ? '95%' : '30rem',
         }}
       >
-        { order?.orderItems?.map(orderItem => {
-          const product = productContext.find(p => p._id === orderItem.productID); // Update this line
+        {order?.orderItems?.map(orderItem => {
+          const orderedProducts = products.find(p => p._id === orderItem.productID); // Update this line
 
-          if (!product) {
+          if (!order) {
             // Product not found
-            return null;
+            <h1>HITTADE INTE</h1>;
           }
 
           return (
@@ -65,14 +65,14 @@ export default function OrderConfirmation() {
                 >
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <img
-                      src={'/api/image/' + product.imageID}
-                      alt={product.title}
+                      src={'/api/image/' + orderedProducts?.imageID}
+                      alt={orderedProducts?.title}
                       style={{ width: '8rem', height: 'auto' }}
                     />
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <Typography variant='subtitle2' data-cy='product-title'>
-                      {product.title}
+                      {orderedProducts?.title}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
@@ -80,7 +80,7 @@ export default function OrderConfirmation() {
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <Typography variant='subtitle2' data-cy='product-price'>
-                      {product.price} kr
+                      {orderedProducts?.price} kr
                     </Typography>
                   </Box>
                 </Box>

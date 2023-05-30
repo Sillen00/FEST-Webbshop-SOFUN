@@ -4,11 +4,10 @@ import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderPage() {
   const { order } = useOrder();
-  const { product: productContext } = useProduct(); // Update this line
+  const { products: productContext } = useProduct(); // Update this line
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  
   return (
     <Box
       sx={{
@@ -34,56 +33,56 @@ export default function OrderPage() {
             return null;
           }
           return (
-          <Card
-            variant='outlined'
-            data-cy='product'
-            key={orderItem.productID}
-            sx={{
-              backgroundColor: 'white',
-              borderBottom: '1px solid black',
-            }}
-          >
-            <CardContent
+            <Card
+              variant='outlined'
+              data-cy='product'
+              key={orderItem.productID}
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
+                backgroundColor: 'white',
+                borderBottom: '1px solid black',
               }}
             >
-              <Box
+              <CardContent
                 sx={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  gap: '1rem',
                   justifyContent: 'center',
-                  flex: '1',
                   alignItems: 'center',
+                  height: '100%',
                 }}
               >
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <img
-                    src={'/api/image/' + product.imageID}
-                    alt={product.title}
-                    style={{ width: '8rem', height: 'auto' }}
-                  />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    flex: '1',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <img
+                      src={'/api/image/' + product.imageID}
+                      alt={product.title}
+                      style={{ width: '8rem', height: 'auto' }}
+                    />
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2' data-cy='product-title'>
+                      {product.title}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: '1' }}>
+                    <Typography variant='subtitle2' data-cy='product-price'>
+                      {product.price} kr
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2' data-cy='product-title'>
-                    {product.title}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flex: '1' }}>
-                  <Typography variant='subtitle2' data-cy='product-price'>
-                    {product.price} kr
-                  </Typography>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
           );
         })}
         <Box>

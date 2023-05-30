@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useOrder } from './OrderContext';
 
 export interface Product {
   _id?: string;
@@ -12,8 +13,8 @@ export interface Product {
 }
 
 interface ContextValue {
-  product: Product[];
-  setProduct: React.Dispatch<React.SetStateAction<Product[]>>;
+  products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   addProduct: (product: Product) => void;
   removeProduct: (product: Product) => void;
   clearProduct: () => void;
@@ -28,24 +29,26 @@ interface Props {
 }
 
 export default function ProductProvider({ children }: Props) {
-  const [product, setProduct] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const { order } = useOrder();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/products');
         const data = await response.json();
-        setProduct(data);
+        setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [order, products]);
 
   const clearProduct = () => {
-    setProduct([]);
+    setProducts([]);
   };
 
   async function addProduct(newProduct: Product) {
@@ -60,7 +63,7 @@ export default function ProductProvider({ children }: Props) {
 
       if (response.ok) {
         const createdProduct = await response.json();
-        setProduct(prevProducts => [...prevProducts, createdProduct]);
+        setProducts(prevProducts => [...prevProducts, createdProduct]);
       } else {
         const message = await response.text();
         throw new Error(message);
@@ -75,7 +78,7 @@ export default function ProductProvider({ children }: Props) {
       await fetch(`/api/products/${product._id}`, {
         method: 'DELETE',
       });
-      setProduct(prevProducts => prevProducts.filter(item => item._id !== product._id));
+      setProducts(prevProducts => prevProducts.filter(item => item._id !== product._id));
     } catch (error) {
       console.error('Error deleting product:', error);
     }
@@ -93,7 +96,7 @@ export default function ProductProvider({ children }: Props) {
 
       if (response.ok) {
         const updatedProduct = await response.json();
-        setProduct(prevProducts =>
+        setProducts(prevProducts =>
           prevProducts.map(item => (item._id === id ? updatedProduct : item))
         );
       } else {
@@ -108,8 +111,8 @@ export default function ProductProvider({ children }: Props) {
   return (
     <ProductContext.Provider
       value={{
-        product,
-        setProduct,
+        products,
+        setProducts,
         addProduct,
         removeProduct,
         clearProduct,

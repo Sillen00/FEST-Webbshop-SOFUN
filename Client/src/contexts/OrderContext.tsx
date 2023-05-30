@@ -68,11 +68,15 @@ export default function OrderProvider({ children }: Props) {
     }
   }, [isLoggedIn]);
 
+  //
+  // Create a new order in the database and reduce the stock level for each ordered item in the order.
+  //
   const createOrder = async (newOrder: Order) => {
     try {
       console.log('Creating order:', newOrder);
 
       const response = await axios.post('/api/orders', newOrder);
+
 
       if (response.status === 201) {
         console.log('Order created:', response.data);

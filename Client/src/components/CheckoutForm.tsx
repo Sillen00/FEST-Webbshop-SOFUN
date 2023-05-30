@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useCart } from '../contexts/CartContext';
-import { Order, useOrder } from '../contexts/OrderContext';
+import { useOrder } from '../contexts/OrderContext';
 import { useUser } from '../contexts/UserContext';
 
 const CheckoutSchema = Yup.object().shape({
@@ -32,26 +32,35 @@ export default function CheckoutForm() {
       firstName: '',
       lastName: '',
       address: '',
-      zipCode: 0, 
+      zipCode: 0,
       city: '',
-      phoneNumber: 0, 
+      phoneNumber: 0,
     },
     validationSchema: CheckoutSchema,
     onSubmit: async values => {
       console.log('cart:', cart);
       console.log('currentUser:', currentUser);
-      const orderItems = cart.map(item => ({ productID: item.id, quantity: item.quantity }));
+      const orderItems = cart.map(item => ({
+        productID: item.id as string,
+        quantity: item.quantity,
+      }));
       const totalPrice = cart.reduce((total, item) => total + item.quantity * item.price, 0);
 
-      const newOrder: Order = {
+      // const newOrder: Order = {
+      //   userID: currentUser ? currentUser._id : '',
+      //   totalPrice,
+      //   deliveryAddress: values,
+      //   isShipped: false,
+      //   orderItems,
+      // };
+
+      await createOrder({
         userID: currentUser ? currentUser._id : '',
         totalPrice,
         deliveryAddress: values,
         isShipped: false,
         orderItems,
-      };
-
-      await createOrder(newOrder);
+      });
       navigate('/confirmation');
       clearCart();
     },
