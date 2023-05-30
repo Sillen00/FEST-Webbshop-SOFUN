@@ -16,7 +16,7 @@ const categoryButton = {
 };
 
 export default function Products() {
-  const { products, setProducts, fetchProductsByCategory } = useProduct();
+  const { products, fetchProductsByCategory } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
