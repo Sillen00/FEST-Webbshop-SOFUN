@@ -1,10 +1,3 @@
-// getAllProducts()
-// getProductById()
-// createProduct()
-// updateProduct()
-// deleteProduct()
-// productQuantity()
-
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
 import { ValidationError } from 'yup';
@@ -32,7 +25,11 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function getProductById(req: Request, res: Response) {
-  console.log('Placeholder för getProductById');
+  const product = await ProductModel.findById(req.params.id);
+  if (!product) {
+    res.status(404).json(`${req.params.id} not found`);
+  }
+  res.status(200).json(product);
 }
 
 export async function createProduct(req: Request, res: Response) {
