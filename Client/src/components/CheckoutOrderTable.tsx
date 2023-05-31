@@ -13,7 +13,9 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useCart } from '../contexts/CartContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 export default function CheckoutOrderTable() {
   const { cart, addProduct, removeProduct } = useCart();
@@ -21,101 +23,152 @@ export default function CheckoutOrderTable() {
     return acc + item.quantity * item.price;
   }, 0);
 
+  const [isLowStockLevel, setIsLowStockLevel] = useState(false);
+
+  const { products } = useProduct();
+
+  // const cartProductId = cart.find(chosen => chosen.id === ) as Product;
+  // const product = products.find(chosen => chosen._id === cartProductId) as Product;
+  // products.forEach(product => {
+  //   cart.forEach(cartProduct => {
+  //     if (product?.stockLevel >= cartProduct.quantity) {
+  //       setIsLowStockLevel(true);
+  //     }
+  //   });
+  // });
+
+  useEffect(() => {
+    const checkStockLevel = () => {
+      let lowStock = false;
+      cart.forEach(cartProduct => {
+        const product = products.find(chosen => chosen._id === cartProduct.id) as Product;
+        if (product?.stockLevel < cartProduct.quantity) {
+          lowStock = true;
+          return;
+        }
+      });
+      setIsLowStockLevel(lowStock);
+    };
+
+    checkStockLevel();
+  }, [cart, products]);
+
   return (
-    <TableContainer
-      component={Paper}
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-    >
-      <Table
-        sx={{ minWidth: 330, maxWidth: 1000 }}
-        aria-label='simple table'
-        size='small'
-        padding='none'
+    <>
+      <TableContainer
+        component={Paper}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-        <TableHead>
-          <TableRow
-            sx={{
-              bgcolor: 'secondary.contrastText',
-            }}
-          >
-            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Produkter
-            </TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Modell
-            </TableCell>
-            <TableCell align='center'></TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Antal
-            </TableCell>
-            <TableCell align='center'></TableCell>
-            <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Pris
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cart.map(product => (
+        <Table
+          sx={{ minWidth: 330, maxWidth: 1000 }}
+          aria-label='simple table'
+          size='small'
+          padding='none'
+        >
+          <TableHead>
             <TableRow
-              key={product.id}
               sx={{
-                '&:last-child td, &:last-child th': {},
+                bgcolor: 'secondary.contrastText',
               }}
-              data-cy='cart-item'
             >
-              <TableCell component='th' scope='row' sx={{ width: '40%' }}>
-                <Avatar
-                  alt={product.title}
-                  src={'/api/image/' + product.imageID}
-                  sx={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxHeight: '15rem',
-                  }}
-                  variant='rounded'
-                />
+              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+                Produkter
               </TableCell>
-              <TableCell align='center' data-cy='product-title' sx={{ width: '10%' }}>
-                {product.title}
+              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+                Modell
               </TableCell>
-              <TableCell align='center' sx={{ width: '10%', color: 'secondary.contrastText' }}>
-                <IconButton
-                  aria-label='remove'
-                  onClick={() => removeProduct(product)}
-                  data-cy='decrease-quantity-button'
-                >
-                  <Icon.RemoveCircleOutline />
-                </IconButton>
+              <TableCell align='center'></TableCell>
+              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+                Antal
               </TableCell>
-              <TableCell align='center' sx={{ width: '10%' }}>
-                <Input
-                  value={product.quantity}
-                  data-cy='product-quantity'
-                  sx={{ width: '1.2rem' }}
-                />
+              <TableCell align='center'></TableCell>
+              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+                Pris
               </TableCell>
-              <TableCell align='center' sx={{ width: '10%', color: 'secondary.contrastText' }}>
-                <IconButton
-                  aria-label='add'
-                  onClick={() => addProduct(product)}
-                  data-cy='increase-quantity-button'
-                >
-                  <Icon.AddCircleOutline />
-                </IconButton>
-              </TableCell>
-              <TableCell align='center' data-cy='product-price' sx={{ width: '8rem' }}>
-                {product.quantity * product.price}
+              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+                InStock
               </TableCell>
             </TableRow>
-          ))}
+          </TableHead>
+          <TableBody>
+            {cart.map(cartProduct => {
+              // const productId = cartProduct.id; // Add this line
 
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell align='right' data-cy='total-price' colSpan={6} sx={{ padding: '1rem' }}>
-              <Typography variant='h6'>Totalt: {totalCost.toLocaleString('sv-SE')} SEK</Typography>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+              const product = products.find(chosen => chosen._id === cartProduct.id) as Product;
+
+              return (
+                <TableRow
+                  key={cartProduct.id}
+                  sx={{
+                    '&:last-child td, &:last-child th': {},
+                  }}
+                  data-cy='cart-item'
+                >
+                  <TableCell component='th' scope='row' sx={{}}>
+                    <Avatar
+                      alt={cartProduct.title}
+                      src={'/api/image/' + cartProduct.imageID}
+                      sx={{
+                        width: 'auto',
+                        height: 'auto',
+                        maxHeight: '15rem',
+                      }}
+                      variant='rounded'
+                    />
+                  </TableCell>
+                  <TableCell align='center' data-cy='product-title' sx={{ width: '20%' }}>
+                    {cartProduct.title}
+                  </TableCell>
+                  <TableCell align='center' sx={{ color: 'secondary.contrastText' }}>
+                    <IconButton
+                      aria-label='remove'
+                      onClick={() => removeProduct(cartProduct)}
+                      data-cy='decrease-quantity-button'
+                    >
+                      <Icon.RemoveCircleOutline />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align='center' sx={{}}>
+                    <Input
+                      value={cartProduct.quantity}
+                      data-cy='product-quantity'
+                      sx={{ width: '1.2rem' }}
+                    />
+                  </TableCell>
+                  <TableCell align='center' sx={{ color: 'secondary.contrastText' }}>
+                    <IconButton
+                      aria-label='add'
+                      onClick={() => addProduct(cartProduct)}
+                      data-cy='increase-quantity-button'
+                    >
+                      <Icon.AddCircleOutline />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align='center' data-cy='product-price' sx={{ width: '8rem' }}>
+                    {cartProduct.quantity * cartProduct.price}
+                  </TableCell>
+                  <TableCell align='center' sx={{ color: 'secondary.contrastText' }}>
+                    {product?.stockLevel >= cartProduct.quantity ? <Icon.Check /> : <Icon.Close />}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align='right' data-cy='total-price' colSpan={6} sx={{ padding: '1rem' }}>
+                <Typography variant='h6'>
+                  Totalt: {totalCost.toLocaleString('sv-SE')} SEK
+                </Typography>
+                {isLowStockLevel ? (
+                  <Typography variant='h6' color='error.main'>
+                    Ordern kan ta lägre tid att skicka pågrund av låg lagernivå.
+                  </Typography>
+                ) : null}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
