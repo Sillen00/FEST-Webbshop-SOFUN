@@ -1,10 +1,6 @@
-// getAllOrders()
-// getOrderById()
-// updateOrderStatus()
-// createOrder()
-
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
+import { ProductModel } from '../products/product-model';
 import { OrderModel } from './order-model';
 
 const addressSchema = Yup.object().shape({
@@ -65,8 +61,31 @@ export async function updateOrderStatus(req: Request, res: Response) {
 
 export async function createOrder(req: Request, res: Response) {
   try {
+    console.log('KOMMER JAG HIT?!??');
     await orderSchema.validate(req.body);
+
+    // Create the order
     const newOrder = await OrderModel.create(req.body);
+
+    // Reduce the stock level of each ordered product
+    const orderItems = req.body.orderItems;
+    for (const orderItem of orderItems) {
+      const product = await ProductModel.findById(orderItem.productID);
+      if (!product) {
+        throw new Error(`Product with ID ${orderItem.productID} not found`);
+      }
+
+      // Calculate the new stock level
+      const newStockLevel = product.stockLevel - orderItem.quantity;
+
+      // Update the stock level of the product
+      await ProductModel.findByIdAndUpdate(
+        orderItem.productID,
+        { stockLevel: newStockLevel },
+        { new: true }
+      );
+    }
+
     res.status(201).json(newOrder);
   } catch (error) {
     console.error('Error creating order:', error);
@@ -77,3 +96,8 @@ export async function createOrder(req: Request, res: Response) {
     }
   }
 }
+// const product = await ProductModel.create(req.body.orderItems);
+// const updatedStockLevel = product.stockLevel - req.body.orderItems.quantity;
+
+// // Update the product stock level
+// await ProductModel.findByIdAndUpdate(product._id, { stockLevel: updatedStockLevel });
