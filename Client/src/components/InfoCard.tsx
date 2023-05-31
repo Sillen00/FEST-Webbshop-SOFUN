@@ -94,6 +94,9 @@ export default function InfoCard() {
           <Typography variant='body2' data-cy='product-description'>
             {selectedProduct?.description}
           </Typography>
+          <Typography variant='body2' marginTop={'1.5rem'}>
+            {selectedProduct?.stockLevel}: st i Lager
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -114,7 +117,7 @@ export default function InfoCard() {
                 paddingLeft: '1rem',
                 marginRight: '2rem',
                 marginBottom: '1rem',
-                marginTop: '6rem',
+                marginTop: '5rem',
                 backgroundColor: 'primary.contrastText',
                 color: 'primary.main',
                 '&:hover': {

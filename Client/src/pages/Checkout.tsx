@@ -17,8 +17,8 @@ export default function Checkout() {
         alignItems: 'center',
         flexDirection: 'column',
         gap: '1rem',
-        marginTop: '1rem',
         marginBottom: '1rem',
+        backgroundColor: 'secondary.main',
       }}
     >
       <Typography variant='h3'>Kassa </Typography>
