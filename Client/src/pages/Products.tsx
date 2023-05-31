@@ -185,22 +185,7 @@ export default function Products() {
                   }}
                   data-cy='product-buy-button'
                   onClick={() => {
-                    const cartItem: CartItem = {
-                      id: product?._id || '',
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      quantity: 1,
-                    };
-                    addProduct(cartItem);
-                    setSnackbarOpen(true);
-                    setLastAddedProduct({
-                      title: product.title,
-                      price: product.price,
-                      imageID: product.imageID,
-                      id: product?._id || '',
-                      quantity: 1,
-                    });
+                   handleAddToCart(product);
                   }}
                 >
                   Lägg i kundvagnen

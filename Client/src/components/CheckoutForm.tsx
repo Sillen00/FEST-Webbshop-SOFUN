@@ -162,12 +162,12 @@ export default function CheckoutForm() {
           type='text'
           name='phoneNumber'
           label='Telefonnummer'
-          value={formik.values.phoneNumber.toString()}
+          value={formik.values.phoneNumber}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
           helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-          inputProps={{ 'data-cy': 'customer-phone' }}
+          inputProps={{ inputMode: 'numeric', pattern: "^[0-9]*[.,]?[0-9]+$" }}
           FormHelperTextProps={{ 'data-cy': 'customer-phone-error' } as any}
           autoComplete='tel'
         />
