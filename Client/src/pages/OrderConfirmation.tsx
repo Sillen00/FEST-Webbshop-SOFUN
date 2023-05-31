@@ -3,7 +3,6 @@ import { useOrder } from '../contexts/OrderContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
-  console.log('order:', order);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -32,7 +31,6 @@ export default function OrderConfirmation() {
         }}
       >
         {order?.orderItems?.map(orderItem => {
-           console.log('Order Item Image ID in orderPage:', orderItem.productID.imageID);
           return (
             <Card
               variant='outlined'

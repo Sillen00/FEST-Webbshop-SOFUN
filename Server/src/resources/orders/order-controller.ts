@@ -61,11 +61,13 @@ export async function updateOrderStatus(req: Request, res: Response) {
 
 export async function createOrder(req: Request, res: Response) {
   try {
-    console.log('KOMMER JAG HIT?!??');
     await orderSchema.validate(req.body);
 
     // Create the order
-    const newOrder = (await OrderModel.create(req.body)).populate("orderItems.productID");
+    const newOrder = await OrderModel.create(req.body);
+
+    // Populate the newly created order
+    const populatedOrder = await OrderModel.findById(newOrder._id).populate("orderItems.productID");
 
     // Reduce the stock level of each ordered product
     const orderItems = req.body.orderItems;
@@ -86,7 +88,7 @@ export async function createOrder(req: Request, res: Response) {
       );
     }
 
-    res.status(201).json(newOrder);
+    res.status(201).json(populatedOrder);
   } catch (error) {
     console.error('Error creating order:', error);
     if (error instanceof Yup.ValidationError) {
@@ -96,8 +98,4 @@ export async function createOrder(req: Request, res: Response) {
     }
   }
 }
-// const product = await ProductModel.create(req.body.orderItems);
-// const updatedStockLevel = product.stockLevel - req.body.orderItems.quantity;
 
-// // Update the product stock level
-// await ProductModel.findByIdAndUpdate(product._id, { stockLevel: updatedStockLevel });
