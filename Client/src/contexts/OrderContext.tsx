@@ -60,7 +60,7 @@ export default function OrderProvider({ children }: Props) {
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
   const { isLoggedIn } = useUser();
-  
+
   const getOrdersByUser = async (userId: string) => {
     try {
       const response = await axios.get(`/api/orders/user/${userId}`);
@@ -97,6 +97,7 @@ export default function OrderProvider({ children }: Props) {
     try {
       console.log('Creating order:', newOrder);
       const response = await axios.post('/api/orders', newOrder);
+
       if (response.status === 201) {
         setOrder(response.data);
       } else {
@@ -113,8 +114,8 @@ export default function OrderProvider({ children }: Props) {
       const response = await axios.put(`/api/orders/status/${orderId}`);
       if (response.status === 200) {
         const updatedOrder = response.data;
-        setAllOrders((prevOrders) =>
-          prevOrders.map((order) => (order._id === updatedOrder._id ? updatedOrder : order))
+        setAllOrders(prevOrders =>
+          prevOrders.map(order => (order._id === updatedOrder._id ? updatedOrder : order))
         );
       } else {
         throw new Error(response.statusText);

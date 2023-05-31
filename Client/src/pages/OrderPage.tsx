@@ -106,9 +106,15 @@ export default function OrderPage() {
               }}>
                 <Typography variant='h5'>Levereras till</Typography>
                 <Typography variant='h5'>
-                  {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}{' '}
+                  {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
+                </Typography>
+                <Typography variant='h5'>
+                  {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
                 </Typography>
                 <Typography variant='h5'>{order.deliveryAddress.address}</Typography>
+                <Typography variant='h5'>
+                  {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
+                </Typography>
                 <Typography variant='h5'>
                   {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
                 </Typography>
