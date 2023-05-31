@@ -1,10 +1,8 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
-import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
-  const { products } = useProduct();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -28,7 +26,6 @@ export default function OrderConfirmation() {
         }}
       >
         {order?.orderItems?.map(orderItem => {
-          const orderedProducts = products.find(p => p._id === orderItem.productID); // Update this line
 
           if (!order) {
             // Product not found
@@ -39,7 +36,7 @@ export default function OrderConfirmation() {
             <Card
               variant='outlined'
               data-cy='product'
-              key={orderItem.productID}
+              key={orderItem.productID._id}
               sx={{
                 backgroundColor: 'white',
                 borderBottom: '1px solid black',
@@ -65,14 +62,14 @@ export default function OrderConfirmation() {
                 >
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <img
-                      src={'/api/image/' + orderedProducts?.imageID}
-                      alt={orderedProducts?.title}
+                      src={'/api/image/' + orderItem.productID.imageID}
+                      alt={orderItem.productID.title}
                       style={{ width: '8rem', height: 'auto' }}
                     />
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <Typography variant='subtitle2' data-cy='product-title'>
-                      {orderedProducts?.title}
+                      {orderItem.productID?.title}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
@@ -80,7 +77,7 @@ export default function OrderConfirmation() {
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <Typography variant='subtitle2' data-cy='product-price'>
-                      {orderedProducts?.price} kr
+                      {orderItem.productID.price} kr
                     </Typography>
                   </Box>
                 </Box>

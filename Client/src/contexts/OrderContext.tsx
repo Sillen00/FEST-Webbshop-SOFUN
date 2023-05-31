@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useUser } from './UserContext';
+import { Product } from './ProductContext';
 
 export interface DeliveryAddress {
   firstName: string;
@@ -12,6 +13,11 @@ export interface DeliveryAddress {
 }
 
 interface OrderItem {
+  productID: Product;
+  quantity: number;
+}
+
+interface CreateOrderItem {
   productID: string;
   quantity: number;
 }
@@ -22,13 +28,14 @@ interface CreateOrder {
   totalPrice: number;
   deliveryAddress: DeliveryAddress;
   isShipped: boolean;
-  orderItems: OrderItem[];
+  orderItems: CreateOrderItem[];
 }
 
 // Hämta information om en order
-export interface Order extends CreateOrder {
+export interface Order extends Omit<CreateOrder, 'orderItems'> {
   _id: string;
   createdAt: Date;
+  orderItems: OrderItem[];
 }
 
 interface OrderContextValue {
