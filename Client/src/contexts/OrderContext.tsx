@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useUser } from './UserContext';
 
 export interface DeliveryAddress {
   firstName: string;
@@ -7,7 +8,7 @@ export interface DeliveryAddress {
   address: string;
   zipCode: number;
   city: string;
-  phoneNumber: number;
+  phoneNumber: string;
 }
 
 interface OrderItem {
@@ -15,7 +16,8 @@ interface OrderItem {
   quantity: number;
 }
 
-export interface Order {
+// Skapa en order
+interface CreateOrder {
   userID: string;
   totalPrice: number;
   deliveryAddress: DeliveryAddress;
@@ -23,12 +25,20 @@ export interface Order {
   orderItems: OrderItem[];
 }
 
+// Hämta information om en order
+export interface Order extends CreateOrder {
+  _id: string;
+  createdAt: Date;
+}
+
 interface OrderContextValue {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
-  createOrder: (order: Order) => Promise<void>;
-  getAllOrders: () => Promise<Order[]>;
+  createOrder: (order: CreateOrder) => Promise<void>;
+  fetchAllOrders: () => Promise<void>;
+  allOrders: Order[];
   getOrdersByUser: (userId: string) => Promise<Order[]>;
+  updateOrderStatus: (orderId: string) => Promise<void>;
 }
 
 export const OrderContext = createContext<OrderContextValue>(null as any);
@@ -40,15 +50,48 @@ interface Props {
 
 export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
+
+  const { isLoggedIn } = useUser();
+  
+  const getOrdersByUser = async (userId: string) => {
+    try {
+      const response = await axios.get(`/api/orders/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching orders by user:', error);
+      return [];
+    }
+  };
+  const fetchAllOrders = async () => {
+    try {
+      const response = await axios.get('/api/orders', { withCredentials: true });
+
+      if (response.status === 200) {
+        setAllOrders(response.data);
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchAllOrders();
+    }
+  }, [isLoggedIn]);
 
   //
   // Create a new order in the database and reduce the stock level for each ordered item in the order.
   //
-  const createOrder = async (newOrder: Order) => {
+  const createOrder = async (newOrder: CreateOrder) => {
     try {
       console.log('Creating order:', newOrder);
 
       const response = await axios.post('/api/orders', newOrder);
+
 
       if (response.status === 201) {
         console.log('Order created:', response.data);
@@ -61,31 +104,19 @@ export default function OrderProvider({ children }: Props) {
     }
   };
 
-  //
-  // Get all orders from the database.
-  //
-
-  const getAllOrders = async () => {
+  const updateOrderStatus = async (orderId: string) => {
     try {
-      const response = await axios.get('/api/orders');
-      return response.data;
+      const response = await axios.put(`/api/orders/status/${orderId}`);
+      if (response.status === 200) {
+        const updatedOrder = response.data;
+        setAllOrders((prevOrders) =>
+          prevOrders.map((order) => (order._id === updatedOrder._id ? updatedOrder : order))
+        );
+      } else {
+        throw new Error(response.statusText);
+      }
     } catch (error) {
-      console.error('Error fetching orders:', error);
-      return [];
-    }
-  };
-
-  //
-  // Get all orders for a specific user from the database.
-  //
-
-  const getOrdersByUser = async (userId: string) => {
-    try {
-      const response = await axios.get(`/api/orders/user/${userId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching orders by user:', error);
-      return [];
+      console.error('Error updating order status:', error);
     }
   };
 
@@ -94,9 +125,11 @@ export default function OrderProvider({ children }: Props) {
       value={{
         order,
         setOrder,
+        allOrders,
         createOrder,
-        getAllOrders,
+        fetchAllOrders,
         getOrdersByUser,
+        updateOrderStatus,
       }}
     >
       {children}

@@ -185,7 +185,7 @@ export default function Products() {
                   }}
                   data-cy='product-buy-button'
                   onClick={() => {
-                    handleAddToCart(product);
+                   handleAddToCart(product);
                   }}
                 >
                   Lägg i kundvagnen
