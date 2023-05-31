@@ -103,7 +103,7 @@ export default function Snackbar({ open, handleClose, lastAddedProduct }: Snackb
               </Box>
             </Box>
             {isLoggedIn ? (
-              <NavLink to='./checkout'>
+              <NavLink to='/checkout'>
                 <Button
                   variant='contained'
                   color='primary'
