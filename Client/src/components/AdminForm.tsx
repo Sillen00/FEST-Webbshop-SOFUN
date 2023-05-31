@@ -12,6 +12,7 @@ import {
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useImage } from '../contexts/ImageContext';
@@ -21,7 +22,7 @@ const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
   imageID: Yup.string().required('Ange bild'),
-  category: Yup.string().required('Ange Kategori'),
+  category: Yup.array().of(Yup.string()).required('Ange Kategori'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -38,7 +39,7 @@ export const defaultValues: AdminValues = {
   title: '',
   description: '',
   imageID: '',
-  category: '',
+  category: [],
   price: 0,
   stockLevel: 0,
 };
@@ -72,7 +73,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     validationSchema: AdminSchema,
     onSubmit: async values => {
       const newProduct: Product = {
-        categoryIDs: values.category,
+        categoryIDs: [values.category?.toString()],
         title: values.title,
         imageID: values.imageID,
         description: values.description,
@@ -82,8 +83,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
       };
 
       try {
-        onSubmit(newProduct); // Wait for the onSubmit function to complete
-        navigate('/admin'); // Navigate to the desired route
+        onSubmit(newProduct);
+        navigate('/admin');
       } catch (error) {
         console.error('Error creating product:', error);
       }
@@ -95,7 +96,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
 
     try {
       const imageID = await uploadImage(file);
-
       formik.setFieldValue('imageID', imageID);
     } catch (error) {
       formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
@@ -163,14 +163,16 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>Kategori</InputLabel>
           <Select
+            name='category'
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             value={formik.values.category}
             label='Kategori'
             onChange={formik.handleChange}
+            multiple
           >
             {categories?.map(category => (
-              <MenuItem key={category._id} value={category.name}>
+              <MenuItem key={category._id} value={category._id}>
                 {category.name}
               </MenuItem>
             ))}
