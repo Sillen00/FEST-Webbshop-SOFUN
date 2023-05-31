@@ -25,7 +25,17 @@ export default function OrderPage() {
         <Button
           variant='contained'
           color='primary'
-          sx={{ margin: '0 0 5em 0' }}
+          sx={{
+            fontSize: '12px',
+            border: '1px solid',
+            padding: '0.5rem',
+            marginBottom: '1.5rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
           onClick={() => {
             logoutUser();
             navigate('/');
