@@ -6,11 +6,21 @@ import Snackbar from '../components/Snackbar';
 import { CartItem, useCart } from '../contexts/CartContext';
 import { Product, useProduct } from '../contexts/ProductContext';
 
+const categoryButton = {
+  color: 'black',
+  border: '1px solid black',
+  padding: '6px',
+  borderRadius: '3px',
+  marginRight: '10px',
+  backgroundColor: 'white',
+};
+
 export default function Products() {
-  const { products } = useProduct();
+  const { products, fetchProductsByCategory } = useProduct();
   const { addProduct } = useCart();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState<CartItem | undefined>(undefined);
+  const matches = useMediaQuery('(min-width:500px)');
 
   const handleSnackbarClose = (
     event: React.SyntheticEvent<Element, Event> | Event,
@@ -22,7 +32,13 @@ export default function Products() {
     setSnackbarOpen(false);
   };
 
-  const matches = useMediaQuery('(min-width:500px)');
+  const handleCategoryButtonClick = (categoryId: string) => {
+    if (categoryId === 'all') {
+      fetchProductsByCategory('');
+    } else {
+      fetchProductsByCategory(categoryId);
+    }
+  };
 
   function handleAddToCart(product: Product) {
     const cartItem: CartItem = {
@@ -48,6 +64,29 @@ export default function Products() {
   return (
     <>
       <Carousel />
+      <Box
+        sx={{
+          padding: '1em 4em 1em 4em',
+          backgroundColor: '#fffaf5',
+        }}
+      >
+        <Button style={categoryButton} onClick={() => handleCategoryButtonClick('all')}>
+          alla
+        </Button>
+        <Button
+          style={categoryButton}
+          onClick={() => handleCategoryButtonClick('6475b46636699a608b3da6ea')}
+        >
+          två-sits
+        </Button>
+        <Button
+          style={categoryButton}
+          onClick={() => handleCategoryButtonClick('6475b47836699a608b3da6ec')}
+        >
+          tre-sits
+        </Button>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
