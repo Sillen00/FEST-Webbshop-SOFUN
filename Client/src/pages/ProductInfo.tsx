@@ -19,36 +19,39 @@ export default function ProductInfo() {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        // height: '78.4vh',
         alignItems: 'center',
         justifyContent: 'center',
         padding: matches ? '5rem' : '0rem',
         backgroundColor: 'secondary.main',
+        marginBottom: '3rem',
         [theme.breakpoints.down('md')]: {
-          flexDirection: 'colum',
-          color: 'black',
+          flexDirection: 'column',
         },
       }}
     >
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'colum',
-          maxWidth: '35rem',
+          justifyContent: 'center',
+          maxWidth: '40rem',
           height: '30rem',
-          marginBottom: '3rem',
+          [theme.breakpoints.down('md')]: {
+            height: '40rem',
+          },
+          [theme.breakpoints.down('sm')]: {
+            height: '30rem',
+          },
         }}
       >
-        <img src={'/api/image/' + product.imageID} alt={product.title}></img>
+        <img src={'/api/image/' + product.imageID} alt={product.title} width={'100%'}></img>
       </Box>
 
       <Card
         sx={{
           display: 'flex',
-          flexDirection: 'colum',
+          justifyContent: 'center',
           maxWidth: '40rem',
           height: '30rem',
-          marginBottom: '3rem',
         }}
         variant='outlined'
       >
