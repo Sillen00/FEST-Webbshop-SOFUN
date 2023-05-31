@@ -3,8 +3,14 @@ import { useOrder } from '../contexts/OrderContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
+  console.log('order:', order);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  if (!order) {
+    // Product not found
+    return <h1>HITTADE INTE</h1>;
+  }
 
   return (
     <Box
@@ -26,12 +32,7 @@ export default function OrderConfirmation() {
         }}
       >
         {order?.orderItems?.map(orderItem => {
-
-          if (!order) {
-            // Product not found
-            <h1>HITTADE INTE</h1>;
-          }
-
+           console.log('Order Item Image ID in orderPage:', orderItem.productID.imageID);
           return (
             <Card
               variant='outlined'
@@ -61,11 +62,14 @@ export default function OrderConfirmation() {
                   }}
                 >
                   <Box sx={{ display: 'flex', flex: '1' }}>
-                    <img
-                      src={'/api/image/' + orderItem.productID.imageID}
-                      alt={orderItem.productID.title}
-                      style={{ width: '8rem', height: 'auto' }}
-                    />
+                    {order?.orderItems.map((item, index) => (
+                      <img
+                        key={index}
+                        src={'/api/image/' + item.productID.imageID}
+                        alt={item.productID.title}
+                        style={{ width: '8rem', height: 'auto' }}
+                      />
+                    ))}
                   </Box>
                   <Box sx={{ display: 'flex', flex: '1' }}>
                     <Typography variant='subtitle2' data-cy='product-title'>
@@ -85,7 +89,6 @@ export default function OrderConfirmation() {
             </Card>
           );
         })}
-
         <Box>
           <Typography
             variant='h6'
@@ -105,7 +108,7 @@ export default function OrderConfirmation() {
                 paddingRight: '1rem',
               }}
             >
-              <p>Summa: {order?.totalPrice.toLocaleString('sv-SE')} kr </p>
+              <p>Summa: {order?.totalPrice} kr </p>
             </Box>
           </Typography>
         </Box>
@@ -148,19 +151,20 @@ export default function OrderConfirmation() {
             }}
           >
             <Typography variant='subtitle1' data-cy='customer-name'>
-              {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}
+              {order?.deliveryAddress?.firstName} {order?.deliveryAddress?.lastName}
             </Typography>
             <Typography variant='subtitle1'>
-              <span data-cy='customer-address'>{order?.deliveryAddress.address},</span>
-              <span data-cy='customer-zipcode'>{order?.deliveryAddress.zipCode},</span>
-              <span data-cy='customer-city'> {order?.deliveryAddress.city}</span>
+              <span data-cy='customer-address'>{order?.deliveryAddress?.address},</span>
+              <span data-cy='customer-zipcode'>{order?.deliveryAddress?.zipCode},</span>
+              <span data-cy='customer-city'> {order?.deliveryAddress?.city}</span>
             </Typography>
             <Typography variant='subtitle1' data-cy='customer-phone'>
-              {order?.deliveryAddress.phoneNumber}
+              {order?.deliveryAddress?.phoneNumber}
             </Typography>
           </Box>
         </Box>
       </Box>
+
     </Box>
   );
 }

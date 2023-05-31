@@ -96,12 +96,8 @@ export default function OrderProvider({ children }: Props) {
   const createOrder = async (newOrder: CreateOrder) => {
     try {
       console.log('Creating order:', newOrder);
-
       const response = await axios.post('/api/orders', newOrder);
-
-
       if (response.status === 201) {
-        console.log('Order created:', response.data);
         setOrder(response.data);
       } else {
         throw new Error(response.statusText);
@@ -110,6 +106,7 @@ export default function OrderProvider({ children }: Props) {
       console.error('Error creating order:', error);
     }
   };
+  
 
   const updateOrderStatus = async (orderId: string) => {
     try {
@@ -130,10 +127,10 @@ export default function OrderProvider({ children }: Props) {
   return (
     <OrderContext.Provider
       value={{
+        createOrder,
         order,
         setOrder,
         allOrders,
-        createOrder,
         fetchAllOrders,
         getOrdersByUser,
         updateOrderStatus,
@@ -142,4 +139,5 @@ export default function OrderProvider({ children }: Props) {
       {children}
     </OrderContext.Provider>
   );
+  
 }

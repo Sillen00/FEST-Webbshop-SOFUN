@@ -51,7 +51,7 @@ export default function OrderPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: '100vw',
+          width: '100%',
           gap: '1rem',
         }}
       >
@@ -75,10 +75,35 @@ export default function OrderPage() {
                 height: '100%',
               }}
             >
-              <Box>
-                <Typography variant='h5'>{order.totalPrice} kr</Typography>
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                width: '50%',
+                gap: '1rem',
+                backgroundColor: "lightgreen"
+              }}>
+              {order.orderItems.map((item, index) => (
+                  <img
+                  key={index}
+                  src={'/api/image/' + item.productID.imageID}
+                  alt={item.productID.title}
+                  style={{ width: '8rem', height: 'auto',  }}
+                />
+                ))}
               </Box>
-              <Box>
+              <Box sx={{
+                backgroundColor: "lightblue",
+                width: "25%"
+              }}>
+              {order.orderItems.map((item, index) => (
+                  <span key={index}>{item.productID.title}</span>
+                ))}
+              </Box>
+              <Box sx={{
+                backgroundColor: "lightyellow",
+                width: "25%"
+              }}>
                 <Typography variant='h5'>Levereras till</Typography>
                 <Typography variant='h5'>
                   {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}{' '}
@@ -89,9 +114,6 @@ export default function OrderPage() {
                 </Typography>
                 <Typography variant='h5'>{order.deliveryAddress.phoneNumber}</Typography>
                 <Typography variant='h5'>{order.isShipped ? 'Yes' : 'No'}</Typography>
-                {order.orderItems.map(item => (
-                  <span>{item.productID.title}</span>
-                ))}
               </Box>
             </CardContent>
           </Card>
@@ -99,20 +121,4 @@ export default function OrderPage() {
       </Box>
     </Box>
   );
-}
-
-{
-  /* <Typography variant='h5'>{order._id}</Typography>
-              <Typography variant='h5'>{order.totalPrice} kr</Typography>
-              <Typography variant='h5'>
-                {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
-              </Typography>
-              <Typography variant='h5'>{order.deliveryAddress.address}</Typography>
-              <Typography variant='h5'>
-                {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
-              </Typography>
-              <Typography variant='h5'> Skickad {order.isShipped ? 'Ja' : 'Nej'}</Typography>
-              <Typography variant='h5'>
-                Skapad: {new Date(order.createdAt).toLocaleDateString('sv-SE')}
-              </Typography> */
 }

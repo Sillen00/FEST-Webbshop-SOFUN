@@ -53,8 +53,8 @@ export default function CheckoutForm() {
         isShipped: false,
         orderItems,
       });
-      navigate('/confirmation');
       clearCart();
+      navigate('/confirmation');
     },
   });
 
