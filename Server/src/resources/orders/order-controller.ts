@@ -65,8 +65,6 @@ export async function createOrder(req: Request, res: Response) {
 
     // Create the order
     const newOrder = await OrderModel.create(req.body);
-
-    // Populate the newly created order
     const populatedOrder = await OrderModel.findById(newOrder._id).populate("orderItems.productID");
 
     // Reduce the stock level of each ordered product
