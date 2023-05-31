@@ -81,7 +81,7 @@ export default function AdminAllOrdersTable() {
                     width: '60%',
                     fontSize: '0.8rem',
                     mb: '0.5rem',
-                    mt: '0.5rem'
+                    mt: '0.5rem',
                   }}
                 >
                   Ändra status

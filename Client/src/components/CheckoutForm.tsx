@@ -167,7 +167,7 @@ export default function CheckoutForm() {
           onBlur={formik.handleBlur}
           error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
           helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-          inputProps={{ inputMode: 'numeric', pattern: "^[0-9]*[.,]?[0-9]+$" }}
+          inputProps={{ inputMode: 'numeric', pattern: '^[0-9]*[.,]?[0-9]+$' }}
           FormHelperTextProps={{ 'data-cy': 'customer-phone-error' } as any}
           autoComplete='tel'
         />
