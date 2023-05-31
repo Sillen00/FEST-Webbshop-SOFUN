@@ -1,8 +1,9 @@
 import * as Icon from '@mui/icons-material';
-import { Box, IconButton, Modal, Tooltip } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
+import React from 'react';
 
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useUser } from '../contexts/UserContext';
 import { theme } from '../theme';
@@ -12,9 +13,22 @@ import Logo from './Logo';
 export default function Header() {
   const { cart } = useCart();
   const location = useLocation();
-
+  const { currentUser, logoutUser } = useUser();
+  const navigate = useNavigate();
   const { open, handleOpen, handleClose, isLoggedIn } = useUser();
-  const { currentUser } = useUser();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  // const handleClick = () => {
+  //   setAnchorEl(null);
+  // };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -90,19 +104,90 @@ export default function Header() {
           )}
 
           <Tooltip title='Orders'>
-            <NavLink to='./orders' data-cy='admin-link'>
-              <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-                <Icon.AccountCircle
+            <IconButton
+              aria-label='admin'
+              aria-controls='account-menu'
+              aria-haspopup='true'
+              onClick={handleClick}
+              sx={{ color: 'secondary.contrastText' }}
+            >
+              <Icon.AccountCircle
+                sx={{
+                  fontSize: '2.5rem',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '1.7rem',
+                  },
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+
+          <Menu
+            id='account-menu'
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleCloseMenu}
+          >
+            {isLoggedIn ? (
+              <>
+                <MenuItem
+                  color='primary'
                   sx={{
-                    fontSize: '2.5rem',
-                    [theme.breakpoints.down('sm')]: {
-                      fontSize: '1.7rem',
+                    fontSize: '12px',
+                    // border: '1px solid',
+                    padding: '0.5rem',
+                    backgroundColor: 'primary.main',
+                    color: 'secondary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.main',
+                      color: 'secondary.contrastText',
                     },
                   }}
-                />
-              </IconButton>
-            </NavLink>
-          </Tooltip>
+                  onClick={handleCloseMenu}
+                  component={NavLink}
+                  to='./orders'
+                >
+                  Dina ordrar
+                </MenuItem>
+                <MenuItem
+                  color='primary'
+                  sx={{
+                    fontSize: '12px',
+                    // border: '1px solid',
+                    padding: '0.5rem',
+                    backgroundColor: 'primary.main',
+                    color: 'secondary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.main',
+                    },
+                  }}
+                  onClick={() => {
+                    logoutUser();
+                    navigate('/');
+                  }}
+                >
+                  Logga ut
+                </MenuItem>
+              </>
+            ) : (
+              <MenuItem
+                color='primary'
+                sx={{
+                  fontSize: '12px',
+                  // border: '1px solid',
+                  padding: '0.5rem',
+                  backgroundColor: 'primary.main',
+                  color: 'secondary.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'primary.main',
+                  },
+                }}
+                onClick={handleOpen}
+              >
+                Logga in/Registrera dig
+              </MenuItem>
+            )}
+          </Menu>
 
           <Box sx={{ marginLeft: 'auto' }}>
             <Tooltip title='Kundvagn'>
