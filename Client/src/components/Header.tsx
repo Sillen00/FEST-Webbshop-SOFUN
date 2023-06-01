@@ -158,6 +158,7 @@ export default function Header() {
                     },
                   }}
                   onClick={() => {
+                    handleCloseMenu();
                     logoutUser();
                     navigate('/');
                   }}
@@ -177,7 +178,10 @@ export default function Header() {
                     backgroundColor: 'primary.main',
                   },
                 }}
-                onClick={handleOpen}
+                onClick={() => {
+                  handleOpen();
+                  handleCloseMenu();
+                }}
               >
                 Logga in/Registrera dig
               </MenuItem>
