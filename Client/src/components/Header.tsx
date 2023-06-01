@@ -125,7 +125,7 @@ export default function Header() {
             onClose={handleCloseMenu}
           >
             {isLoggedIn ? (
-              <>
+              <div>
                 <MenuItem
                   color='primary'
                   sx={{
@@ -165,7 +165,7 @@ export default function Header() {
                 >
                   Logga ut
                 </MenuItem>
-              </>
+              </div>
             ) : (
               <MenuItem
                 color='primary'

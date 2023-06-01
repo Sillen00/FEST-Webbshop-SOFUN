@@ -19,7 +19,7 @@ export default function Checkout() {
         gap: '1rem',
         marginBottom: '1rem',
         backgroundColor: 'secondary.main',
-        minHeight: '60vh',
+        minHeight: '70vh',
       }}
     >
       <Typography variant='h3'>Kassa </Typography>

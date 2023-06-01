@@ -18,7 +18,7 @@ import {
 
 const userRouter = express
   .Router()
-  .get('/api/users', authAdmin, authLogin, getAllUsers)
+  .get('/api/users', authAdmin, getAllUsers)
   .post('/api/users/signup', signUpUser)
   .post('/api/users/login', logInUser)
   .get('/api/users/checkSession', checkSession)
