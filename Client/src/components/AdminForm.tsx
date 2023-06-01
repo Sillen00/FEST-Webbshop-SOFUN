@@ -202,7 +202,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           id='stockLevel'
           type='number'
           name='stockLevel'
-          label='StockLevel'
+          label='Lagernivå'
           value={formik.values.stockLevel}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

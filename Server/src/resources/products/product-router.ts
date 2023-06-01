@@ -1,9 +1,3 @@
-// GET /api/products
-// GET /api/products/:id
-// POST /api/products A L V
-// PUT /api/products/:id A L V
-// DELETE /api/products/:id A L
-
 import express from 'express';
 import { authAdmin } from '../middlewares';
 import {

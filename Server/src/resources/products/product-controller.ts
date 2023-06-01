@@ -10,7 +10,6 @@ const productSchema = Yup.object().shape({
   description: Yup.string().required(),
   price: Yup.number().required(),
   stockLevel: Yup.number().required(),
-  // imageURL: Yup.string().required(),
   isArchived: Yup.boolean().required(),
 });
 
@@ -49,6 +48,7 @@ export async function createProduct(req: Request, res: Response) {
 
 export async function updateProduct(req: Request, res: Response) {
   try {
+    await productSchema.validate(req.body);
     const { id } = req.params;
     const { title, description, price, stockLevel, categoryIDs } = req.body;
 
@@ -85,8 +85,4 @@ export async function deleteProduct(req: Request, res: Response) {
       error: (error as any).message,
     });
   }
-}
-
-export async function getProductQuantity(req: Request, res: Response) {
-  console.log('Placeholder för productQuantity');
 }

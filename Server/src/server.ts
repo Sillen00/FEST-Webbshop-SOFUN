@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { app } from './app';
 dotenv.config();
-// import MONGO_PASSWORD from '/.env';
 
 const URL = process.env.MONGO_URL;
 

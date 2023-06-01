@@ -8,7 +8,7 @@ export default function OrderConfirmation() {
 
   if (!order) {
     // Product not found
-    return <h1>HITTADE INTE</h1>;
+    return <h1>HITTADE INTE NÅGON ORDER...</h1>;
   }
 
   return (
@@ -17,6 +17,7 @@ export default function OrderConfirmation() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        minHeight: '70vh',
         backgroundColor: 'secondary.main',
       }}
     >
@@ -30,98 +31,92 @@ export default function OrderConfirmation() {
           width: isSmallScreen ? '95%' : '30rem',
         }}
       >
-        {order?.orderItems?.map(orderItem => {
-          return (
-            <Card
-              variant='outlined'
-              data-cy='product'
-              key={orderItem.productID._id}
+        <Card
+          variant='outlined'
+          data-cy='product'
+          sx={{
+            backgroundColor: 'white',
+            borderBottom: '1px solid black',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              padding: '1rem',
+              borderBottom: '1px solid lightgrey',
+            }}
+          >
+            <Box
               sx={{
-                backgroundColor: 'white',
-                borderBottom: '1px solid black',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  padding: '0 0.4rem',
-                  borderBottom: '1px solid lightgrey',
-                }}
-              >
+              <Typography variant='h5'>Ordernr: {order._id}</Typography>
+              <Typography variant='body2'>
+                {new Date(order.createdAt).toLocaleDateString('sv-SE', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </Typography>
+            </Box>
+            <Typography variant='h5'>
+              {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
+            </Typography>
+          </Box>
+          <CardContent
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                gap: '1rem',
+              }}
+            >
+              {order?.orderItems.map((orderItem, index) => (
                 <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Typography variant='h5'>Ordernr: {order._id}</Typography>
-                  <Typography variant='body2'>
-                    {new Date(order.createdAt).toLocaleDateString('sv-SE', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </Typography>
-                </Box>
-                <Typography variant='h5'>
-                  {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
-                </Typography>
-              </Box>
-              <CardContent
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100%',
-                }}
-              >
-                <Box
+                  key={index}
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '3rem',
-                    alignItems: 'center',
                   }}
                 >
-                  {order?.orderItems.map((item, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: '3rem',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        key={index}
-                        src={'/api/image/' + item.productID.imageID}
-                        alt={item.productID.title}
-                        style={{ width: '8rem', height: 'auto' }}
-                      />
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                        }}
-                      >
-                        <Typography variant='body1'>Produktdetaljer</Typography>
-                        <Typography variant='body2'>Namn: {item.productID?.title}</Typography>
-                        <Typography variant='body2'>Antal: {item.quantity}x</Typography>
-                        <Typography variant='body2'>
-                          Pris: {item.productID?.price * item.quantity}kr
-                        </Typography>
-                      </Box>
-                    </Box>
-                  ))}
+                  <img
+                    key={index}
+                    src={'/api/image/' + orderItem.productID.imageID}
+                    alt={orderItem.productID.title}
+                    style={{ width: '8rem', height: 'auto' }}
+                  />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Typography variant='body1'>Produktdetaljer</Typography>
+                    <Typography variant='body2'>Namn: {orderItem.productID?.title}</Typography>
+                    <Typography variant='body2'>Antal: {orderItem.quantity}x</Typography>
+                    <Typography variant='body2'>
+                      Pris: {orderItem.productID?.price * orderItem.quantity}kr
+                    </Typography>
+                  </Box>
                 </Box>
-              </CardContent>
-            </Card>
-          );
-        })}
+              ))}
+            </Box>
+          </CardContent>
+        </Card>
         <Box>
           <Typography
             variant='h6'

@@ -1,14 +1,14 @@
-import { Box, Button, ButtonGroup, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminAllOrdersTable from '../components/AdminAllOrdersTable';
 import AdminAllProductsTable from '../components/AdminAllProductsTable';
 import AdminAllUsersTable from '../components/AdminAllUsersTable';
+import { theme } from '../theme';
 
 export default function Admin() {
   const navigate = useNavigate();
-  // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [showSection, setShowSection] = useState<'user' | 'product' | 'order'>('product');
 
@@ -59,7 +59,7 @@ export default function Admin() {
           onClick={() => setShowSection('product')}
           sx={{
             width: '33%',
-            fontSize: '16px',
+            fontSize: isSmallScreen ? '0.8rem' : '1rem',
             paddingLeft: '1rem',
             paddingRight: '1rem',
             backgroundColor: 'secondary.main',
@@ -69,13 +69,13 @@ export default function Admin() {
             },
           }}
         >
-          Products
+          Produkter
         </Button>
         <Button
           onClick={() => setShowSection('user')}
           sx={{
             width: '33%',
-            fontSize: '16px',
+            fontSize: isSmallScreen ? '0.8rem' : '1rem',
             paddingLeft: '1rem',
             paddingRight: '1rem',
             backgroundColor: 'secondary.main',
@@ -85,13 +85,13 @@ export default function Admin() {
             },
           }}
         >
-          Users
+          Användare
         </Button>
         <Button
           onClick={() => setShowSection('order')}
           sx={{
             width: '33%',
-            fontSize: '16px',
+            fontSize: isSmallScreen ? '0.8rem' : '1rem',
             paddingLeft: '1rem',
             paddingRight: '1rem',
             backgroundColor: 'secondary.main',
@@ -101,7 +101,7 @@ export default function Admin() {
             },
           }}
         >
-          Orders
+          Beställningar
         </Button>
       </ButtonGroup>
 

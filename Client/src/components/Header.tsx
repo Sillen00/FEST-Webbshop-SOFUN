@@ -85,18 +85,20 @@ export default function Header() {
           }}
         >
           {currentUser?.isAdmin && (
-            <NavLink to='./admin' data-cy='admin-link'>
-              <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
-                <Icon.ModeEdit
-                  sx={{
-                    fontSize: '2.5rem',
-                    [theme.breakpoints.down('sm')]: {
-                      fontSize: '1.7rem',
-                    },
-                  }}
-                />
-              </IconButton>
-            </NavLink>
+            <Tooltip title='Admin'>
+              <NavLink to='./admin' data-cy='admin-link'>
+                <IconButton aria-label='admin' sx={{ color: 'secondary.contrastText' }}>
+                  <Icon.ModeEdit
+                    sx={{
+                      fontSize: '2.5rem',
+                      [theme.breakpoints.down('sm')]: {
+                        fontSize: '1.7rem',
+                      },
+                    }}
+                  />
+                </IconButton>
+              </NavLink>
+            </Tooltip>
           )}
 
           <Tooltip title='Orders'>
