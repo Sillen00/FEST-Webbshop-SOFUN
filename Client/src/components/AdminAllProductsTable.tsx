@@ -44,7 +44,7 @@ export default function AdminAllProductsTable() {
               Bild
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              SL
+              LN
             </TableCell>
             {!isSmallScreen ? (
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
@@ -58,7 +58,7 @@ export default function AdminAllProductsTable() {
               Pris
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              D
+              R
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               E

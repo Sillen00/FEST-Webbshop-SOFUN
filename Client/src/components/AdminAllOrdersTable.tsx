@@ -70,7 +70,7 @@ export default function AdminAllOrdersTable() {
               }}
             >
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                User ID
+                Användar ID
               </TableCell>
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
                 Skickad

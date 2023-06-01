@@ -53,17 +53,17 @@ export default function AdminAllUsersTable() {
           >
             {!isSmallScreen ? (
               <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-                User ID
+                Användar ID
               </TableCell>
             ) : null}
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Username
+              Användarnamn
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
               Admin
             </TableCell>
             <TableCell align='center' sx={{ typography: 'h6', color: 'primary.main' }}>
-              Change Admin Status
+              Ändra Admin Status
             </TableCell>
           </TableRow>
         </TableHead>
@@ -105,7 +105,7 @@ export default function AdminAllUsersTable() {
                     }
                   }}
                 >
-                  {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                  {user.isAdmin ? 'Ta Bort Admin' : 'Gör Admin'}
                 </Button>
               </TableCell>
             </TableRow>
