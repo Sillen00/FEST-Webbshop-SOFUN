@@ -26,17 +26,18 @@ const orderSchema = Yup.object().shape({
 
 export async function getAllOrders(req: Request, res: Response) {
   try {
-    const orders = await OrderModel.find();
+    const orders = await OrderModel.find().populate('orderItems.productID');
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ error: (error as any).message });
   }
 }
 
+
 export async function getOrdersByUser(req: Request, res: Response) {
   const userId = req.params.id;
   try {
-    const orders = await OrderModel.find({ userID: userId });
+    const orders = await OrderModel.find({ userID: userId }).populate('orderItems.productID');
     if (!orders) {
       return res.status(404).json({ error: 'No orders found for this user' });
     }
@@ -65,6 +66,7 @@ export async function createOrder(req: Request, res: Response) {
 
     // Create the order
     const newOrder = await OrderModel.create(req.body);
+    const populatedOrder = await OrderModel.findById(newOrder._id).populate("orderItems.productID");
 
     // Reduce the stock level of each ordered product
     const orderItems = req.body.orderItems;
@@ -85,7 +87,7 @@ export async function createOrder(req: Request, res: Response) {
       );
     }
 
-    res.status(201).json(newOrder);
+    res.status(201).json(populatedOrder);
   } catch (error) {
     console.error('Error creating order:', error);
     if (error instanceof Yup.ValidationError) {

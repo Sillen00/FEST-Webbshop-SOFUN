@@ -15,13 +15,13 @@ interface UserContextValue {
   loginUser: (values: { username: string; password: string }) => void;
   isLoggedIn: boolean;
   isNotValid: boolean;
-  fetchAllUsers: () => void;
   allUsers: User[];
   assignAsAdmin: (userId: string) => void;
   removeAsAdmin: (userId: string) => void;
   logoutUser: () => void;
   currentUser: User | null;
   isLoading: boolean;
+  isAdmin: boolean;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -41,17 +41,22 @@ export default function UserProvider({ children }: Props) {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const fetchAllUsers = async () => {
-    axios
-      .get('/api/users', { withCredentials: true })
-      .then(function (response) {
-        setAllUsers(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      if (isAdmin) {
+        try {
+          const response = await axios.get('/api/users', { withCredentials: true });
+          setAllUsers(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchAllUsers();
+  }, [isAdmin]);
 
   const loginUser = async (values: { username: string; password: string }) => {
     await axios
@@ -66,7 +71,6 @@ export default function UserProvider({ children }: Props) {
       .then(function (response) {
         handleClose();
         setIsLoggedIn(true);
-        fetchAllUsers();
         setCurrentUser(response.data);
         console.log(response);
       })
@@ -84,11 +88,10 @@ export default function UserProvider({ children }: Props) {
         if (response.data.loggedIn) {
           setIsLoggedIn(true);
           setCurrentUser(response.data.user);
-          fetchAllUsers();
+          setIsAdmin(response.data.isAdmin);
         } else {
           setIsLoggedIn(false);
           setCurrentUser(null);
-          setIsLoading(false);
         }
         setIsLoading(false);
       })
@@ -173,13 +176,13 @@ export default function UserProvider({ children }: Props) {
         loginUser,
         isLoggedIn,
         isNotValid,
-        fetchAllUsers,
         allUsers,
         assignAsAdmin,
         removeAsAdmin,
         logoutUser,
         currentUser,
         isLoading,
+        isAdmin,
       }}
     >
       {children}

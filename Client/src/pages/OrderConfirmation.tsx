@@ -1,12 +1,15 @@
 import { Box, Card, CardContent, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useOrder } from '../contexts/OrderContext';
-import { useProduct } from '../contexts/ProductContext';
 
 export default function OrderConfirmation() {
   const { order } = useOrder();
-  const { products } = useProduct();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  if (!order) {
+    // Product not found
+    return <h1>HITTADE INTE</h1>;
+  }
 
   return (
     <Box
@@ -28,23 +31,45 @@ export default function OrderConfirmation() {
         }}
       >
         {order?.orderItems?.map(orderItem => {
-          const orderedProducts = products.find(p => p._id === orderItem.productID); // Update this line
-
-          if (!order) {
-            // Product not found
-            <h1>HITTADE INTE</h1>;
-          }
-
           return (
             <Card
               variant='outlined'
               data-cy='product'
-              key={orderItem.productID}
+              key={orderItem.productID._id}
               sx={{
                 backgroundColor: 'white',
                 borderBottom: '1px solid black',
               }}
             >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  padding: '0 0.4rem',
+                  borderBottom: '1px solid lightgrey',
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography variant='h5'>Ordernr: {order._id}</Typography>
+                  <Typography variant='body2'>
+                    {new Date(order.createdAt).toLocaleDateString('sv-SE', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </Typography>
+                </Box>
+                <Typography variant='h5'>
+                  {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
+                </Typography>
+              </Box>
               <CardContent
                 sx={{
                   display: 'flex',
@@ -57,38 +82,46 @@ export default function OrderConfirmation() {
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    gap: '1rem',
-                    justifyContent: 'center',
-                    flex: '1',
+                    gap: '3rem',
                     alignItems: 'center',
                   }}
                 >
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <img
-                      src={'/api/image/' + orderedProducts?.imageID}
-                      alt={orderedProducts?.title}
-                      style={{ width: '8rem', height: 'auto' }}
-                    />
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2' data-cy='product-title'>
-                      {orderedProducts?.title}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2' data-cy='product-price'>
-                      {orderedProducts?.price} kr
-                    </Typography>
-                  </Box>
+                  {order?.orderItems.map((item, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: '3rem',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        key={index}
+                        src={'/api/image/' + item.productID.imageID}
+                        alt={item.productID.title}
+                        style={{ width: '8rem', height: 'auto' }}
+                      />
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}
+                      >
+                        <Typography variant='body1'>Produktdetaljer</Typography>
+                        <Typography variant='body2'>Namn: {item.productID?.title}</Typography>
+                        <Typography variant='body2'>Antal: {item.quantity}x</Typography>
+                        <Typography variant='body2'>
+                          Pris: {item.productID?.price * item.quantity}kr
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ))}
                 </Box>
               </CardContent>
             </Card>
           );
         })}
-
         <Box>
           <Typography
             variant='h6'
@@ -107,9 +140,7 @@ export default function OrderConfirmation() {
                 justifyContent: 'flex-end',
                 paddingRight: '1rem',
               }}
-            >
-              <p>Summa: {order?.totalPrice.toLocaleString('sv-SE')} kr </p>
-            </Box>
+            ></Box>
           </Typography>
         </Box>
         <Box
@@ -127,40 +158,37 @@ export default function OrderConfirmation() {
               flexDirection: 'column',
               justifyContent: 'center',
               textAlign: 'center',
+              margin: '1rem 0',
             }}
           >
-            <p>Tack för din beställning!</p>
+            <Typography variant='h3'>Tack för din beställning!</Typography>
           </Box>
-          <Typography
-            component='h4'
-            sx={{
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              marginTop: '1rem',
-            }}
-          >
-            Din order levereras till följande adress
-          </Typography>
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '1rem',
-              marginBottom: '2rem',
+              flexDirection: 'row',
+              padding: '0.4rem',
+              margin: '0 0.5rem 0.5rem 0',
+              width: '100%',
+              justifyContent: 'center',
+              gap: '2rem',
             }}
           >
-            <Typography variant='subtitle1' data-cy='customer-name'>
-              {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}
-            </Typography>
-            <Typography variant='subtitle1'>
-              <span data-cy='customer-address'>{order?.deliveryAddress.address},</span>
-              <span data-cy='customer-zipcode'>{order?.deliveryAddress.zipCode},</span>
-              <span data-cy='customer-city'> {order?.deliveryAddress.city}</span>
-            </Typography>
-            <Typography variant='subtitle1' data-cy='customer-phone'>
-              {order?.deliveryAddress.phoneNumber}
-            </Typography>
+            <Box>
+              <Typography variant='h5'>Levereransuppgifter</Typography>
+              <Typography variant='body2'>
+                {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
+              </Typography>
+              <Typography variant='body2'>{order.deliveryAddress.address}</Typography>
+              <Typography variant='body2'>
+                {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
+              </Typography>
+              <Typography variant='body2'>{order.deliveryAddress.phoneNumber}</Typography>
+            </Box>
+            <Box>
+              <Typography variant='h5'>Summa</Typography>
+              <Typography variant='body2'>{order.totalPrice} kr</Typography>
+            </Box>
           </Box>
         </Box>
       </Box>

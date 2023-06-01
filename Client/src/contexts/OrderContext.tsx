@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useUser } from './UserContext';
+import { Product } from './ProductContext';
 
 export interface DeliveryAddress {
   firstName: string;
@@ -12,6 +13,11 @@ export interface DeliveryAddress {
 }
 
 interface OrderItem {
+  productID: Product;
+  quantity: number;
+}
+
+interface CreateOrderItem {
   productID: string;
   quantity: number;
 }
@@ -22,13 +28,14 @@ interface CreateOrder {
   totalPrice: number;
   deliveryAddress: DeliveryAddress;
   isShipped: boolean;
-  orderItems: OrderItem[];
+  orderItems: CreateOrderItem[];
 }
 
 // Hämta information om en order
-export interface Order extends CreateOrder {
+export interface Order extends Omit<CreateOrder, 'orderItems'> {
   _id: string;
   createdAt: Date;
+  orderItems: OrderItem[];
 }
 
 interface OrderContextValue {
@@ -52,7 +59,7 @@ export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, isAdmin } = useUser();
 
   const getOrdersByUser = async (userId: string) => {
     try {
@@ -78,10 +85,10 @@ export default function OrderProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && isAdmin) {
       fetchAllOrders();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isAdmin]);
 
   //
   // Create a new order in the database and reduce the stock level for each ordered item in the order.
@@ -89,11 +96,9 @@ export default function OrderProvider({ children }: Props) {
   const createOrder = async (newOrder: CreateOrder) => {
     try {
       console.log('Creating order:', newOrder);
-
       const response = await axios.post('/api/orders', newOrder);
 
       if (response.status === 201) {
-        console.log('Order created:', response.data);
         setOrder(response.data);
       } else {
         throw new Error(response.statusText);
@@ -122,10 +127,10 @@ export default function OrderProvider({ children }: Props) {
   return (
     <OrderContext.Provider
       value={{
+        createOrder,
         order,
         setOrder,
         allOrders,
-        createOrder,
         fetchAllOrders,
         getOrdersByUser,
         updateOrderStatus,
