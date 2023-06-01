@@ -41,6 +41,35 @@ export default function OrderConfirmation() {
                 borderBottom: '1px solid black',
               }}
             >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  padding: '0 0.4rem',
+                  borderBottom: '1px solid lightgrey',
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography variant='h5'>Ordernr: {order._id}</Typography>
+                  <Typography variant='body2'>
+                    {new Date(order.createdAt).toLocaleDateString('sv-SE', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </Typography>
+                </Box>
+                <Typography variant='h5'>
+                  {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
+                </Typography>
+              </Box>
               <CardContent
                 sx={{
                   display: 'flex',
@@ -53,35 +82,41 @@ export default function OrderConfirmation() {
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    gap: '1rem',
-                    justifyContent: 'center',
-                    flex: '1',
+                    gap: '3rem',
                     alignItems: 'center',
                   }}
                 >
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    {order?.orderItems.map((item, index) => (
+                  {order?.orderItems.map((item, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: '3rem',
+                        alignItems: 'center',
+                      }}
+                    >
                       <img
                         key={index}
                         src={'/api/image/' + item.productID.imageID}
                         alt={item.productID.title}
                         style={{ width: '8rem', height: 'auto' }}
                       />
-                    ))}
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2' data-cy='product-title'>
-                      {orderItem.productID?.title}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2'>{orderItem.quantity}</Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: '1' }}>
-                    <Typography variant='subtitle2' data-cy='product-price'>
-                      {orderItem.productID.price} kr
-                    </Typography>
-                  </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}
+                      >
+                        <Typography variant='body1'>Produktdetaljer</Typography>
+                        <Typography variant='body2'>Namn: {item.productID?.title}</Typography>
+                        <Typography variant='body2'>Antal: {item.quantity}x</Typography>
+                        <Typography variant='body2'>
+                          Pris: {item.productID?.price * item.quantity}kr
+                        </Typography>
+                      </Box>
+                    </Box>
+                  ))}
                 </Box>
               </CardContent>
             </Card>
@@ -105,9 +140,7 @@ export default function OrderConfirmation() {
                 justifyContent: 'flex-end',
                 paddingRight: '1rem',
               }}
-            >
-              <p>Summa: {order?.totalPrice} kr </p>
-            </Box>
+            ></Box>
           </Typography>
         </Box>
         <Box
@@ -125,44 +158,40 @@ export default function OrderConfirmation() {
               flexDirection: 'column',
               justifyContent: 'center',
               textAlign: 'center',
+              margin: '1rem 0',
             }}
           >
-            <p>Tack för din beställning!</p>
+            <Typography variant='h3'>Tack för din beställning!</Typography>
           </Box>
-          <Typography
-            component='h4'
-            sx={{
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              marginTop: '1rem',
-            }}
-          >
-            Din order levereras till följande adress
-          </Typography>
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '1rem',
-              marginBottom: '2rem',
+              flexDirection: 'row',
+              padding: '0.4rem',
+              margin: '0 0.5rem 0.5rem 0',
+              width: '100%',
+              justifyContent: 'center',
+              gap: '2rem',
             }}
           >
-            <Typography variant='subtitle1' data-cy='customer-name'>
-              {order?.deliveryAddress?.firstName} {order?.deliveryAddress?.lastName}
-            </Typography>
-            <Typography variant='subtitle1'>
-              <span data-cy='customer-address'>{order?.deliveryAddress?.address},</span>
-              <span data-cy='customer-zipcode'>{order?.deliveryAddress?.zipCode},</span>
-              <span data-cy='customer-city'> {order?.deliveryAddress?.city}</span>
-            </Typography>
-            <Typography variant='subtitle1' data-cy='customer-phone'>
-              {order?.deliveryAddress?.phoneNumber}
-            </Typography>
+            <Box>
+              <Typography variant='h5'>Levereransuppgifter</Typography>
+              <Typography variant='body2'>
+                {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
+              </Typography>
+              <Typography variant='body2'>{order.deliveryAddress.address}</Typography>
+              <Typography variant='body2'>
+                {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
+              </Typography>
+              <Typography variant='body2'>{order.deliveryAddress.phoneNumber}</Typography>
+            </Box>
+            <Box>
+              <Typography variant='h5'>Summa</Typography>
+              <Typography variant='body2'>{order.totalPrice} kr</Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
-
     </Box>
   );
 }
