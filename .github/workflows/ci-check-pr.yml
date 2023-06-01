@@ -11,7 +11,7 @@ on:
   # workflow_dispatch: # Manually trigger the workflow
 
 jobs:
-  build:
+  client:
 
     runs-on: ubuntu-latest
 
@@ -31,12 +31,25 @@ jobs:
     - run: cd Client && npm run prettier
     - run: cd Client && npm run lint
     - run: cd Client && npm run build
-    # - run: cd client && npm test --if-present
-    # Add Prettier step
-    # run: cd client && npm run format
+
+
+  server:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: Server/package-lock.json
+    - run: cd Server && npm ci 
+    - run: cd Server && npm run build
+    - run: cd Server && npm test -- --run
     
-    # Add MongoDB setup steps
-    # - name: Install MongoDB
-    #   run: sudo apt-get install mongodb
-    # - name: Start MongoDB
-    #   run: sudo service mongod start
