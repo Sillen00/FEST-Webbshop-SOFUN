@@ -6,6 +6,5 @@ const categoryRouter = express
 .post('/api/categories', createCategory)
 .get('/api/categories', getAllCategories)
 .get('/api/categories/:categoryId', getProductsByCategory); 
-// byta till? 
-// .get('/api/products/category/:categoryId', getAllProductsByCategory);
+
 export default categoryRouter;

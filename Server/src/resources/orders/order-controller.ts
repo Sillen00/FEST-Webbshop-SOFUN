@@ -61,7 +61,6 @@ export async function updateOrderStatus(req: Request, res: Response) {
 
 export async function createOrder(req: Request, res: Response) {
   try {
-    console.log('KOMMER JAG HIT?!??');
     await orderSchema.validate(req.body);
 
     // Create the order

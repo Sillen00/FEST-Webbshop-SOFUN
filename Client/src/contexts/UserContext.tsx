@@ -73,7 +73,6 @@ export default function UserProvider({ children }: Props) {
       .catch(function (error) {
         console.log(error);
         setIsNotValid(true);
-        // setUsernameTakenError(error.response.data);
       });
   };
 

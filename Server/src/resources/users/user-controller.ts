@@ -40,6 +40,7 @@ export async function signUpUser(req: Request, res: Response) {
 // LOGIN USER ----------------------------------------------------------------------------
 
 export async function logInUser(req: Request, res: Response) {
+  await UserCreateSchema.parseAsync(req.body);
   const { password } = req.body;
   const user = await UserModel.findOne({ username: req.body.username });
 
@@ -68,12 +69,6 @@ export async function logOutUser(req: Request, res: Response) {
 
   req.session = null;
   res.status(204).json(req.session);
-  // req.session.destroy((err) => {
-  //   if (err) {
-  //     console.error('Error destroying session:', err);
-  //   }
-  //   res.status(204).end();
-  // });
 }
 
 // ADMIN - UPDATE USER ROLE TO ADMIN ---------------------------------------------------------
@@ -97,6 +92,8 @@ export async function assignAsAdmin(req: Request, res: Response) {
   res.status(200).json(user);
 }
 
+// ADMIN - REMOVE USER AS ADMIN ---------------------------------------------------------
+
 export async function removeAsAdmin(req: Request, res: Response) {
   const { id } = req.params;
   if (!req.session?.isAdmin) {
@@ -113,6 +110,8 @@ export async function removeAsAdmin(req: Request, res: Response) {
 
   res.status(200).json(user);
 }
+
+// CHECK SESSION ---------------------------------------------------------
 
 export async function checkSession(req: Request, res: Response) {
   if (req.session?._id) {

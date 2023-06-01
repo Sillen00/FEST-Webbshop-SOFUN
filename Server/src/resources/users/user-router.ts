@@ -8,17 +8,14 @@ import express from 'express';
 import { authAdmin, authLogin } from '../middlewares';
 import {
   assignAsAdmin,
-  checkSession,
-  getAllUsers,
-  logInUser,
+  checkSession, logInUser,
   logOutUser,
   removeAsAdmin,
-  signUpUser,
+  signUpUser
 } from './user-controller';
 
 const userRouter = express
   .Router()
-  .get('/api/users', authAdmin, authLogin, getAllUsers)
   .post('/api/users/signup', signUpUser)
   .post('/api/users/login', logInUser)
   .get('/api/users/checkSession', checkSession)

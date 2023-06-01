@@ -65,7 +65,7 @@ export default function ProductProvider({ children }: Props) {
       try {
         const response = await fetch('/api/categories');
         const data = await response.json();
-        console.log(data);
+
         setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -83,7 +83,6 @@ export default function ProductProvider({ children }: Props) {
       } else {
         response = await fetch(`/api/categories/${categoryId}`);
         console.log(response);
-        // setCategories(response);
       }
 
       const products = await response.json();

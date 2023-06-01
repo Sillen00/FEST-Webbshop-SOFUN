@@ -3,17 +3,8 @@ POST http://localhost:3000/api/categories
 Content-Type: application/json
 
 {
- "name": "3-sits"
+ "name": ""
 }
-
-# Get products by category 
-# Available categories: 
-
-# # GET TEST CATEGORY
-# GET http://localhost:3000/api/categories/6473e2eeffe85c382201fa7b
-
-# # GET TEST2 CATEGORY
-# GET http://localhost:3000/api/categories/6473e302ffe85c382201fa7d
 
 
 
