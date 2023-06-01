@@ -16,7 +16,7 @@ export default function Footer() {
       }}
     >
       <Box sx={{ paddingLeft: '1rem' }}>
-        <Typography variant='h6' sx={{ marginBottom: '1rem' }}>
+        <Typography variant='h6'>
           <p>SO-FUN</p>
           <p>support@sofun.se</p>
           <p>031-334375</p>
