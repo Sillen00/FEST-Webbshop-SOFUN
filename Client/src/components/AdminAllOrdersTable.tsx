@@ -22,7 +22,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Order, useOrder } from '../contexts/OrderContext';
 
 export default function AdminAllOrdersTable() {
-  const { updateOrderStatus } = useOrder();
+  const { updateOrderStatus, orderStatusUpdated } = useOrder();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
@@ -48,7 +48,7 @@ export default function AdminAllOrdersTable() {
     };
 
     fetchAllOrders();
-  }, []);
+  }, [orderStatusUpdated]);
 
   return (
     <>
