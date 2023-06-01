@@ -112,9 +112,9 @@ export default function CheckoutOrderTable() {
                       alt={cartProduct.title}
                       src={'/api/image/' + cartProduct.imageID}
                       sx={{
-                        width: 'auto',
+                        width: isSmallScreen ? 'auto' : '10rem',
                         height: 'auto',
-                        maxHeight: '15rem',
+                        objectFit: 'contain',
                       }}
                       variant='rounded'
                     />
