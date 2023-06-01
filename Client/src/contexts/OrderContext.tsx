@@ -59,7 +59,7 @@ export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
   const [allOrders, setAllOrders] = useState<Order[]>([]);
 
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, isAdmin } = useUser();
 
   const getOrdersByUser = async (userId: string) => {
     try {
@@ -85,10 +85,10 @@ export default function OrderProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && isAdmin) {
       fetchAllOrders();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isAdmin]);
 
   //
   // Create a new order in the database and reduce the stock level for each ordered item in the order.
