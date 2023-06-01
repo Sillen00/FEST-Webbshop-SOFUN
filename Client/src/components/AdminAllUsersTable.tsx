@@ -9,13 +9,29 @@ import {
   TableRow,
   useMediaQuery,
 } from '@mui/material';
-import { useUser } from '../contexts/UserContext';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { User, useUser } from '../contexts/UserContext';
 import { theme } from '../theme';
 
 export default function AdminAllUsersTable() {
-  const { allUsers, assignAsAdmin, removeAsAdmin } = useUser();
+  const { assignAsAdmin, removeAsAdmin, adminStatusUpdated } = useUser();
+  const [fetchedUsers, setFetchedUsers] = useState<User[]>([]);
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const response = await axios.get('/api/users', { withCredentials: true });
+        setFetchedUsers(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchAllUsers();
+  }, [adminStatusUpdated]);
 
   return (
     <TableContainer
@@ -52,7 +68,7 @@ export default function AdminAllUsersTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {allUsers.map(user => (
+          {fetchedUsers.map(user => (
             <TableRow
               key={user._id}
               sx={{
@@ -75,16 +91,12 @@ export default function AdminAllUsersTable() {
                   sx={{
                     fontSize: '16px',
                     border: '1px solid',
-                    // paddingLeft: '1rem',
-                    // paddingRight: '1rem',
-                    // backgroundColor: 'secondary.main',
                     color: 'secondary.contrastText',
                     width: '100%',
                     '&:hover': {
                       backgroundColor: 'primary.main',
                     },
                   }}
-                  // color='primary'
                   onClick={() => {
                     if (user.isAdmin) {
                       removeAsAdmin(user._id);
