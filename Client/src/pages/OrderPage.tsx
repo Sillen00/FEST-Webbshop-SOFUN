@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
+import { Box, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Order, useOrder } from '../contexts/OrderContext';
 import { useUser } from '../contexts/UserContext';
@@ -7,7 +7,6 @@ export default function OrderPage() {
   const { getOrdersByUser } = useOrder();
   const { currentUser } = useUser();
   const [userOrders, setUserOrders] = useState<Order[]>([]);
-  const navigate = useNavigate();
 
   const isMobile = useMediaQuery('(max-width:600px)');
 
@@ -42,6 +41,7 @@ export default function OrderPage() {
           flexDirection: 'column',
           alignItems: 'center',
           width: '100%',
+          minHeight: '50vh',
           gap: '1rem',
         }}
       >
