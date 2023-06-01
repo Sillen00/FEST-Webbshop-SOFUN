@@ -22,7 +22,7 @@ const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
   imageID: Yup.string().required('Ange bild'),
-  category: Yup.array().of(Yup.string()).required('Ange Kategori'),
+  category: Yup.array().of(Yup.string().required()).required('Ange Kategori'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -73,7 +73,7 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     validationSchema: AdminSchema,
     onSubmit: async values => {
       const newProduct: Product = {
-        categoryIDs: [values.category?.toString()],
+        categoryIDs: values.category,
         title: values.title,
         imageID: values.imageID,
         description: values.description,
