@@ -72,6 +72,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     initialValues,
     validationSchema: AdminSchema,
     onSubmit: async values => {
+      // const separate = values.category.map(category => category.split(',')).flat();
+
       const newProduct: Product = {
         categoryIDs: values.category,
         title: values.title,
@@ -161,14 +163,16 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
         />
 
         <FormControl fullWidth>
-          <InputLabel id='demo-simple-select-label'>Kategori</InputLabel>
+          <InputLabel id='kategori-input'>Kategori</InputLabel>
           <Select
+            id='category'
             name='category'
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
+            type='text'
+            labelId='kategori-input'
             value={formik.values.category}
             label='Kategori'
             onChange={formik.handleChange}
+            error={formik.touched.category && Boolean(formik.errors.category)}
             multiple
           >
             {categories?.map(category => (

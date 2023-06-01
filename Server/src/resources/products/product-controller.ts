@@ -50,11 +50,11 @@ export async function createProduct(req: Request, res: Response) {
 export async function updateProduct(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { title, description, price, stockLevel } = req.body;
+    const { title, description, price, stockLevel, categoryIDs } = req.body;
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       id,
-      { title, description, price, stockLevel },
+      { title, description, price, stockLevel, categoryIDs },
       { new: true } //behövs för att skicka tillbaka den uppdaterade produkten
     );
 
