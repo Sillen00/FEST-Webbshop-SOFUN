@@ -80,7 +80,7 @@ export default function InfoCard() {
             </Typography>
           </Box>
         </Box>
-        <Divider />
+        <Divider color={'black'} />
         <Box
           sx={{
             padding: '0.5rem',
