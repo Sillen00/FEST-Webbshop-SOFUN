@@ -10,7 +10,6 @@ const productSchema = Yup.object().shape({
   description: Yup.string().required(),
   price: Yup.number().required(),
   stockLevel: Yup.number().required(),
-  // imageURL: Yup.string().required(),
   isArchived: Yup.boolean().required(),
 });
 

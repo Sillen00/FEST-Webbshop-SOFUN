@@ -95,8 +95,3 @@ export async function createOrder(req: Request, res: Response) {
     }
   }
 }
-// const product = await ProductModel.create(req.body.orderItems);
-// const updatedStockLevel = product.stockLevel - req.body.orderItems.quantity;
-
-// // Update the product stock level
-// await ProductModel.findByIdAndUpdate(product._id, { stockLevel: updatedStockLevel });

@@ -1,21 +1,18 @@
-// GET /api/users A L
-// POST /api/users/signup V
-// POST /api/users/login V
-// POST /api/users/logout L
-// PUT /api/users/assignAsAdmin A
-
 import express from 'express';
 import { authAdmin, authLogin } from '../middlewares';
 import {
   assignAsAdmin,
-  checkSession, logInUser,
+  checkSession,
+  getAllUsers,
+  logInUser,
   logOutUser,
   removeAsAdmin,
-  signUpUser
+  signUpUser,
 } from './user-controller';
 
 const userRouter = express
   .Router()
+  .get('/api/users', authAdmin, getAllUsers)
   .post('/api/users/signup', signUpUser)
   .post('/api/users/login', logInUser)
   .get('/api/users/checkSession', checkSession)
