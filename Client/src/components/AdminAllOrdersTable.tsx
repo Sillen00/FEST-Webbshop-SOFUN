@@ -16,10 +16,8 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useOrder } from '../contexts/OrderContext';
-import { Fragment } from 'react';
-
 
 export default function AdminAllOrdersTable() {
   const { allOrders, updateOrderStatus } = useOrder();
@@ -28,6 +26,11 @@ export default function AdminAllOrdersTable() {
   const handleAccordionChange = (orderId: string) => {
     setExpandedOrder(orderId === expandedOrder ? null : orderId);
   };
+
+  const customAccordionSummary = {
+    height: '20px !important',
+    minHeight: '20px !important',
+  }
 
   return (
     <>
@@ -103,17 +106,21 @@ export default function AdminAllOrdersTable() {
                         expanded={expandedOrder === order._id}
                         onChange={() => handleAccordionChange(order._id)}
                       >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}></AccordionSummary>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          sx={{ ...customAccordionSummary }}
+                        ></AccordionSummary>
+
                         <AccordionDetails>
                           <Card
                             key={order._id}
                             variant='outlined'
                             sx={{
-                              backgroundColor: 'white',
                               minWidth: 300,
                               maxWidth: 800,
                               padding: 0,
                               borderRadius: 0,
+                              backgroundColor: 'secondary.main',
                               '&:first-of-type': {
                                 marginTop: '1rem',
                               },
