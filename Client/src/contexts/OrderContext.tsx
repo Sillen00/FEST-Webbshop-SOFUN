@@ -107,7 +107,6 @@ export default function OrderProvider({ children }: Props) {
       console.error('Error creating order:', error);
     }
   };
-  
 
   const updateOrderStatus = async (orderId: string) => {
     try {
@@ -140,5 +139,4 @@ export default function OrderProvider({ children }: Props) {
       {children}
     </OrderContext.Provider>
   );
-  
 }

@@ -54,7 +54,7 @@ export default function UserProvider({ children }: Props) {
         }
       }
     };
-  
+
     fetchAllUsers();
   }, [isAdmin]);
 
@@ -89,7 +89,7 @@ export default function UserProvider({ children }: Props) {
         if (response.data.loggedIn) {
           setIsLoggedIn(true);
           setCurrentUser(response.data.user);
-          setIsAdmin(response.data.isAdmin); 
+          setIsAdmin(response.data.isAdmin);
         } else {
           setIsLoggedIn(false);
           setCurrentUser(null);
