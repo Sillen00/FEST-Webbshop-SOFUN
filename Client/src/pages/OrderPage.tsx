@@ -51,7 +51,8 @@ export default function OrderPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: '100vw',
+          width: '100%',
+          minHeight: '50vh',
           gap: '1rem',
         }}
       >

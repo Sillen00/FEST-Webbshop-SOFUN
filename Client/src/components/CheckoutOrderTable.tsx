@@ -50,7 +50,7 @@ export default function CheckoutOrderTable() {
     <>
       <TableContainer
         component={Paper}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'start' }}
       >
         <Table
           sx={{ minWidth: 330, maxWidth: 1000 }}
@@ -92,12 +92,9 @@ export default function CheckoutOrderTable() {
               return (
                 <TableRow
                   key={cartProduct.id}
-                  sx={{
-                    '&:last-child td, &:last-child th': {},
-                  }}
                   data-cy='cart-item'
                 >
-                  <TableCell component='th' scope='row' sx={{}}>
+                  <TableCell component='th' scope='row' >
                     <Avatar
                       alt={cartProduct.title}
                       src={'/api/image/' + cartProduct.imageID}
