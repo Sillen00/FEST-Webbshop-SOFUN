@@ -27,7 +27,6 @@ export default function Checkout() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
             flexDirection: isMediumScreen ? 'column' : 'row',
             gap: '1rem',
           }}
@@ -36,7 +35,7 @@ export default function Checkout() {
           <CheckoutForm />
         </Box>
       ) : (
-        <Typography variant='h5' sx={{ padding: '3rem' }}>
+        <Typography variant='h6' sx={{ padding: '3rem' }}>
           Du har inte lagt till något i kassan ännu.
         </Typography>
       )}
