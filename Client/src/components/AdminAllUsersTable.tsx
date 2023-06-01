@@ -71,7 +71,7 @@ export default function AdminAllUsersTable() {
               <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
               <TableCell align='center'>
                 <Button
-                  variant="outlined"
+                  variant='outlined'
                   sx={{
                     fontSize: '16px',
                     border: '1px solid',

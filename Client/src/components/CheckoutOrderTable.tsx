@@ -64,21 +64,36 @@ export default function CheckoutOrderTable() {
                 bgcolor: 'secondary.contrastText',
               }}
             >
-              <TableCell align='center' sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Produkter
               </TableCell>
-              <TableCell align='center' sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Modell
               </TableCell>
               <TableCell align='center'></TableCell>
-              <TableCell align='center' sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Antal
               </TableCell>
               <TableCell align='center'></TableCell>
-              <TableCell align='center' sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Pris
               </TableCell>
-              <TableCell align='center' sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 InStock
               </TableCell>
             </TableRow>
@@ -90,11 +105,8 @@ export default function CheckoutOrderTable() {
               const product = products.find(chosen => chosen._id === cartProduct.id) as Product;
 
               return (
-                <TableRow
-                  key={cartProduct.id}
-                  data-cy='cart-item'
-                >
-                  <TableCell component='th' scope='row' >
+                <TableRow key={cartProduct.id} data-cy='cart-item'>
+                  <TableCell component='th' scope='row'>
                     <Avatar
                       alt={cartProduct.title}
                       src={'/api/image/' + cartProduct.imageID}
