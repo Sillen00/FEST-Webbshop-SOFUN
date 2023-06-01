@@ -1,6 +1,7 @@
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AdminAllOrdersTable from '../components/AdminAllOrdersTable';
 import AdminAllProductsTable from '../components/AdminAllProductsTable';
 import AdminAllUsersTable from '../components/AdminAllUsersTable';
 
@@ -9,7 +10,7 @@ export default function Admin() {
   // const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [showUser_Product, setShowUser_Product] = useState<'user' | 'product'>('product');
+  const [showSection, setShowSection] = useState<'user' | 'product' | 'order'>('product');
 
   return (
     <Box
@@ -55,9 +56,9 @@ export default function Admin() {
         sx={{ width: '100%', maxWidth: '800px', border: '1px solid' }}
       >
         <Button
-          onClick={() => setShowUser_Product('product')}
+          onClick={() => setShowSection('product')}
           sx={{
-            width: '50%',
+            width: '33%',
             fontSize: '16px',
             paddingLeft: '1rem',
             paddingRight: '1rem',
@@ -71,9 +72,9 @@ export default function Admin() {
           Products
         </Button>
         <Button
-          onClick={() => setShowUser_Product('user')}
+          onClick={() => setShowSection('user')}
           sx={{
-            width: '50%',
+            width: '33%',
             fontSize: '16px',
             paddingLeft: '1rem',
             paddingRight: '1rem',
@@ -86,10 +87,27 @@ export default function Admin() {
         >
           Users
         </Button>
+        <Button
+          onClick={() => setShowSection('order')}
+          sx={{
+            width: '33%',
+            fontSize: '16px',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            backgroundColor: 'secondary.main',
+            color: 'secondary.contrastText',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+          }}
+        >
+          Orders
+        </Button>
       </ButtonGroup>
 
-      {showUser_Product === 'product' ? <AdminAllProductsTable /> : null}
-      {showUser_Product === 'user' ? <AdminAllUsersTable /> : null}
+      {showSection === 'product' && <AdminAllProductsTable />}
+      {showSection === 'user' && <AdminAllUsersTable />}
+      {showSection === 'order' && <AdminAllOrdersTable />}
     </Box>
   );
 }

@@ -149,7 +149,13 @@ export default function Products() {
                 }}
               >
                 <Box>
-                  <Typography variant='h4' data-cy='product-title'>
+                  <Typography
+                    variant='h4'
+                    data-cy='product-title'
+                    sx={{
+                      marginBottom: '0.5rem',
+                    }}
+                  >
                     {product.title}
                   </Typography>
                 </Box>
