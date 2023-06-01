@@ -2,11 +2,11 @@ import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
-  AccordionSummary,
   Box,
   Button,
   Card,
   CardContent,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -26,11 +26,6 @@ export default function AdminAllOrdersTable() {
   const handleAccordionChange = (orderId: string) => {
     setExpandedOrder(orderId === expandedOrder ? null : orderId);
   };
-
-  const customAccordionSummary = {
-    height: '20px !important',
-    minHeight: '20px !important',
-  }
 
   return (
     <>
@@ -97,6 +92,21 @@ export default function AdminAllOrdersTable() {
                     >
                       Ändra status
                     </Button>
+                    <IconButton
+                      aria-label='expand'
+                      size='small'
+                      sx={{
+                        marginLeft: 'auto',
+                        transform: expandedOrder === order._id ? 'rotate(180deg)' : 'rotate(0)',
+                        transition: 'transform 0.2s ease-in-out',
+                      }}
+                      onClick={event => {
+                        event.stopPropagation();
+                        handleAccordionChange(order._id);
+                      }}
+                    >
+                      <ExpandMoreIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
                 {expandedOrder === order._id && (
@@ -106,11 +116,6 @@ export default function AdminAllOrdersTable() {
                         expanded={expandedOrder === order._id}
                         onChange={() => handleAccordionChange(order._id)}
                       >
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          sx={{ ...customAccordionSummary }}
-                        ></AccordionSummary>
-
                         <AccordionDetails>
                           <Card
                             key={order._id}
