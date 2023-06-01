@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { useUser } from './UserContext';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { Product } from './ProductContext';
 
 export interface DeliveryAddress {
@@ -42,10 +41,9 @@ interface OrderContextValue {
   order: Order | null;
   setOrder: React.Dispatch<React.SetStateAction<Order | null>>;
   createOrder: (order: CreateOrder) => Promise<void>;
-  fetchAllOrders: () => Promise<void>;
-  allOrders: Order[];
   getOrdersByUser: (userId: string) => Promise<Order[]>;
   updateOrderStatus: (orderId: string) => Promise<void>;
+  orderStatusUpdated: boolean;
 }
 
 export const OrderContext = createContext<OrderContextValue>(null as any);
@@ -57,9 +55,7 @@ interface Props {
 
 export default function OrderProvider({ children }: Props) {
   const [order, setOrder] = useState<Order | null>(null);
-  const [allOrders, setAllOrders] = useState<Order[]>([]);
-
-  const { isLoggedIn, isAdmin } = useUser();
+  const [orderStatusUpdated, setOrderStatusUpdated] = useState(false);
 
   const getOrdersByUser = async (userId: string) => {
     try {
@@ -70,29 +66,7 @@ export default function OrderProvider({ children }: Props) {
       return [];
     }
   };
-  const fetchAllOrders = async () => {
-    try {
-      const response = await axios.get('/api/orders', { withCredentials: true });
 
-      if (response.status === 200) {
-        setAllOrders(response.data);
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (isLoggedIn && isAdmin) {
-      fetchAllOrders();
-    }
-  }, [isLoggedIn, isAdmin]);
-
-  //
-  // Create a new order in the database and reduce the stock level for each ordered item in the order.
-  //
   const createOrder = async (newOrder: CreateOrder) => {
     try {
       console.log('Creating order:', newOrder);
@@ -112,10 +86,8 @@ export default function OrderProvider({ children }: Props) {
     try {
       const response = await axios.put(`/api/orders/status/${orderId}`);
       if (response.status === 200) {
-        const updatedOrder = response.data;
-        setAllOrders(prevOrders =>
-          prevOrders.map(order => (order._id === updatedOrder._id ? updatedOrder : order))
-        );
+        console.log(response);
+        setOrderStatusUpdated(prev => !prev);
       } else {
         throw new Error(response.statusText);
       }
@@ -130,10 +102,9 @@ export default function OrderProvider({ children }: Props) {
         createOrder,
         order,
         setOrder,
-        allOrders,
-        fetchAllOrders,
         getOrdersByUser,
         updateOrderStatus,
+        orderStatusUpdated,
       }}
     >
       {children}

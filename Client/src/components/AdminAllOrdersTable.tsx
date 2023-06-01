@@ -17,18 +17,38 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Fragment, useState } from 'react';
-import { useOrder } from '../contexts/OrderContext';
+import axios from 'axios';
+import { Fragment, useEffect, useState } from 'react';
+import { Order, useOrder } from '../contexts/OrderContext';
 
 export default function AdminAllOrdersTable() {
-  const { allOrders, updateOrderStatus } = useOrder();
+  const { updateOrderStatus, orderStatusUpdated } = useOrder();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
 
   const handleAccordionChange = (orderId: string) => {
     setExpandedOrder(orderId === expandedOrder ? null : orderId);
   };
 
   const isMobile = useMediaQuery('(max-width:600px)');
+
+  useEffect(() => {
+    const fetchAllOrders = async () => {
+      try {
+        const response = await axios.get('/api/orders', { withCredentials: true });
+
+        if (response.status === 200) {
+          setAllOrders(response.data);
+        } else {
+          throw new Error(response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchAllOrders();
+  }, [orderStatusUpdated]);
 
   return (
     <>
