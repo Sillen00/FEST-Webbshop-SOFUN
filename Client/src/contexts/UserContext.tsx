@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-interface User {
+export interface User {
   _id: string;
   username: string;
   isAdmin: boolean;
@@ -22,6 +22,7 @@ interface UserContextValue {
   currentUser: User | null;
   isLoading: boolean;
   isAdmin: boolean;
+  adminStatusUpdated: boolean;
 }
 
 export const UserContext = createContext<UserContextValue>(null as any);
@@ -42,6 +43,7 @@ export default function UserProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminStatusUpdated, setAdminStatusUpdated] = useState(false);
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -77,7 +79,6 @@ export default function UserProvider({ children }: Props) {
       .catch(function (error) {
         console.log(error);
         setIsNotValid(true);
-        // setUsernameTakenError(error.response.data);
       });
   };
 
@@ -144,9 +145,7 @@ export default function UserProvider({ children }: Props) {
       .put(`/api/users/${userId}/assignAsAdmin`, {}, { withCredentials: true })
       .then(function (response) {
         console.log(response);
-        setAllUsers(prevUsers =>
-          prevUsers.map(user => (user._id === userId ? { ...user, isAdmin: true } : user))
-        );
+        setAdminStatusUpdated(prev => !prev);
       })
       .catch(function (error) {
         console.log(error);
@@ -158,14 +157,13 @@ export default function UserProvider({ children }: Props) {
       .put(`/api/users/${userId}/removeAsAdmin`, {}, { withCredentials: true })
       .then(function (response) {
         console.log(response);
-        setAllUsers(prevUsers =>
-          prevUsers.map(user => (user._id === userId ? { ...user, isAdmin: false } : user))
-        );
+        setAdminStatusUpdated(prev => !prev);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  
 
   return (
     <UserContext.Provider
@@ -184,6 +182,7 @@ export default function UserProvider({ children }: Props) {
         currentUser,
         isLoading,
         isAdmin,
+        adminStatusUpdated,
       }}
     >
       {children}
