@@ -163,7 +163,6 @@ export default function UserProvider({ children }: Props) {
         console.log(error);
       });
   };
-  
 
   return (
     <UserContext.Provider
