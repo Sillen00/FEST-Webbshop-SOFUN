@@ -17,6 +17,7 @@ export default function InfoCard() {
   const params = useParams();
   const { products } = useProduct();
   const { addProduct } = useCart();
+  const { categories } = useProduct();
   const matches = useMediaQuery('(min-width:1280px)');
   const [lastAddedProduct, setLastAddedProduct] = useState<
     | {
@@ -89,7 +90,14 @@ export default function InfoCard() {
           }}
         >
           <Typography marginBottom={'1.5rem'} marginTop={'1rem'}>
-            Kategori
+            Kategori:
+            {selectedProduct?.categoryIDs.map(category => {
+              for (let i = 0; i < categories.length; i++) {
+                if (categories[i]._id === category) {
+                  return <span key={category}>{' ' + categories[i].name + ' '}</span>;
+                }
+              }
+            })}
           </Typography>
           <Typography variant='body2' data-cy='product-description'>
             {selectedProduct?.description}

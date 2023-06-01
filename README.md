@@ -43,7 +43,7 @@ Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 
 - [ ] Alla sidor skall vara responsiva.
 - [x] Arbetet ska implementeras med en React frontend och en Express backend.
-- [ ] Express backenden ska ha validering på samtliga endpoints.
+- [?????] Express backenden ska ha validering på samtliga endpoints.
 - [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G
 - [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet
 - [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm)
@@ -61,9 +61,9 @@ Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 **Krav för välgodkänt**
 
 - [x] Ett CI flöde ska sättas upp (i början av projektet) som kontrollerar prettier, eslint, typescript & tester i varje PR, tester kan lånas ifrån tidigare uppgifter
-- [ ] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte
-- [ ] Administratörer ska kunna redigera produkt inklusive vilka kategorier den tillhör
+- [x] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte
+- [x] Administratörer ska kunna redigera produkt inklusive vilka kategorier den tillhör
 - [x] Administratörer ska kunna lägga till och ta bort produkter
 - [x] Backendapplikationen ska ha en fungerande global felhantering
 - [x] En administratör ska kunna uppgradera en användare till administratör
-- [ ] Administratörer ska kunna markera beställningar som skickade
+- [x] Administratörer ska kunna markera beställningar som skickade
