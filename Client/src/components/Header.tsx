@@ -166,23 +166,21 @@ export default function Header() {
                 </MenuItem>
               </>
             ) : (
-              <NavLink onClick={handleOpen} to={location.pathname}>
-                <MenuItem
-                  color='primary'
-                  sx={{
-                    fontSize: '12px',
-                    padding: '0.5rem',
+              <MenuItem
+                color='primary'
+                sx={{
+                  fontSize: '12px',
+                  padding: '0.5rem',
+                  backgroundColor: 'primary.main',
+                  color: 'secondary.contrastText',
+                  '&:hover': {
                     backgroundColor: 'primary.main',
-                    color: 'secondary.contrastText',
-                    '&:hover': {
-                      backgroundColor: 'primary.main',
-                    },
-                  }}
-                  // onClick={handleOpen}
-                >
-                  Logga in/Registrera dig
-                </MenuItem>
-              </NavLink>
+                  },
+                }}
+                onClick={handleOpen}
+              >
+                Logga in/Registrera dig
+              </MenuItem>
             )}
           </Menu>
 
