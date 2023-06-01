@@ -26,6 +26,7 @@ export default function EditProduct() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        minHeight: '70vh',
         backgroundColor: 'secondary.main',
       }}
     >

@@ -68,48 +68,50 @@ export default function AdminAllUsersTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {fetchedUsers.map(user => (
-            <TableRow
-              key={user._id}
-              sx={{
-                '&:last-child td, &:last-child th': {},
-              }}
-              data-cy='user'
-            >
-              {!isSmallScreen ? (
-                <TableCell align='center' data-cy='user-id'>
-                  {user._id}
+          {fetchedUsers
+            .map(user => (
+              <TableRow
+                key={user._id}
+                sx={{
+                  '&:last-child td, &:last-child th': {},
+                }}
+                data-cy='user'
+              >
+                {!isSmallScreen ? (
+                  <TableCell align='center' data-cy='user-id'>
+                    {user._id}
+                  </TableCell>
+                ) : null}
+                <TableCell align='center' data-cy='user-name'>
+                  {user.username}
                 </TableCell>
-              ) : null}
-              <TableCell align='center' data-cy='user-name'>
-                {user.username}
-              </TableCell>
-              <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
-              <TableCell align='center'>
-                <Button
-                  variant='outlined'
-                  sx={{
-                    fontSize: '16px',
-                    border: '1px solid',
-                    color: 'secondary.contrastText',
-                    width: '100%',
-                    '&:hover': {
-                      backgroundColor: 'primary.main',
-                    },
-                  }}
-                  onClick={() => {
-                    if (user.isAdmin) {
-                      removeAsAdmin(user._id);
-                    } else {
-                      assignAsAdmin(user._id);
-                    }
-                  }}
-                >
-                  {user.isAdmin ? 'Ta Bort Admin' : 'Gör Admin'}
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell align='center'>{user.isAdmin ? 'Yes' : 'No'}</TableCell>
+                <TableCell align='center'>
+                  <Button
+                    variant='outlined'
+                    sx={{
+                      fontSize: '16px',
+                      border: '1px solid',
+                      color: 'secondary.contrastText',
+                      width: '100%',
+                      '&:hover': {
+                        backgroundColor: 'primary.main',
+                      },
+                    }}
+                    onClick={() => {
+                      if (user.isAdmin) {
+                        removeAsAdmin(user._id);
+                      } else {
+                        assignAsAdmin(user._id);
+                      }
+                    }}
+                  >
+                    {user.isAdmin ? 'Ta Bort Admin' : 'Gör Admin'}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+            .reverse()}
         </TableBody>
       </Table>
     </TableContainer>
