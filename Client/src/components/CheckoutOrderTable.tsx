@@ -27,6 +27,7 @@ export default function CheckoutOrderTable() {
 
   const [isLowStockLevel, setIsLowStockLevel] = useState(false);
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { products } = useProduct();
 
@@ -66,35 +67,35 @@ export default function CheckoutOrderTable() {
             >
               <TableCell
                 align='center'
-                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+                sx={{ typography: isSmallScreen ? 'h5' : 'h4', color: 'primary.main' }}
               >
                 Produkter
               </TableCell>
               <TableCell
                 align='center'
-                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+                sx={{ typography: isSmallScreen ? 'h5' : 'h4', color: 'primary.main' }}
               >
                 Modell
               </TableCell>
               <TableCell align='center'></TableCell>
               <TableCell
                 align='center'
-                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+                sx={{ typography: isSmallScreen ? 'h5' : 'h4', color: 'primary.main' }}
               >
                 Antal
               </TableCell>
               <TableCell align='center'></TableCell>
               <TableCell
                 align='center'
-                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+                sx={{ typography: isSmallScreen ? 'h5' : 'h4', color: 'primary.main' }}
               >
                 Pris
               </TableCell>
               <TableCell
                 align='center'
-                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+                sx={{ typography: isSmallScreen ? 'h5' : 'h4', color: 'primary.main' }}
               >
-                InStock
+                I&nbsp;Lager
               </TableCell>
             </TableRow>
           </TableHead>
@@ -162,7 +163,7 @@ export default function CheckoutOrderTable() {
                   Totalt: {totalCost.toLocaleString('sv-SE')} SEK
                 </Typography>
                 {isLowStockLevel ? (
-                  <Typography variant={isMediumScreen ? 'h5' : 'h3'} color='error.main'>
+                  <Typography variant={isMediumScreen ? 'h5' : 'h4'} color='error.main'>
                     Ordern kan ta lägre tid att skicka pågrund av låg lagernivå.
                   </Typography>
                 ) : null}
