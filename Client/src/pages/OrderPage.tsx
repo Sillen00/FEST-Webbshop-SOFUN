@@ -61,7 +61,7 @@ export default function OrderPage() {
             variant='outlined'
             sx={{
               backgroundColor: 'white',
-              width: '80%',
+              width: '50rem',
               padding: 0,
               borderRadius: 0,
               '&:first-child': {
@@ -75,21 +75,29 @@ export default function OrderPage() {
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                gap: '1rem',
+                flexDirection: 'column',
                 width: '100%',
                 padding: '0 0.4rem',
                 borderBottom: '1px solid lightgrey',
               }}
             >
-              <Typography variant='h5'>
-                Ordern skapades:{' '}
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Typography variant='h5'>Ordernr: {order._id}</Typography>
+              <Typography variant='body2'>
                 {new Date(order.createdAt).toLocaleDateString('sv-SE', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
                 })}
               </Typography>
+              </Box>
+              <Typography variant='h5'>
+                  {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
+                </Typography>
             </Box>
             <CardContent
               sx={{
@@ -107,10 +115,10 @@ export default function OrderPage() {
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
                   gap: '0.4rem',
                   justifyContent: 'center',
-                  flexWrap: 'wrap',
                   maxWidth: '10rem',
                   padding: '0.4rem',
                   marginBottom: '0.5rem',
@@ -122,14 +130,14 @@ export default function OrderPage() {
                     sx={{
                       display: 'flex',
                       flexDirection: 'row',
-                      gap: '1rem',
+                      gap: '3rem',
                       alignItems: 'center',
                     }}
                   >
                     <img
                       src={`/api/image/${orderItem.productID.imageID}`}
                       alt={orderItem.productID.title}
-                      style={{ maxWidth: '100%', height: 'auto' }}
+                      style={{ maxWidth: '80%', height: 'auto' }}
                     />
                     <Box
                       sx={{
@@ -137,8 +145,10 @@ export default function OrderPage() {
                         flexDirection: 'column',
                       }}
                     >
-                      <Typography variant='h5'>{orderItem.productID.title}</Typography>
-                      <Typography variant='h5'>{orderItem.quantity}x</Typography>
+                      <Typography variant='body1'>Produktdetaljer</Typography>
+                      <Typography variant='body2'>Namn: {orderItem.productID.title}</Typography>
+                      <Typography variant='body2'>Antal: {orderItem.quantity}x</Typography>
+                      <Typography variant='body2'>Pris: {orderItem.productID.price * orderItem.quantity}kr</Typography>
                     </Box>
                   </Box>
                 ))}
@@ -148,23 +158,22 @@ export default function OrderPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   padding: '0.4rem',
-                  marginBottom: '0.5rem',
-                  maxWidth: '25%',
+                  margin: '0 0.5rem 0.5rem 0',
+                  maxWidth: '50%',
                   justifyContent: 'flex-end',
                 }}
               >
-                <Typography variant='h5'>Levereras till</Typography>
-                <Typography variant='h5'>
+                <Typography variant='h5'>Levereransuppgifter</Typography>
+                <Typography variant='body2'>
                   {order.deliveryAddress.firstName} {order.deliveryAddress.lastName}
                 </Typography>
-                <Typography variant='h5'>{order.deliveryAddress.address}</Typography>
-                <Typography variant='h5'>
+                <Typography variant='body2'>{order.deliveryAddress.address}</Typography>
+                <Typography variant='body2'>
                   {order.deliveryAddress.zipCode} {order.deliveryAddress.city}
                 </Typography>
-                <Typography variant='h5'>{order.deliveryAddress.phoneNumber}</Typography>
-                <Typography variant='h5'>
-                  {order.isShipped ? 'Ordern är skickad' : 'Ordern behandlas'}
-                </Typography>
+                <Typography variant='body2'>{order.deliveryAddress.phoneNumber}</Typography>
+                <Typography variant='h5' sx={{ marginTop: "0.5rem"}}>Summa</Typography>
+                <Typography variant='body2'>{order.totalPrice} kr</Typography>
               </Box>
             </CardContent>
           </Card>
