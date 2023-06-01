@@ -1,5 +1,5 @@
 import * as Icon from '@mui/icons-material';
-import { Box, IconButton, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
+import { Box, Divider, IconButton, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
 import StyledBadge from '@mui/material/Badge';
 import React from 'react';
 
@@ -16,15 +16,11 @@ export default function Header() {
   const { currentUser, logoutUser } = useUser();
   const navigate = useNavigate();
   const { open, handleOpen, handleClose, isLoggedIn } = useUser();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
-  // const handleClick = () => {
-  //   setAnchorEl(null);
-  // };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -134,7 +130,6 @@ export default function Header() {
                   color='primary'
                   sx={{
                     fontSize: '12px',
-                    // border: '1px solid',
                     padding: '0.5rem',
                     backgroundColor: 'primary.main',
                     color: 'secondary.contrastText',
@@ -149,6 +144,7 @@ export default function Header() {
                 >
                   Dina ordrar
                 </MenuItem>
+                <Divider color={'black'} />
                 <MenuItem
                   color='primary'
                   sx={{
@@ -170,22 +166,23 @@ export default function Header() {
                 </MenuItem>
               </>
             ) : (
-              <MenuItem
-                color='primary'
-                sx={{
-                  fontSize: '12px',
-                  // border: '1px solid',
-                  padding: '0.5rem',
-                  backgroundColor: 'primary.main',
-                  color: 'secondary.contrastText',
-                  '&:hover': {
+              <NavLink onClick={handleOpen} to={location.pathname}>
+                <MenuItem
+                  color='primary'
+                  sx={{
+                    fontSize: '12px',
+                    padding: '0.5rem',
                     backgroundColor: 'primary.main',
-                  },
-                }}
-                onClick={handleOpen}
-              >
-                Logga in/Registrera dig
-              </MenuItem>
+                    color: 'secondary.contrastText',
+                    '&:hover': {
+                      backgroundColor: 'primary.main',
+                    },
+                  }}
+                  // onClick={handleOpen}
+                >
+                  Logga in/Registrera dig
+                </MenuItem>
+              </NavLink>
             )}
           </Menu>
 
