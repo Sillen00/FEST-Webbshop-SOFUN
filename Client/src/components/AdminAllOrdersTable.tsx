@@ -15,6 +15,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { Fragment, useState } from 'react';
 import { useOrder } from '../contexts/OrderContext';
@@ -26,6 +27,8 @@ export default function AdminAllOrdersTable() {
   const handleAccordionChange = (orderId: string) => {
     setExpandedOrder(orderId === expandedOrder ? null : orderId);
   };
+
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
     <>
@@ -166,7 +169,7 @@ export default function AdminAllOrdersTable() {
                             <CardContent
                               sx={{
                                 display: 'flex',
-                                flexDirection: 'row',
+                                flexDirection: isMobile ? 'column' : 'row',
                                 justifyContent: 'space-between',
                                 gap: '0.5rem',
                                 height: 'auto',

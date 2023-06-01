@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Order, useOrder } from '../contexts/OrderContext';
@@ -9,6 +9,8 @@ export default function OrderPage() {
   const { currentUser, logoutUser } = useUser();
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const navigate = useNavigate();
+
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
     const fetchUserOrders = async () => {
@@ -61,7 +63,7 @@ export default function OrderPage() {
             variant='outlined'
             sx={{
               backgroundColor: 'white',
-              width: '50rem',
+              width: '90vw',
               padding: 0,
               borderRadius: 0,
               '&:first-of-type': {
@@ -104,7 +106,7 @@ export default function OrderPage() {
             <CardContent
               sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: isMobile ? 'column' : 'row',
                 justifyContent: 'space-between',
                 gap: '0.5rem',
                 height: 'auto',
