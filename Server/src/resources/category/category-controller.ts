@@ -14,14 +14,14 @@ export async function createCategory(req: Request, res: Response) {
 }
 
 // GET CATEGORY
-export async function getCategory(req: Request, res: Response) {
-    const category = req.params.category;
-    console.log(req.params.category);
+// export async function getCategory(req: Request, res: Response) {
+//     const category = req.params.category;
+//     console.log(req.params.category);
     
-    const products = await ProductModel.find({ categories: category });
-    console.log(products);
-    res.json(products);
-}
+//     const products = await ProductModel.find({ categories: category });
+//     console.log(products);
+//     res.json(products);
+// }
    
 // GET ALL CATEGORIES
 export async function getAllCategories(req: Request, res: Response) {

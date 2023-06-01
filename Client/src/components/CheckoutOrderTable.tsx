@@ -12,10 +12,12 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { Product, useProduct } from '../contexts/ProductContext';
+import { theme } from '../theme';
 
 export default function CheckoutOrderTable() {
   const { cart, addProduct, removeProduct } = useCart();
@@ -24,18 +26,9 @@ export default function CheckoutOrderTable() {
   }, 0);
 
   const [isLowStockLevel, setIsLowStockLevel] = useState(false);
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const { products } = useProduct();
-
-  // const cartProductId = cart.find(chosen => chosen.id === ) as Product;
-  // const product = products.find(chosen => chosen._id === cartProductId) as Product;
-  // products.forEach(product => {
-  //   cart.forEach(cartProduct => {
-  //     if (product?.stockLevel >= cartProduct.quantity) {
-  //       setIsLowStockLevel(true);
-  //     }
-  //   });
-  // });
 
   useEffect(() => {
     const checkStockLevel = () => {
@@ -57,7 +50,7 @@ export default function CheckoutOrderTable() {
     <>
       <TableContainer
         component={Paper}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'start' }}
       >
         <Table
           sx={{ minWidth: 330, maxWidth: 1000 }}
@@ -71,21 +64,36 @@ export default function CheckoutOrderTable() {
                 bgcolor: 'secondary.contrastText',
               }}
             >
-              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Produkter
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Modell
               </TableCell>
               <TableCell align='center'></TableCell>
-              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Antal
               </TableCell>
               <TableCell align='center'></TableCell>
-              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 Pris
               </TableCell>
-              <TableCell align='center' sx={{ typography: 'h5', color: 'primary.main' }}>
+              <TableCell
+                align='center'
+                sx={{ typography: isMediumScreen ? 'h5' : 'h4', color: 'primary.main' }}
+              >
                 InStock
               </TableCell>
             </TableRow>
@@ -97,14 +105,8 @@ export default function CheckoutOrderTable() {
               const product = products.find(chosen => chosen._id === cartProduct.id) as Product;
 
               return (
-                <TableRow
-                  key={cartProduct.id}
-                  sx={{
-                    '&:last-child td, &:last-child th': {},
-                  }}
-                  data-cy='cart-item'
-                >
-                  <TableCell component='th' scope='row' sx={{}}>
+                <TableRow key={cartProduct.id} data-cy='cart-item'>
+                  <TableCell component='th' scope='row'>
                     <Avatar
                       alt={cartProduct.title}
                       src={'/api/image/' + cartProduct.imageID}
@@ -160,7 +162,7 @@ export default function CheckoutOrderTable() {
                   Totalt: {totalCost.toLocaleString('sv-SE')} SEK
                 </Typography>
                 {isLowStockLevel ? (
-                  <Typography variant='h6' color='error.main'>
+                  <Typography variant={isMediumScreen ? 'h5' : 'h3'} color='error.main'>
                     Ordern kan ta lägre tid att skicka pågrund av låg lagernivå.
                   </Typography>
                 ) : null}

@@ -17,8 +17,9 @@ export default function Checkout() {
         alignItems: 'center',
         flexDirection: 'column',
         gap: '1rem',
-        marginTop: '1rem',
         marginBottom: '1rem',
+        backgroundColor: 'secondary.main',
+        minHeight: '60vh',
       }}
     >
       <Typography variant='h3'>Kassa </Typography>
@@ -27,7 +28,6 @@ export default function Checkout() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
             flexDirection: isMediumScreen ? 'column' : 'row',
             gap: '1rem',
           }}
@@ -36,7 +36,7 @@ export default function Checkout() {
           <CheckoutForm />
         </Box>
       ) : (
-        <Typography variant='h5' sx={{ padding: '3rem' }}>
+        <Typography variant='h6' sx={{ padding: '3rem' }}>
           Du har inte lagt till något i kassan ännu.
         </Typography>
       )}

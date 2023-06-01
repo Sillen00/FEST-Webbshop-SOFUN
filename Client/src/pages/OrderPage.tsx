@@ -1,12 +1,11 @@
 import { Box, Button, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Order, useOrder } from '../contexts/OrderContext';
 import { useUser } from '../contexts/UserContext';
 
 export default function OrderPage() {
   const { getOrdersByUser } = useOrder();
-  const { currentUser, logoutUser } = useUser();
+  const { currentUser } = useUser();
   const [userOrders, setUserOrders] = useState<Order[]>([]);
   const navigate = useNavigate();
 
@@ -36,17 +35,6 @@ export default function OrderPage() {
         backgroundColor: 'secondary.main',
       }}
     >
-      <Button
-        variant='contained'
-        color='primary'
-        sx={{ margin: '0 0 5em 0' }}
-        onClick={() => {
-          logoutUser();
-          navigate('/');
-        }}
-      >
-        <Typography variant='body1'>Logga ut </Typography>
-      </Button>
       <Typography variant='h3'>Dina beställningar</Typography>
       <Box
         sx={{

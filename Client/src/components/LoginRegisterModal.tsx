@@ -117,7 +117,7 @@ const LoginRegisterModal = forwardRef<HTMLDivElement>((props, ref) => {
             variant='contained'
             color='primary'
           >
-            Skapa Konto
+            Registrera dig
           </Button>
         </Box>
       ) : (

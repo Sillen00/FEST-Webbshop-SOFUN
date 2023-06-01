@@ -1,16 +1,28 @@
-import { Button, Card, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Button,
+  Card,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useImage } from '../contexts/ImageContext';
-import { Product } from '../contexts/ProductContext';
+import { Product, useProduct } from '../contexts/ProductContext';
 
 const AdminSchema = Yup.object().shape({
   title: Yup.string().required('Ange titel'),
   description: Yup.string().required('Ange beskrivning'),
   imageID: Yup.string().required('Ange bild'),
+  category: Yup.array().of(Yup.string().required()).required('Ange Kategori'),
   price: Yup.number()
     .typeError('Priset måste vara en siffra')
     .positive('Priset måste vara högre än 0 kr')
@@ -27,6 +39,7 @@ export const defaultValues: AdminValues = {
   title: '',
   description: '',
   imageID: '',
+  category: [],
   price: 0,
   stockLevel: 0,
 };
@@ -44,11 +57,13 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { uploadImage } = useImage();
+  const { categories } = useProduct();
 
   const initialValues: AdminValues = {
     title: product?.title || defaultValues.title,
     description: product?.description || defaultValues.description,
     imageID: product?.imageID || defaultValues.imageID,
+    category: product?.categoryIDs || defaultValues.category,
     price: product?.price || defaultValues.price,
     stockLevel: product?.stockLevel || defaultValues.stockLevel,
   };
@@ -57,8 +72,10 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
     initialValues,
     validationSchema: AdminSchema,
     onSubmit: async values => {
+      // const separate = values.category.map(category => category.split(',')).flat();
+
       const newProduct: Product = {
-        categoryIDs: [],
+        categoryIDs: values.category,
         title: values.title,
         imageID: values.imageID,
         description: values.description,
@@ -68,8 +85,8 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
       };
 
       try {
-        onSubmit(newProduct); // Wait for the onSubmit function to complete
-        navigate('/admin'); // Navigate to the desired route
+        onSubmit(newProduct);
+        navigate('/admin');
       } catch (error) {
         console.error('Error creating product:', error);
       }
@@ -81,7 +98,6 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
 
     try {
       const imageID = await uploadImage(file);
-
       formik.setFieldValue('imageID', imageID);
     } catch (error) {
       formik.setFieldError('imageID', 'Kunde inte ladda upp bilden');
@@ -145,6 +161,28 @@ export default function AdminForm({ product, isNewProduct, onSubmit }: AdminForm
           inputProps={{ 'data-cy': 'product-image' }}
           FormHelperTextProps={{ 'data-cy': 'product-image-error' } as any}
         />
+
+        <FormControl fullWidth>
+          <InputLabel id='kategori-input'>Kategori</InputLabel>
+          <Select
+            id='category'
+            name='category'
+            type='text'
+            labelId='kategori-input'
+            value={formik.values.category}
+            label='Kategori'
+            onChange={formik.handleChange}
+            error={formik.touched.category && Boolean(formik.errors.category)}
+            multiple
+          >
+            {categories?.map(category => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <TextField
           fullWidth
           id='price'
