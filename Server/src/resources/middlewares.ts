@@ -4,7 +4,6 @@ export function authLogin(req: Request, res: Response, next: NextFunction) {
   const username = req.session?.username;
 
   if (username) {
-    // User is logged in.
     next();
   } else {
     res.status(401).json({ error: 'Unauthorized' });

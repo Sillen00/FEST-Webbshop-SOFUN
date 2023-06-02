@@ -8,7 +8,7 @@ const URL = process.env.MONGO_URL;
 const port = 3000;
 
 async function main() {
-  mongoose.set('strictQuery', false); // Detta var bara för att inte få varning i terminalen. Den varnar för en ny version av mongoose där denna används.?
+  mongoose.set('strictQuery', false);
   await mongoose.connect(URL!);
   console.log('Connected to Database');
 
