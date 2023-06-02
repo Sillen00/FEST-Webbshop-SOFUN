@@ -15,7 +15,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from '@mui/material';
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
@@ -96,7 +96,7 @@ export default function AdminAllOrdersTable() {
                       {order.userID}
                     </TableCell>
                     <TableCell align='center' data-cy='order-shipped'>
-                      {order.isShipped ? 'Yes' : 'No'}
+                      {order.isShipped ? 'Ja' : 'Nej'}
                     </TableCell>
                     <TableCell align='center'>
                       <Button
