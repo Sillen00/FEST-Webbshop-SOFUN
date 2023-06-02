@@ -33,7 +33,6 @@ export async function getAllOrders(req: Request, res: Response) {
   }
 }
 
-
 export async function getOrdersByUser(req: Request, res: Response) {
   const userId = req.params.id;
   try {
@@ -64,11 +63,9 @@ export async function createOrder(req: Request, res: Response) {
   try {
     await orderSchema.validate(req.body);
 
-    // Create the order
     const newOrder = await OrderModel.create(req.body);
-    const populatedOrder = await OrderModel.findById(newOrder._id).populate("orderItems.productID");
+    const populatedOrder = await OrderModel.findById(newOrder._id).populate('orderItems.productID');
 
-    // Reduce the stock level of each ordered product
     const orderItems = req.body.orderItems;
     for (const orderItem of orderItems) {
       const product = await ProductModel.findById(orderItem.productID);
@@ -76,10 +73,8 @@ export async function createOrder(req: Request, res: Response) {
         throw new Error(`Product with ID ${orderItem.productID} not found`);
       }
 
-      // Calculate the new stock level
       const newStockLevel = product.stockLevel - orderItem.quantity;
 
-      // Update the stock level of the product
       await ProductModel.findByIdAndUpdate(
         orderItem.productID,
         { stockLevel: newStockLevel },

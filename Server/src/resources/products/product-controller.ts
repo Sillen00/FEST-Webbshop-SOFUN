@@ -55,7 +55,7 @@ export async function updateProduct(req: Request, res: Response) {
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       id,
       { title, description, price, stockLevel, categoryIDs },
-      { new: true } //behövs för att skicka tillbaka den uppdaterade produkten
+      { new: true }
     );
 
     if (!updatedProduct) {

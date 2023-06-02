@@ -42,28 +42,51 @@ Tara Skoglund [GitHub](https://github.com/TaraSkoglund)
 **Krav för godkänt**
 
 - [x] Alla sidor skall vara responsiva.
+  - Responsiv ner till 360 px, anpassad för mobile, tablet och desktop med hjälp av MUI
 - [x] Arbetet ska implementeras med en React frontend och en Express backend.
+  - Stämmer
 - [x] Express backenden ska ha validering på samtliga endpoints.
+  - Validering har gjorts med hjälp av Zod samt Yup
 - [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet G
+  - finns med i Canva PDF
 - [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet
+  - Bifogad i projekt mappen
 - [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm)
+  - Stämmer
 - [x] Man ska kunna logga in som administratör i systemet
+  - Görs med hjälp av authAdmin-middleware
 - [x] Inga Lösenord får sparas i klartext i databasen
+  - Görs med hjälp av argon2
 - [x] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen
+  - Lagersaldo uppdateras när order läggs
 - [x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan
+  - Görs i funktionen updateProduct i product-controller
 - [x] Administratörer ska kunna se en lista på alla gjorda beställningar
+  - Görs i funktionen getAllOrders i order-controller.
 - [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera
+  - Görs i ProductContext
 - [x] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori
+  - fetchProducts görs i en useEffect i ProductContext. Renderas med hjälp av statet products och funktionen fetchProductByCategory från ProductContext.
 - [x] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten
+  - Görs med hjälp av en localeStorage-hook och CartContext.
 - [x] En besökare som gör en beställning ska få möjligheten att registrera sig samt logga in och måste vara inloggad som kund innan beställningen skapas
+  - Conditional rendering. Webbläsaren kollar om en session finns. Om inte renderas en modal där man får logga in. Vi har även lagt in en funktion i main.tsx som skyddar checkout-pathen.
 - [x] Checkoutflödet i frontendapplikationen ska ha validering på samtliga fält
+  - vi har använts oss av Yup
 
 **Krav för välgodkänt**
 
 - [x] Ett CI flöde ska sättas upp (i början av projektet) som kontrollerar prettier, eslint, typescript & tester i varje PR, tester kan lånas ifrån tidigare uppgifter
+  - Stämmer
 - [x] När man är inloggad som kund ska man kunna se sina gjorda beställning och om det är skickade eller inte
+  - Beställningar renderas i en users orderPage med hjälp av funktionen getOrdersByUsers i order-controllern och orderContext
 - [x] Administratörer ska kunna redigera produkt inklusive vilka kategorier den tillhör
+  - Görs med funktionen updateProduct i product-controller. I product-routern använder vi oss av authAdmin-middleware för denna funktionen
 - [x] Administratörer ska kunna lägga till och ta bort produkter
+  - Görs i funktionerna createProduct och deleteProduct i order-controllern. I product-router använder vi oss av authAdmin-middleware för dessa funktioner
 - [x] Backendapplikationen ska ha en fungerande global felhantering
+  - Finns längst ner i app.ts
 - [x] En administratör ska kunna uppgradera en användare till administratör
+  - Görs i assignAsAdmin funktionen i user-controllern. I user-router använder vi oss av authAdmin-middleware för denna funktionen.
 - [x] Administratörer ska kunna markera beställningar som skickade
+  - Görs i updateOrderStatus i order-controllern. I order-router använder vi oss av en authAdmin-middleware för denna funktionen.

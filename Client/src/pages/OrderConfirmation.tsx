@@ -7,7 +7,6 @@ export default function OrderConfirmation() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!order) {
-    // Product not found
     return <h1>HITTADE INTE NÅGON ORDER...</h1>;
   }
 

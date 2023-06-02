@@ -17,8 +17,6 @@ export async function getImageById(req: Request, res: Response) {
   }
 
   res.setHeader('Content-Type', file.contentType);
-  // Downloada till din dator istället för att visa i browsern som raden ovan.
-  //   res.setHeader("Content-Disposition", `attachment; filename=${file.filename}`);
 
   const downloadStream = fileBucket.openDownloadStream(_id);
   downloadStream.pipe(res);

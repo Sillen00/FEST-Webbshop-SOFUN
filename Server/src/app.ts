@@ -1,5 +1,4 @@
 import cookieSession from 'cookie-session';
-// import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { ZodError } from 'zod';
@@ -10,7 +9,6 @@ import productRouter from './resources/products/product-router';
 import userRouter from './resources/users/user-router';
 
 export const app = express();
-// app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 // COOKIE SESSION --------------------------------------------------------------------------------------------------------------------
