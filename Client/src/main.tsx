@@ -28,6 +28,7 @@ import { theme } from './theme';
 
 function AdminWrapper({ children }: { children: React.ReactNode }) {
   const { currentUser, isLoading } = useUser();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,12 +44,37 @@ function AdminWrapper({ children }: { children: React.ReactNode }) {
   return <>{currentUser && currentUser.isAdmin && children}</>;
 }
 
+function LoginWrapper({ children }: { children: React.ReactNode }) {
+  const { currentUser, isLoading } = useUser();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && currentUser === null) {
+      navigate('/login');
+    }
+  }, [currentUser, navigate, isLoading]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return <>{currentUser !== null && children}</>;
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index element={<Products />} />
       <Route path='product/:id' element={<ProductInfo />} />
-      <Route path='checkout' element={<Checkout />} />
+      <Route
+        path='checkout'
+        element={
+          <LoginWrapper>
+            <Checkout />
+          </LoginWrapper>
+        }
+      />
       <Route path='confirmation' element={<OrderConfirmation />} />
       <Route
         path='admin'
