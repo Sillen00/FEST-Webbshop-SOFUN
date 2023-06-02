@@ -15,7 +15,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from '@mui/material';
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
