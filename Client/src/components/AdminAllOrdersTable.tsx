@@ -96,7 +96,7 @@ export default function AdminAllOrdersTable() {
                       {order.userID}
                     </TableCell>
                     <TableCell align='center' data-cy='order-shipped'>
-                      {order.isShipped ? 'Yes' : 'No'}
+                      {order.isShipped ? 'Ja' : 'Nej'}
                     </TableCell>
                     <TableCell align='center'>
                       <Button
